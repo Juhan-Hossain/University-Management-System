@@ -1,0 +1,68 @@
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\appsettings.Development.json
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\appsettings.json
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\libman.json
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\University Student Management.exe
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\University Student Management.deps.json
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\University Student Management.runtimeconfig.json
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\University Student Management.runtimeconfig.dev.json
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\University Student Management.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\ref\University Student Management.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\University Student Management.pdb
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\Humanizer.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\Microsoft.Data.SqlClient.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\Microsoft.Identity.Client.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\Microsoft.OpenApi.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\Newtonsoft.Json.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\System.Configuration.ConfigurationManager.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\System.Runtime.Caching.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.pdb
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.pdb
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.pdb
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.pdb
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\StudentManagementBLL.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\StudentManagementDAL.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\StudentManagementEntity.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\StudentManagementBLL.pdb
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\StudentManagementDAL.pdb
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\bin\Debug\net5.0\StudentManagementEntity.pdb
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\obj\Debug\net5.0\University Student Management.csproj.AssemblyReference.cache
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\obj\Debug\net5.0\University Student Management.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\obj\Debug\net5.0\University Student Management.AssemblyInfoInputs.cache
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\obj\Debug\net5.0\University Student Management.AssemblyInfo.cs
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\obj\Debug\net5.0\University Student Management.csproj.CoreCompileInputs.cache
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\obj\Debug\net5.0\University Student Management.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\obj\Debug\net5.0\University Student Management.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\obj\Debug\net5.0\staticwebassets\University Student Management.StaticWebAssets.Manifest.cache
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\obj\Debug\net5.0\staticwebassets\University Student Management.StaticWebAssets.xml
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\obj\Debug\net5.0\scopedcss\bundle\University Student Management.styles.css
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\obj\Debug\net5.0\University Student Management.RazorTargetAssemblyInfo.cache
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\obj\Debug\net5.0\University Student Management.csproj.CopyComplete
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\obj\Debug\net5.0\University Student Management.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\obj\Debug\net5.0\ref\University Student Management.dll
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\obj\Debug\net5.0\University Student Management.pdb
+C:\Users\BS161\Desktop\Office\University Student Management\University Student Management\obj\Debug\net5.0\University Student Management.genruntimeconfig.cache
