@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace StudentManagementDAL
 {
     public class ApplicationDbContext : DbContext
     {
-        
-        
+
         public DbSet<Department> Departments { get; set; }
         public DbSet<Student> Students { get; set; }
 
@@ -46,6 +46,15 @@ namespace StudentManagementDAL
                 entity.Property(x => x.Code).HasMaxLength(7);
                 entity.HasIndex(x => x.Code).IsUnique();
                 entity.HasCheckConstraint("CHK_LengthOfCode", "len(code) >= 2 and len(code) <= 7");
+                entity.HasData(
+                   new Department { Id = 1, Code = "EEE", Name = "Electronics & Electrical Engineering" },
+                   new Department { Id = 2, Code = "CSE", Name = "Computer Science & Engineering" },
+                   new Department { Id = 3, Code = "CE", Name = "Civil Engineering" },
+                   new Department { Id = 4, Code = "ME", Name = "Mechanical Engineering" },
+                   new Department { Id = 5, Code = "MTE", Name = "Mechatronics Engineering" },
+                   new Department { Id = 6, Code = "IPE", Name = "Industrial Production & Engineering" },
+                   new Department { Id = 7, Code = "MME", Name = "Department of Materials and Metallurgical Engineering" }
+               );
             });
         }
     }
