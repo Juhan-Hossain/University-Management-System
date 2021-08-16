@@ -14,9 +14,9 @@ namespace StudentManagementEntity
             Students = new HashSet<Student>();
         }
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Name field must be filled")]
         public string Name { get; set; }
-        [Required]
+        [Required(ErrorMessage = "You must given an valid Department Code")]
         public string Code { get; set; }
         public ICollection<Student> Students { get; set; }
     }
