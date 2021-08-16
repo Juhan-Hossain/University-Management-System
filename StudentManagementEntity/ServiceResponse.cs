@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StudentManagementEntity
+namespace Data_Access_Layer.Repository.Entities
 {
-    class ServiceResponse
+    public class ServiceResponce<T>
     {
+        public bool Success { get; set; } = true;
+        public string Message { get; set; } = "Operation Successful";
+        public T Data { get; set; }
+
     }
 }

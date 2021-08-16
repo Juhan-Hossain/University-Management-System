@@ -10,6 +10,8 @@ namespace StudentManagementDAL
 {
     public class ApplicationDbContext : DbContext
     {
+        
+        
         public DbSet<Department> Departments { get; set; }
         public DbSet<Student> Students { get; set; }
 
