@@ -13,10 +13,11 @@ namespace StudentManagementEntity
         [Required]
         public string Name { get; set; }
         [Required]
-        [DataType(DataType.EmailAddress)]
+        /*[DataType(DataType.EmailAddress)]*/
         [EmailAddress(ErrorMessage = "Please Enter Email Address in correct Format.")]
+        
         public string Email { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.Now;
         public long ContactNumber { get; set; }
         [Required]
         public string Address { get; set; }
