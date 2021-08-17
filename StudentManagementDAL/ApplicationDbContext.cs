@@ -14,6 +14,7 @@ namespace StudentManagementDAL
 
         public DbSet<Department> Departments { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<Designation> Designations { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -57,6 +58,19 @@ namespace StudentManagementDAL
                    new Department { Id = 6, Code = "IPE", Name = "Industrial Production & Engineering" },
                    new Department { Id = 7, Code = "MME", Name = "Department of Materials and Metallurgical Engineering" }
                );
+            });
+
+
+            modelBuilder.Entity<Designation>(entity=>
+            {
+                entity.Property(x => x.Name).IsRequired();
+                entity.HasIndex(x => x.Name).IsUnique();
+                entity.HasData(
+                    new Designation() { Id=1,Name = "Professor" },
+                    new Designation() { Id=2,Name = "asst. Professor" },
+                    new Designation() { Id=3,Name = "Lecturer" },
+                    new Designation() { Id=4,Name = "Asst Lecturer" }
+                    );
             });
         }
     }
