@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RepositoryLayer;
 using StudentManagementBLL.CourseBLL;
+using StudentManagementDAL;
 using StudentManagementEntity;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,14 @@ namespace University_Student_Management.Controllers
         }
 
 
+        private readonly ApplicationDbContext _dbContext;
+        public CoursesController(ApplicationDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+
+        //getting all course
         [HttpGet]
         public ActionResult<ServiceResponse<IEnumerable<Course>>> GetCourses()
         {
@@ -27,6 +36,22 @@ namespace University_Student_Management.Controllers
             if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
             return Ok(serviceResponse);
         }
+
+        //getting department list
+        [HttpGet]
+        public IEnumerable<Department> GetDepartment()
+        {
+            var listOfDepartments = _dbContext.Departments.ToList();
+            return listOfDepartments;
+        }
+
+        public IEnumerable<Semester> GetSemester()
+        {
+            var listOfSemesters = _dbContext.Semesters.ToList();
+            return listOfSemesters;
+        }
+
+
 
         [HttpPost]
         
