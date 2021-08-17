@@ -11,7 +11,7 @@ namespace RepositoryLayer
     {
         public ServiceResponse<IEnumerable<T>> GetDetailsAll();
         public ServiceResponse<T> GetDetailsById(int? id);
-        public ServiceResponse<T> CreateDetails(T unit);
+        public ServiceResponse<T> AddDetails(T unit);
         public ServiceResponse<T> UpdateDetails(T unit);
         public ServiceResponse<T> UpdateDetails(int id, T unit);
         public ServiceResponse<T> DeleteDetails(T unit);

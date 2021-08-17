@@ -9,57 +9,26 @@ using System.Threading.Tasks;
 
 namespace RepositoryLayer
 {
-    public abstract class Repository<T> : IRepository<T> where T : class
+    public abstract class Repository<TEntity,ApplicationDbContext> : IRepository<TEntity> 
+        where TEntity : class
+        where ApplicationDbContext : DbContext
     {
-        public readonly ApplicationDbContext _dbContext; //giving public to provide access to the childs
+
+
+        protected readonly ApplicationDbContext _dbContext; //giving protected to provide access to the childs
 
         public Repository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        //CREATE
-        public virtual ServiceResponse<T> CreateDetails(T unit)
-        {
-            var serviceResponse = new ServiceResponse<T>();
-            try
-            {
-                if(unit is T)
-                {
-                    serviceResponse.Data = _dbContext.Set<T>().Add(unit) as T;
-                    _dbContext.SaveChanges();
-                    serviceResponse.Message = "Unit created successfully in DB";
-                }
-            }
-            catch (Exception exception)
-            {
-                serviceResponse.Message = $"Storing action failed in the database for given unit\n" +
-                    $"Error Message: {exception.Message}";
-                serviceResponse.Success = false;
-            }
-            return serviceResponse;
-        }
-
-        public virtual ServiceResponse<T> DeleteDetails(T unit)
-        {
-            var ServiceResponse = new ServiceResponse<T>();
-            throw new NotImplementedException();
-        }
-
-        public virtual ServiceResponse<T> DeleteDetailsConfirmedById(int id)
-        {
-            var ServiceResponse = new ServiceResponse<T>();
-            throw new NotImplementedException();
-        }
-
-
         //GetAll
-        public virtual ServiceResponse<IEnumerable<T>> GetDetailsAll()
+        public virtual ServiceResponse<IEnumerable<TEntity>> GetDetailsAll()
         {
-            var serviceResponse = new ServiceResponse<IEnumerable<T>>();
+            var serviceResponse = new ServiceResponse<IEnumerable<TEntity>>();
             try
             {
-                serviceResponse.Data =  _dbContext.Set<T>().ToList();
+                serviceResponse.Data = _dbContext.Set<TEntity>().ToList();
                 serviceResponse.Message = "Data loaded in ServiceResponse.Data Successfully";
             }
             catch (Exception exception)
@@ -68,17 +37,18 @@ namespace RepositoryLayer
                 serviceResponse.Message = "Error occurred while loading data.\nError message: " + exception.Message;
                 serviceResponse.Success = false;
             }
-           
+
             return serviceResponse;
         }
 
+
         //GetById
-        public virtual ServiceResponse<T> GetDetailsById(int? id)
+        public virtual ServiceResponse<TEntity> GetDetailsById(int? id)
         {
-            var serviceResponse = new ServiceResponse<T>();
+            var serviceResponse = new ServiceResponse<TEntity>();
             try
             {
-                serviceResponse.Data = _dbContext.Set<T>().Find(id);
+                serviceResponse.Data = _dbContext.Set<TEntity>().Find(id);
                 if (id != null)
                 {
                     if (serviceResponse.Data == null)
@@ -104,16 +74,46 @@ namespace RepositoryLayer
             return serviceResponse;
         }
 
-        
-        //UpdateDetails
-        public virtual ServiceResponse<T> UpdateDetails(T unit)
+        //ADD
+        public virtual ServiceResponse<TEntity> AddDetails(TEntity unit)
         {
-            var serviceResponse = new ServiceResponse<T>();
+            var serviceResponse = new ServiceResponse<TEntity>();
             try
             {
-                if (unit is T)
+                /*if (ModelState.IsValid)
                 {
-                    serviceResponse.Data = _dbContext.Set<T>().Update(unit) as T;
+                    db.Departments.Add(department);
+                    db.SaveChanges();
+                    TempData["success"] = "Department Added";
+                    return RedirectToAction("Create");*/
+               
+                    serviceResponse.Data = unit;
+                     _dbContext.Set<TEntity>().Add(unit);
+                     _dbContext.SaveChanges();
+                    
+                    
+                    serviceResponse.Message = "Unit created successfully in DB";
+                
+            }
+            catch (Exception exception)
+            {
+                serviceResponse.Message = $"Storing action failed in the database for given unit\n" +
+                    $"Error Message: {exception.Message}";
+                serviceResponse.Success = false;
+            }
+            return  serviceResponse;
+        }
+
+
+        //UpdateDetails
+        public virtual ServiceResponse<TEntity> UpdateDetails(TEntity unit)
+        {
+            var serviceResponse = new ServiceResponse<TEntity>();
+            try
+            {
+                if (unit is TEntity)
+                {
+                    serviceResponse.Data = _dbContext.Set<TEntity>().Update(unit) as TEntity;
                     _dbContext.SaveChanges();
                     serviceResponse.Message = "Unit Updated successfully in DB";
                 }
@@ -128,13 +128,13 @@ namespace RepositoryLayer
         }
 
         //UpdateDetails
-        public virtual ServiceResponse<T> UpdateDetails(int id, T unit)
+        public virtual ServiceResponse<TEntity> UpdateDetails(int id, TEntity unit)
         {
-            var serviceResponse = new ServiceResponse<T>();
+            var serviceResponse = new ServiceResponse<TEntity>();
             int UnitId = (int)unit.GetType().GetProperty("Id").GetValue(unit);
-            
-            var p = _dbContext.Set<T>().Find(id);
-            if (id!=UnitId)
+
+            var p = _dbContext.Set<TEntity>().Find(id);
+            if (id != UnitId)
             {
                 serviceResponse.Data = unit;
                 serviceResponse.Message = "Bad update request!!!";
@@ -144,7 +144,7 @@ namespace RepositoryLayer
             else
             {
                 /*if (unit.GetType().GetProperties().Id)*/
-                    _dbContext.Entry(unit).State = EntityState.Modified;
+                _dbContext.Entry(unit).State = EntityState.Modified;
                 _dbContext.SaveChanges();
                 serviceResponse.Data = unit;
                 serviceResponse.Message = "Update Success!!!";
@@ -152,6 +152,51 @@ namespace RepositoryLayer
             return serviceResponse;
 
         }
+
+
+
+
+        public virtual ServiceResponse<TEntity> DeleteDetails(TEntity unit)
+        {
+            var ServiceResponse = new ServiceResponse<TEntity>();
+            throw new NotImplementedException();
+        }
+
+
+
+
+
+
+        public virtual ServiceResponse<TEntity> DeleteDetailsConfirmedById(int id)
+        {
+            var ServiceResponse = new ServiceResponse<TEntity>();
+
+            try
+            {
+                ServiceResponse.Data = _dbContext.Set<TEntity>().Find(id);
+                if(ServiceResponse.Data==null)
+                {
+                    ServiceResponse.Message = $"{id} no id do not found to delete ";
+                    ServiceResponse.Success = false;
+                }
+                else
+                {
+                    _dbContext.Set<TEntity>().Remove(ServiceResponse.Data);
+                    _dbContext.SaveChanges();
+                    ServiceResponse.Message = "Deleting details by id";
+                }
+            }
+            catch (Exception)
+            {
+                ServiceResponse.Message = $"{id} no id is a bad request ";
+                ServiceResponse.Success = false;
+            }
+            
+            
+            return ServiceResponse;
+            
+        }   
+       
     }
 
         
