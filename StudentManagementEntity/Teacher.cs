@@ -26,7 +26,7 @@ namespace StudentManagementEntity
         public String Email { get; set; }
 
         [Required(ErrorMessage = "Field must be given")]
-        public String Contact { get; set; }
+        public int Contact { get; set; }
 
         [Required(ErrorMessage = "Field must be given")]
         [ForeignKey("Designation")]

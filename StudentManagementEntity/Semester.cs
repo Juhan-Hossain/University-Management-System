@@ -8,6 +8,7 @@ namespace StudentManagementEntity
 {
     public class Semester
     {
+        
         public int Id { get; set; }
         public String Name { get; set; }
     }
