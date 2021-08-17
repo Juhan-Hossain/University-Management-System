@@ -12,6 +12,7 @@ namespace StudentManagementEntity
         public Department()
         {
             Students = new HashSet<Student>();
+            Courses = new HashSet<Course>();
         }
         public int Id { get; set; }
         [Required(ErrorMessage = "Name field must be filled")]
@@ -19,5 +20,6 @@ namespace StudentManagementEntity
         [Required(ErrorMessage = "You must given an valid Department Code")]
         public string Code { get; set; }
         public ICollection<Student> Students { get; set; }
+        public ICollection<Course> Courses { get; set; }
     }
 }

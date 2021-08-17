@@ -15,6 +15,9 @@ namespace StudentManagementDAL
         public DbSet<Department> Departments { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Designation> Designations { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<Semester> Semesters { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -44,7 +47,7 @@ namespace StudentManagementDAL
                 entity.Property(x => x.Name).HasMaxLength(255);
                 entity.HasIndex(x => x.Name).IsUnique();
                 entity.HasCheckConstraint("CHK_LengthOfDeptName", "len(name) >= 7");
-                entity.Property(x => x.Code).HasMaxLength(7);
+                entity.Property(x => x.Code).HasMaxLength(5);
                 entity.HasIndex(x => x.Code).IsUnique();
                 entity.HasCheckConstraint("CHK_LengthOfCode", "len(code) >= 2 and len(code) <= 7");
                 entity.HasData(
@@ -58,7 +61,7 @@ namespace StudentManagementDAL
                );
             });
 
-
+            //Designation
             modelBuilder.Entity<Designation>(entity=>
             {
                 entity.Property(x => x.Name).IsRequired();
@@ -69,6 +72,25 @@ namespace StudentManagementDAL
                     new Designation() { Id=3,Name = "Lecturer" },
                     new Designation() { Id=4,Name = "Asst Lecturer" }
                     );
+            });
+
+            //Course
+            modelBuilder.Entity<Course>(entity =>
+            {
+                entity.HasOne(x => x.CourseDepartment).WithMany(x => x.Courses);
+                entity.Property(x => x.Name).IsRequired();
+                entity.HasIndex(x => x.Name).IsUnique();
+                entity.Property(x => x.Code).HasMaxLength(9);
+                entity.HasIndex(x => x.Code).IsUnique();
+                entity.HasKey(x => new { x.Code, x.DepartmentId }); //setting code & departmentId as composite key
+                entity.HasCheckConstraint("CHK_LengthOfCodeOfCourse", "LEN(Code) >= 5");
+                entity.HasCheckConstraint("CHK_CreditRangeOfCourse", "Credit BETWEEN 0.5 AND 5.0");
+                /*entity.HasData(
+                    new Designation() { Id = 1, Name = "Professor" },
+                    new Designation() { Id = 2, Name = "asst. Professor" },
+                    new Designation() { Id = 3, Name = "Lecturer" },
+                    new Designation() { Id = 4, Name = "Asst Lecturer" }
+                    );*/
             });
         }
     }
