@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RepositoryLayer;
 using StudentManagementBLL.DesignationBLL;
+using StudentManagementDAL;
 using StudentManagementEntity;
 using System;
 using System.Collections.Generic;
@@ -19,9 +20,15 @@ namespace University_Student_Management.Controllers
             _service = service;
         }
 
+        private readonly ApplicationDbContext _dbContext;
+        public DesignationsController(ApplicationDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
 
         [HttpPost]
-        public ActionResult<ServiceResponse<Designation>> PostDepartment(Designation designation)
+        public ActionResult<ServiceResponse<Designation>> PostDesignation(Designation designation)
         {
             designation.Id = 0;
             var serviceResponse = _service.AddDetails(designation);
@@ -29,13 +36,15 @@ namespace University_Student_Management.Controllers
             return Ok(serviceResponse);
         }
 
-        // GET: api/Departments
+        // GET: api/Designationvalues
         [HttpGet]
-        public ActionResult<ServiceResponse<IEnumerable<Designation>>> GetDepartments()
+        public IEnumerable<Designation> GetDesignation()
         {
-            var serviceResponse = _service.GetDetailsAll();
-            if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
-            return Ok(serviceResponse);
+            var listOfDesignation = _dbContext.Designations.ToList();
+
+
+            
+            return listOfDesignation;
         }
     }
 }
