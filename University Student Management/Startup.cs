@@ -8,6 +8,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
+using StudentManagementBLL.DepartmentBLL;
+using StudentManagementDAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +44,9 @@ namespace University_Student_Management
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
+            services.AddScoped<ApplicationDbContext>();
+            services.AddScoped<DepartmentServiceBLL>();
+            services.AddScoped<IDepartmentServiceBLL, DepartmentServiceBLL>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
