@@ -18,15 +18,8 @@ namespace University_Student_Management.Controllers
         public CoursesController(ICourseServiceBLL service)
         {
             _service = service;
+
         }
-
-
-        private readonly ApplicationDbContext _dbContext;
-        public CoursesController(ApplicationDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
-
 
         //getting all course
         [HttpGet]
@@ -37,20 +30,7 @@ namespace University_Student_Management.Controllers
             return Ok(serviceResponse);
         }
 
-        //getting department list
-        [HttpGet]
-        public IEnumerable<Department> GetDepartment()
-        {
-            var listOfDepartments = _dbContext.Departments.ToList();
-            return listOfDepartments;
-        }
-
-        public IEnumerable<Semester> GetSemester()
-        {
-            var listOfSemesters = _dbContext.Semesters.ToList();
-            return listOfSemesters;
-        }
-
+       
 
 
         [HttpPost]
@@ -62,11 +42,6 @@ namespace University_Student_Management.Controllers
             if (serviceResponse.Success == false) return BadRequest(serviceResponse);
             return Ok(serviceResponse.Data);
         }
-
-
-
-
-
 
     }
 }
