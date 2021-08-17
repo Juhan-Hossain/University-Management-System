@@ -80,18 +80,9 @@ namespace RepositoryLayer
             var serviceResponse = new ServiceResponse<TEntity>();
             try
             {
-                /*if (ModelState.IsValid)
-                {
-                    db.Departments.Add(department);
-                    db.SaveChanges();
-                    TempData["success"] = "Department Added";
-                    return RedirectToAction("Create");*/
-               
                     serviceResponse.Data = unit;
                      _dbContext.Set<TEntity>().Add(unit);
                      _dbContext.SaveChanges();
-                    
-                    
                     serviceResponse.Message = "Unit created successfully in DB";
                 
             }

@@ -19,6 +19,8 @@ namespace StudentManagementEntity
         public string Name { get; set; }
         [Required(ErrorMessage = "You must given an valid Department Code")]
         public string Code { get; set; }
+        public ICollection<Student> Students { get; set; }
+        public ICollection<Course> Courses { get; set; }
 
     }
 }

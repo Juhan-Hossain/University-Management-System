@@ -45,7 +45,7 @@ namespace University_Student_Management
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
             services.AddScoped<ApplicationDbContext>();
-            services.AddScoped<DepartmentServiceBLL>();
+          
             services.AddScoped<IDepartmentServiceBLL, DepartmentServiceBLL>();
         }
 
