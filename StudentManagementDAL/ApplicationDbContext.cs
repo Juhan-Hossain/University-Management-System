@@ -80,6 +80,7 @@ namespace StudentManagementDAL
             modelBuilder.Entity<Course>(entity =>
             {
                 entity.HasOne(x => x.CourseDepartment).WithMany(x => x.Courses);
+                entity.HasOne(x => x.Teacher).WithMany(x => x.Courses);
                 entity.Property(x => x.Name).IsRequired();
                 entity.HasIndex(x => x.Name).IsUnique();
                 entity.Property(x => x.Code).HasMaxLength(9);
@@ -87,12 +88,25 @@ namespace StudentManagementDAL
                 entity.HasKey(x => new { x.Code, x.DepartmentId }); //setting code & departmentId as composite key
                 entity.HasCheckConstraint("CHK_LengthOfCodeOfCourse", "LEN(Code) >= 5");
                 entity.HasCheckConstraint("CHK_CreditRangeOfCourse", "Credit BETWEEN 0.5 AND 5.0");
-                /*entity.HasData(
-                    new Designation() { Id = 1, Name = "Professor" },
-                    new Designation() { Id = 2, Name = "asst. Professor" },
-                    new Designation() { Id = 3, Name = "Lecturer" },
-                    new Designation() { Id = 4, Name = "Asst Lecturer" }
-                    );*/
+                entity.HasData(
+                    new Course() { Code="CSE-0101", DepartmentId = 2,Name="C", Credit=3, Description="", SemesterId=1, TeacherId=1 },
+                    new Course() { Code = "CSE-0102", DepartmentId = 2, Name = "C++", Credit = 3, Description = "", SemesterId = 1, TeacherId = 1 },
+                    new Course() { Code = "CSE-0103", DepartmentId = 2, Name = "Compiler", Credit = 3, Description = "", SemesterId = 1, TeacherId = 1 },
+                    new Course() { Code = "CSE-0104", DepartmentId = 2, Name = "Database", Credit = 3, Description = "", SemesterId = 1, TeacherId = 1 }
+                    );
+            });
+
+            //Teacher
+            modelBuilder.Entity<Teacher>(entity =>
+            {
+                
+                entity.Property(x => x.Name).IsRequired();
+                entity.HasIndex(x => x.Name).IsUnique();
+                entity.HasIndex(x => x.Email).IsUnique();
+                entity.HasData(
+                    new Teacher() {Id=2,Name="Ezaz Raihan",Address="fjdsf",Email="saif@gmail.com",Contact=123445,DesignationId=2,CreditTaken=3,DepartmentId=2}
+                 
+                    );
             });
         }
     }
