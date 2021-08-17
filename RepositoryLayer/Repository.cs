@@ -80,8 +80,9 @@ namespace RepositoryLayer
             var serviceResponse = new ServiceResponse<TEntity>();
             try
             {
-                    serviceResponse.Data = unit;
-                     _dbContext.Set<TEntity>().Add(unit);
+                      
+                      serviceResponse.Data = unit;
+                     _dbContext.Set<TEntity>().Add(serviceResponse.Data);
                      _dbContext.SaveChanges();
                     serviceResponse.Message = "Unit created successfully in DB";
                 

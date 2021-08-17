@@ -8,7 +8,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
+using StudentManagementBLL.CourseBLL;
 using StudentManagementBLL.DepartmentBLL;
+using StudentManagementBLL.TeacherBLL;
 using StudentManagementDAL;
 using System;
 using System.Collections.Generic;
@@ -47,6 +49,8 @@ namespace University_Student_Management
             services.AddScoped<ApplicationDbContext>();
           
             services.AddScoped<IDepartmentServiceBLL, DepartmentServiceBLL>();
+            services.AddScoped<ITeacherServiceBLL, TeacherServiceBLL>();
+            services.AddScoped<ICourseServiceBLL, CourseServiceBLL>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
