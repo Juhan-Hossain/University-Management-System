@@ -41,9 +41,6 @@ namespace University_Student_Management.Controllers
         public IEnumerable<Designation> GetDesignation()
         {
             var listOfDesignation = _dbContext.Designations.ToList();
-
-
-            
             return listOfDesignation;
         }
     }
