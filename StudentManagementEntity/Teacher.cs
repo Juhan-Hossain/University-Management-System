@@ -26,20 +26,22 @@ namespace StudentManagementEntity
         public String Email { get; set; }
 
         [Required(ErrorMessage = "Field must be given")]
-        public int Contact { get; set; }
+        public long Contact { get; set; }
 
         [Required(ErrorMessage = "Field must be given")]
         [ForeignKey("Designation")]
         public int DesignationId { get; set; }
 
         [Required(ErrorMessage = "Field must be given")]        
-        [Range(typeof(double), "0.00", "100.00", ErrorMessage = "Credit Should be a positive number")]
-        public Double CreditTaken { get; set; }
-
+        
+        public double CreditTaken { get; set; }
+        [Required(ErrorMessage = "Field must be given")]
+        public double RemainingCredit { get; set; }
+ 
         public int DepartmentId { get; set; }
-        public virtual Department Department { get; set; }
+        public virtual Department? Department { get; set; }
 
-        public virtual Designation Designation { get; set; }
+        public virtual Designation? Designation { get; set; }
 
         public virtual ICollection<Course> Courses { get; set; }
 

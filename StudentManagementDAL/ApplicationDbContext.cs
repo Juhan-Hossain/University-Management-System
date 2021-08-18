@@ -102,9 +102,13 @@ namespace StudentManagementDAL
                 entity.Property(x => x.Name).IsRequired();
                 entity.HasIndex(x => x.Name).IsUnique();
                 entity.HasIndex(x => x.Email).IsUnique();
+                entity.HasOne(a => a.Department).WithMany(b => b.Teachers);
+                entity.HasCheckConstraint("CHK_CreditToBeTakenByTeacher", "CreditTaken >= 0");
+                /*entity.HasCheckConstraint("CHK_RemainingCreditOfTeacher", "RemainingCredit BETWEEN 0 AND CreditTaken");*/
                 entity.HasData(
-                    new Teacher() {Id=2,Name="Ezaz Raihan",Address="fjdsf",Email="saif@gmail.com",Contact=123445,DesignationId=2,CreditTaken=3,DepartmentId=2}
-                 
+                    new Teacher() {Id=2,Name="Ezaz Raihan",Address="fjdsf",Email="saif@gmail.com",Contact=123445,DesignationId=2,CreditTaken=3,RemainingCredit=97,DepartmentId=2},
+                    new Teacher() { Id = 3, Name = "Ashek", Address = "adafsf", Email = "ashek@gmail.com", Contact = 12312445, DesignationId = 1, CreditTaken = 30,RemainingCredit=70, DepartmentId = 2 }
+
                     );
             });
         }

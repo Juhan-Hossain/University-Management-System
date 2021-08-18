@@ -13,6 +13,7 @@ namespace StudentManagementEntity
         {
             Students = new HashSet<Student>();
             Courses = new HashSet<Course>();
+            Teachers = new HashSet<Teacher>();
         }
         public int Id { get; set; }
         [Required(ErrorMessage = "Name field must be filled")]
@@ -21,5 +22,6 @@ namespace StudentManagementEntity
         public string Code { get; set; }
         public ICollection<Student> Students { get; set; }
         public ICollection<Course> Courses { get; set; }
+        public ICollection<Teacher> Teachers { get; set; }
     }
 }
