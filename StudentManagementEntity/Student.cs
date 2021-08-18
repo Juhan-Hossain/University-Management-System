@@ -17,7 +17,7 @@ namespace StudentManagementEntity
         [EmailAddress(ErrorMessage = "Please Enter Email Address in correct Format.")]
         
         public string Email { get; set; }
-        public DateTime Date { get; set; } = DateTime.Now;
+        public DateTime Date { get; set; } = DateTime.Today;
         public long ContactNumber { get; set; }
         [Required]
         public string Address { get; set; }
@@ -26,7 +26,7 @@ namespace StudentManagementEntity
 
         public int DepartmentId { get; set; }
 
-        [Required]
+        
         public string RegistrationNumber { get; set; }
     }
 }

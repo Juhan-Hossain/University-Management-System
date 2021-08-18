@@ -11,6 +11,7 @@ using Newtonsoft.Json.Serialization;
 using StudentManagementBLL.CourseBLL;
 using StudentManagementBLL.DepartmentBLL;
 using StudentManagementBLL.DesignationBLL;
+using StudentManagementBLL.StudentBLL;
 using StudentManagementBLL.TeacherBLL;
 using StudentManagementDAL;
 using System;
@@ -53,6 +54,8 @@ namespace University_Student_Management
             services.AddScoped<ITeacherServiceBLL, TeacherServiceBLL>();
             services.AddScoped<ICourseServiceBLL, CourseServiceBLL>();
             services.AddScoped<IDesignationServiceBLL, DesignationServiceBLL>();
+            services.AddScoped<IStudentServiceBLL, StudentServiceBLL>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
