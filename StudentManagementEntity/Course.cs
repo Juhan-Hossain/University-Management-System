@@ -19,7 +19,7 @@ namespace StudentManagementEntity
         
         public String Name { get; set; }
         [Required(ErrorMessage = "Credit Field Must Be Filled")]
-        
+
         public float Credit { get; set; }
         public String Description { get; set; }
         

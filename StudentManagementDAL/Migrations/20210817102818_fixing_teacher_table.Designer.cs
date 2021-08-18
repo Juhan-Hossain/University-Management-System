@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagementDAL;
 
 namespace StudentManagementDAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210817102818_fixing_teacher_table")]
+    partial class fixing_teacher_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -307,8 +309,8 @@ namespace StudentManagementDAL.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("Contact")
-                        .HasColumnType("bigint");
+                    b.Property<int>("Contact")
+                        .HasColumnType("int");
 
                     b.Property<double>("CreditTaken")
                         .HasColumnType("float");
@@ -327,9 +329,6 @@ namespace StudentManagementDAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<double>("RemainingCredit")
-                        .HasColumnType("float");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DepartmentId");
@@ -344,32 +343,17 @@ namespace StudentManagementDAL.Migrations
 
                     b.ToTable("Teachers");
 
-                    b.HasCheckConstraint("CHK_CreditToBeTakenByTeacher", "CreditTaken >= 0");
-
                     b.HasData(
                         new
                         {
                             Id = 2,
                             Address = "fjdsf",
-                            Contact = 123445L,
+                            Contact = 123445,
                             CreditTaken = 3.0,
                             DepartmentId = 2,
                             DesignationId = 2,
                             Email = "saif@gmail.com",
-                            Name = "Ezaz Raihan",
-                            RemainingCredit = 97.0
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Address = "adafsf",
-                            Contact = 12312445L,
-                            CreditTaken = 30.0,
-                            DepartmentId = 2,
-                            DesignationId = 1,
-                            Email = "ashek@gmail.com",
-                            Name = "Ashek",
-                            RemainingCredit = 70.0
+                            Name = "Ezaz Raihan"
                         });
                 });
 
@@ -426,7 +410,7 @@ namespace StudentManagementDAL.Migrations
             modelBuilder.Entity("StudentManagementEntity.Teacher", b =>
                 {
                     b.HasOne("StudentManagementEntity.Department", "Department")
-                        .WithMany("Teachers")
+                        .WithMany()
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -447,8 +431,6 @@ namespace StudentManagementDAL.Migrations
                     b.Navigation("Courses");
 
                     b.Navigation("Students");
-
-                    b.Navigation("Teachers");
                 });
 
             modelBuilder.Entity("StudentManagementEntity.Teacher", b =>

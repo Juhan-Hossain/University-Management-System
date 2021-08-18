@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data_Access_Layer.Repository.Entities
+namespace RepositoryLayer
 {
-    public class ServiceResponce<T>
+    public class ServiceResponse<T>
     {
         public bool Success { get; set; } = true;
         public string Message { get; set; } = "Operation Successful";

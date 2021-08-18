@@ -18,7 +18,7 @@ namespace StudentManagementDAL
         public DbSet<Course> Courses { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Semester> Semesters { get; set; }
-        public DbSet<CourseAssignment> CourseAssignments { get; set; }
+       
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -31,6 +31,7 @@ namespace StudentManagementDAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
 
             //Student
             modelBuilder.Entity<Student>(entity =>
@@ -46,6 +47,7 @@ namespace StudentManagementDAL
 
             modelBuilder.Entity<Department>(entity =>
             {
+                entity.HasKey(x => x.Id);
                 entity.Property(x => x.Name).HasMaxLength(255);
                 entity.HasIndex(x => x.Name).IsUnique();
                 entity.HasCheckConstraint("CHK_LengthOfDeptName", "len(name) >= 7");
@@ -112,10 +114,7 @@ namespace StudentManagementDAL
 
                     );
             });
-            modelBuilder.Entity<CourseAssignment>(entity=>
-            {
-                entity.HasKey(c => new { c.CourseId, c.TeacherId });
-            });
+
         }
     }
 }
