@@ -18,7 +18,8 @@ namespace StudentManagementDAL
         public DbSet<Course> Courses { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Semester> Semesters { get; set; }
-        
+        public DbSet<CourseAssignment> CourseAssignments { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -110,6 +111,10 @@ namespace StudentManagementDAL
                     new Teacher() { Id = 3, Name = "Ashek", Address = "adafsf", Email = "ashek@gmail.com", Contact = 12312445, DesignationId = 1, CreditTaken = 30,RemainingCredit=70, DepartmentId = 2 }
 
                     );
+            });
+            modelBuilder.Entity<CourseAssignment>(entity=>
+            {
+                entity.HasKey(c => new { c.CourseId, c.TeacherId });
             });
         }
     }
