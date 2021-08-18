@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagementDAL;
 
 namespace StudentManagementDAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210818063337_fixing_teacher_table")]
+    partial class fixing_teacher_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,9 +126,6 @@ namespace StudentManagementDAL.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int?>("TeacherId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Code")
@@ -134,8 +133,6 @@ namespace StudentManagementDAL.Migrations
 
                     b.HasIndex("Name")
                         .IsUnique();
-
-                    b.HasIndex("TeacherId");
 
                     b.ToTable("Departments");
 
@@ -199,15 +196,10 @@ namespace StudentManagementDAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("TeacherId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Name")
                         .IsUnique();
-
-                    b.HasIndex("TeacherId");
 
                     b.ToTable("Designations");
 
@@ -398,20 +390,6 @@ namespace StudentManagementDAL.Migrations
                     b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("StudentManagementEntity.Department", b =>
-                {
-                    b.HasOne("StudentManagementEntity.Teacher", null)
-                        .WithMany("Departments")
-                        .HasForeignKey("TeacherId");
-                });
-
-            modelBuilder.Entity("StudentManagementEntity.Designation", b =>
-                {
-                    b.HasOne("StudentManagementEntity.Teacher", null)
-                        .WithMany("Designations")
-                        .HasForeignKey("TeacherId");
-                });
-
             modelBuilder.Entity("StudentManagementEntity.Student", b =>
                 {
                     b.HasOne("StudentManagementEntity.Department", "Department")
@@ -454,10 +432,6 @@ namespace StudentManagementDAL.Migrations
             modelBuilder.Entity("StudentManagementEntity.Teacher", b =>
                 {
                     b.Navigation("Courses");
-
-                    b.Navigation("Departments");
-
-                    b.Navigation("Designations");
                 });
 #pragma warning restore 612, 618
         }
