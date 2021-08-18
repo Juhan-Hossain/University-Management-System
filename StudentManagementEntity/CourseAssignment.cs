@@ -9,12 +9,16 @@ namespace StudentManagementEntity
 {
     public class CourseAssignment
     {
-        public int Id { get; set; }
-        [ForeignKey("Teacher")]
+  
+        public int DepartmentId { get; set; }
+
         public int TeacherId { get; set; }
-        [ForeignKey("Course")]
+
         public int CourseId { get; set; }
+
+        public string Code { get; set; }
         public Teacher Teacher { get; set; }
         public Course Course { get; set; }
+        public Department Department { get; set; }
     }
 }
