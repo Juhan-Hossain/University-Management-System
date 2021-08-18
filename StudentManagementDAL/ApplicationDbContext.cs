@@ -30,6 +30,7 @@ namespace StudentManagementDAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
 
             //Student
             modelBuilder.Entity<Student>(entity =>
@@ -45,6 +46,7 @@ namespace StudentManagementDAL
 
             modelBuilder.Entity<Department>(entity =>
             {
+                entity.HasKey(x => x.Id);
                 entity.Property(x => x.Name).HasMaxLength(255);
                 entity.HasIndex(x => x.Name).IsUnique();
                 entity.HasCheckConstraint("CHK_LengthOfDeptName", "len(name) >= 7");
@@ -107,6 +109,8 @@ namespace StudentManagementDAL
                  
                     );
             });
+
+         
         }
     }
 }

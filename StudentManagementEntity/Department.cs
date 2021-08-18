@@ -21,5 +21,6 @@ namespace StudentManagementEntity
         public string Code { get; set; }
         public ICollection<Student> Students { get; set; }
         public ICollection<Course> Courses { get; set; }
+
     }
 }
