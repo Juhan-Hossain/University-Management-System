@@ -10,6 +10,7 @@ namespace StudentManagementBLL.CourseBLL
 {
    public interface ICourseServiceBLL : IRepository<Course>
    {
-
-   }
+        public ServiceResponse<Course> GetByCompositeKey(int departmentId, string courseCode);
+        public ServiceResponse<IEnumerable<Course>> GetCourseDetailsByDepartment(int departmentId);
+    }
 }
