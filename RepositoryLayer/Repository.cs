@@ -81,7 +81,7 @@ namespace RepositoryLayer
             try
             {
                 /*unit.GetType().GetProperty("Id")?.SetValue(unit, 0);*/
-                serviceResponse.Data = unit;
+                    serviceResponse.Data = unit ;
                      _dbContext.Set<TEntity>().Add(serviceResponse.Data);
                      _dbContext.SaveChanges();
                     serviceResponse.Message = "Unit created successfully in DB";
@@ -123,8 +123,9 @@ namespace RepositoryLayer
         public virtual ServiceResponse<TEntity> UpdateDetails(int id, TEntity unit)
         {
             var serviceResponse = new ServiceResponse<TEntity>();
+            //from stackoverflow
             int UnitId = (int)unit.GetType().GetProperty("Id").GetValue(unit);
-
+            
             var p = _dbContext.Set<TEntity>().Find(id);
             if (id != UnitId)
             {
