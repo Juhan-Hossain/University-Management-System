@@ -39,21 +39,39 @@ namespace StudentManagementBLL.CourseBLL
 
 
 
-        public virtual ServiceResponse<Course> GetByCompositeKey(int departmentId, string Code)
+        public virtual ServiceResponse<Course> GetByCompositeKey(int departmentId, string Code,int teacherId)
         {
             var serviceResponse = new ServiceResponse<Course>();
             try
             {
                 serviceResponse.Data =  _dbContext.Courses.Include(x => x.Teacher)
-                    .SingleOrDefault(x => x.DepartmentId == departmentId
-                                            && x.Code == Code);
+                    .SingleOrDefault(x => (x.DepartmentId == departmentId
+                                            && x.Code == Code) && x.TeacherId!=teacherId);
+                /* if(serviceResponse.Data.Credit>serviceResponse.Data.TeacherId.)*/
 
                 if (serviceResponse.Data == null)
                 {
                     serviceResponse.Message = "Data not found with the given constrain.";
                     serviceResponse.Success = false;
                 }
-                else serviceResponse.Message = "Data  with the given id was fetched successfully from the database";
+                else
+                {
+                    //Checking remaining credit
+                    Teacher aTeacher = _dbContext.Teachers.FirstOrDefault(t=> t.Id==teacherId);
+                    Course aCourse = _dbContext.Courses.FirstOrDefault(c => c.Code == Code);
+                    if(aTeacher.RemainingCredit>=aCourse.Credit)
+                    {
+                        aTeacher.RemainingCredit -= aCourse.Credit;
+                        aTeacher.CreditTaken += aCourse.Credit;
+                        serviceResponse.Message = $"{aTeacher.Name} will start taking {aCourse.Code}: {aCourse.Name}";
+                    }
+                    else
+                    {
+                        serviceResponse.Message = $"{aTeacher.Name} does not have time to take {aCourse.Code}: {aCourse.Name}";
+                        serviceResponse.Success = false;
+                    }
+                    
+                }
             }
             catch (Exception exception)
             {
@@ -85,5 +103,8 @@ namespace StudentManagementBLL.CourseBLL
             }
             return serviceResponse;
         }
+
+
+
     }
 }
