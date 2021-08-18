@@ -38,7 +38,7 @@ namespace StudentManagementBLL.CourseBLL
 
 
 
-
+        //validates the fact of course assignment
         public virtual ServiceResponse<Course> GetByCompositeKey(int departmentId, string Code,int teacherId)
         {
             var serviceResponse = new ServiceResponse<Course>();
@@ -90,7 +90,6 @@ namespace StudentManagementBLL.CourseBLL
             {
                 serviceResponse.Data = _dbContext.Courses
                     .Include(x => x.Teacher)
-                    
                     .Where(x => x.DepartmentId == departmentId).ToList();
 
                 serviceResponse.Message = "Data  with the given id was fetched successfully from the database";
