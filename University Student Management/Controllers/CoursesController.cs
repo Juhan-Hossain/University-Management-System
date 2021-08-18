@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RepositoryLayer;
 using StudentManagementBLL.CourseBLL;
+using StudentManagementDAL;
 using StudentManagementEntity;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,10 @@ namespace University_Student_Management.Controllers
         public CoursesController(ICourseServiceBLL service)
         {
             _service = service;
+
         }
 
-
+        //getting all course
         [HttpGet]
         public ActionResult<ServiceResponse<IEnumerable<Course>>> GetCourses()
         {
@@ -27,6 +29,9 @@ namespace University_Student_Management.Controllers
             if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
             return Ok(serviceResponse);
         }
+
+       
+
 
         [HttpPost]
         
@@ -37,11 +42,6 @@ namespace University_Student_Management.Controllers
             if (serviceResponse.Success == false) return BadRequest(serviceResponse);
             return Ok(serviceResponse.Data);
         }
-
-
-
-
-
 
     }
 }

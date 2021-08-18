@@ -20,11 +20,6 @@ namespace University_Student_Management.Controllers
             _service = service;
         }
 
-        private readonly ApplicationDbContext _dbContext;
-        public DesignationsController(ApplicationDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
 
 
         [HttpPost]
@@ -35,6 +30,7 @@ namespace University_Student_Management.Controllers
             if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
             return Ok(serviceResponse);
         }
+<<<<<<< HEAD
 
         // GET: api/Designationvalues
         [HttpGet]
@@ -43,5 +39,7 @@ namespace University_Student_Management.Controllers
             var listOfDesignation = _dbContext.Designations.ToList();
             return listOfDesignation;
         }
+=======
+>>>>>>> 16e277d39a4f3c30d388ed5b6ee50dbac2a2e269
     }
 }
