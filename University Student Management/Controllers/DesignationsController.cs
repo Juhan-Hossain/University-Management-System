@@ -30,16 +30,6 @@ namespace University_Student_Management.Controllers
             if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
             return Ok(serviceResponse);
         }
-<<<<<<< HEAD
 
-        // GET: api/Designationvalues
-        [HttpGet]
-        public IEnumerable<Designation> GetDesignation()
-        {
-            var listOfDesignation = _dbContext.Designations.ToList();
-            return listOfDesignation;
-        }
-=======
->>>>>>> 16e277d39a4f3c30d388ed5b6ee50dbac2a2e269
     }
 }
