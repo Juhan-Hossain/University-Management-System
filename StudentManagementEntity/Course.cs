@@ -22,21 +22,21 @@ namespace StudentManagementEntity
 
         public float Credit { get; set; }
         public String Description { get; set; }
-        
+
         public Semester? Semester { get; set; }
         [ForeignKey("Semester")]
-        public int SemesterId { get; set; }
+        public int? SemesterId { get; set; }
 
 
         public Department? CourseDepartment { get; set; }
         [ForeignKey("Department")]
-        public int DepartmentId { get; set; }
+        public int? DepartmentId { get; set; }
         
         public Teacher? Teacher { get; set; }
-        [ForeignKey("Department")]
+        [ForeignKey("Teacher")]
         public int? TeacherId { get; set; }
 
 
-     
+
     }
 }

@@ -30,7 +30,14 @@ namespace University_Student_Management.Controllers
             return Ok(serviceResponse);
         }
 
-       
+        // GET: Courses
+        [HttpGet("CoursesByDepartment")]
+        public ActionResult<ServiceResponse<IEnumerable<Course>>> GetCoursesByDepartment(int departmentId)
+        {
+            var serviceResponse =  _service.GetCourseDetailsByDepartment(departmentId);
+            if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
+            return Ok(serviceResponse.Data);
+        }
 
 
         [HttpPost]

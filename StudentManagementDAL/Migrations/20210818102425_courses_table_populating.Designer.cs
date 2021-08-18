@@ -10,8 +10,8 @@ using StudentManagementDAL;
 namespace StudentManagementDAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210818063337_fixing_teacher_table")]
-    partial class fixing_teacher_table
+    [Migration("20210818102425_courses_table_populating")]
+    partial class courses_table_populating
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,7 +27,7 @@ namespace StudentManagementDAL.Migrations
                         .HasMaxLength(9)
                         .HasColumnType("nvarchar(9)");
 
-                    b.Property<int>("DepartmentId")
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<float>("Credit")
@@ -40,7 +40,7 @@ namespace StudentManagementDAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("SemesterId")
+                    b.Property<int?>("SemesterId")
                         .HasColumnType("int");
 
                     b.Property<int?>("TeacherId")
@@ -74,7 +74,6 @@ namespace StudentManagementDAL.Migrations
                             Credit = 3f,
                             Description = "",
                             Name = "C",
-                            SemesterId = 1,
                             TeacherId = 1
                         },
                         new
@@ -84,7 +83,6 @@ namespace StudentManagementDAL.Migrations
                             Credit = 3f,
                             Description = "",
                             Name = "C++",
-                            SemesterId = 1,
                             TeacherId = 1
                         },
                         new
@@ -94,17 +92,6 @@ namespace StudentManagementDAL.Migrations
                             Credit = 3f,
                             Description = "",
                             Name = "Compiler",
-                            SemesterId = 1,
-                            TeacherId = 1
-                        },
-                        new
-                        {
-                            Code = "CSE-0104",
-                            DepartmentId = 2,
-                            Credit = 3f,
-                            Description = "",
-                            Name = "Database",
-                            SemesterId = 1,
                             TeacherId = 1
                         });
                 });
@@ -126,6 +113,9 @@ namespace StudentManagementDAL.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<int?>("TeacherId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Code")
@@ -133,6 +123,8 @@ namespace StudentManagementDAL.Migrations
 
                     b.HasIndex("Name")
                         .IsUnique();
+
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Departments");
 
@@ -196,10 +188,15 @@ namespace StudentManagementDAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int?>("TeacherId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Name")
                         .IsUnique();
+
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Designations");
 
@@ -234,11 +231,54 @@ namespace StudentManagementDAL.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Semesters");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "1st"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "2nd"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "3rd"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "4th"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "5th"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "6th"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "7th"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "8th"
+                        });
                 });
 
             modelBuilder.Entity("StudentManagementEntity.Student", b =>
@@ -338,10 +378,12 @@ namespace StudentManagementDAL.Migrations
 
                     b.HasCheckConstraint("CHK_CreditToBeTakenByTeacher", "CreditTaken >= 0");
 
+                    b.HasCheckConstraint("CHK_RemainingCreditOfTeacher", "RemainingCredit BETWEEN 0 AND CreditTaken");
+
                     b.HasData(
                         new
                         {
-                            Id = 2,
+                            Id = 1,
                             Address = "fjdsf",
                             Contact = 123445L,
                             CreditTaken = 3.0,
@@ -353,7 +395,7 @@ namespace StudentManagementDAL.Migrations
                         },
                         new
                         {
-                            Id = 3,
+                            Id = 2,
                             Address = "adafsf",
                             Contact = 12312445L,
                             CreditTaken = 30.0,
@@ -375,9 +417,7 @@ namespace StudentManagementDAL.Migrations
 
                     b.HasOne("StudentManagementEntity.Semester", "Semester")
                         .WithMany()
-                        .HasForeignKey("SemesterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SemesterId");
 
                     b.HasOne("StudentManagementEntity.Teacher", "Teacher")
                         .WithMany("Courses")
@@ -388,6 +428,20 @@ namespace StudentManagementDAL.Migrations
                     b.Navigation("Semester");
 
                     b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("StudentManagementEntity.Department", b =>
+                {
+                    b.HasOne("StudentManagementEntity.Teacher", null)
+                        .WithMany("Departments")
+                        .HasForeignKey("TeacherId");
+                });
+
+            modelBuilder.Entity("StudentManagementEntity.Designation", b =>
+                {
+                    b.HasOne("StudentManagementEntity.Teacher", null)
+                        .WithMany("Designations")
+                        .HasForeignKey("TeacherId");
                 });
 
             modelBuilder.Entity("StudentManagementEntity.Student", b =>
@@ -432,6 +486,10 @@ namespace StudentManagementDAL.Migrations
             modelBuilder.Entity("StudentManagementEntity.Teacher", b =>
                 {
                     b.Navigation("Courses");
+
+                    b.Navigation("Departments");
+
+                    b.Navigation("Designations");
                 });
 #pragma warning restore 612, 618
         }
