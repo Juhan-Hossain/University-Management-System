@@ -19,6 +19,8 @@ namespace StudentManagementBLL.CourseBLL
 
         }
 
+
+        //GET:All:COurse
         public override ServiceResponse<IEnumerable<Course>> GetDetailsAll()
         {
             var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
@@ -36,6 +38,26 @@ namespace StudentManagementBLL.CourseBLL
             return serviceResponse;
         }
 
+        //POST:Course
+        public override ServiceResponse<Course> AddDetails(Course course)
+        {
+            var serviceResponse = new ServiceResponse<Course>();
+
+            try
+            {
+                serviceResponse.Data = course;
+                _dbContext.Courses.Add(serviceResponse.Data);
+                _dbContext.SaveChanges();
+                serviceResponse.Message = "Designation created successfully in DB";
+            }
+            catch (Exception exception)
+            {
+                serviceResponse.Message = $"Storing action failed in the database for given designation\n" +
+                    $"Error Message: {exception.Message}";
+                serviceResponse.Success = false;
+            }
+            return serviceResponse;
+        }
 
 
         //validates the fact of course assignment
