@@ -39,10 +39,10 @@ namespace University_Student_Management.Controllers
             return Ok(serviceResponse);
         }
 
-
-        [HttpPost]
+        //POST:Course
+        [HttpPost("CreateCourse")]
         
-        public ActionResult<ServiceResponse<Course>> PostCourse(Course course)
+        public ActionResult<ServiceResponse<Course>> CreateCourse(Course course)
         {
            /* course.Id = 0;*/
             var serviceResponse = _service.AddDetails(course);
