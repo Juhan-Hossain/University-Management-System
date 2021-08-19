@@ -18,7 +18,13 @@ namespace StudentManagementDAL
         public DbSet<Course> Courses { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Semester> Semesters { get; set; }
-       
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<Day> Days { get; set; }
+        public DbSet<RoomAllocation> RoomAllocations { get; set; }
+
+
+
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -115,6 +121,7 @@ namespace StudentManagementDAL
                     );
             });
 
+            //Semester
             modelBuilder.Entity<Semester>(entity =>
             {
                 entity.HasKey(x => x.Id);
@@ -130,6 +137,54 @@ namespace StudentManagementDAL
                     new Semester { Id = 8, Name = "8th" }
                 );
             });
+
+            /// Day
+            modelBuilder.Entity<Day>(entity =>
+            {
+                entity.HasIndex(x => x.Name).IsUnique();
+                entity.HasData(
+                    new Day() { Id = 1, Name = "Sat" },
+                    new Day() { Id = 2, Name = "Sun" },
+                    new Day() { Id = 3, Name = "Mon" },
+                    new Day() { Id = 4, Name = "Tue" },
+                    new Day() { Id = 5, Name = "Wed" },
+                    new Day() { Id = 6, Name = "Thu" },
+                    new Day() { Id = 7, Name = "Fri" }
+                    );
+            });
+
+
+            ///Room
+            modelBuilder.Entity<Room>(entity =>
+            {
+                entity.HasIndex(x => x.Name).IsUnique();
+                entity.HasData(
+                    new Room() { Id = 1, Name = "A-101" },
+                    new Room() { Id = 2, Name = "A-102" },
+                    new Room() { Id = 3, Name = "B-101" },
+                    new Room() { Id = 4, Name = "B-102" },
+                    new Room() { Id = 5, Name = "C-101" },
+                    new Room() { Id = 6, Name = "C-102" },
+                    new Room() { Id = 7, Name = "D-101" },
+                    new Room() { Id = 8, Name = "D-102" }
+                    );
+            });
+
+            ///RoomAllocation
+          /*  modelBuilder.Entity<RoomAllocation>(entity =>
+            {
+                entity.HasKey(x => new { x.DayId, x.RoomId, x.StartTime, x.EndTime });
+                entity.HasIndex(x => x.ScheduleInfo).IsUnique();
+                entity.HasIndex(p => p.Department)
+
+                      .WithMany(c => c.Products)
+                      .HasForeignKey(p => new { p.CategoryId1, p.CategoryId2 });
+                entity.HasData(
+                    new Teacher() { Id = 1, Name = "Ezaz Raihan", Address = "fjdsf", Email = "saif@gmail.com", Contact = 123445, DesignationId = 2, CreditTaken = 3, RemainingCredit = 97, DepartmentId = 2 },
+                    new Teacher() { Id = 2, Name = "Ashek", Address = "adafsf", Email = "ashek@gmail.com", Contact = 12312445, DesignationId = 1, CreditTaken = 30, RemainingCredit = 70, DepartmentId = 2 }
+
+                    );
+            });*/
 
         }
     }
