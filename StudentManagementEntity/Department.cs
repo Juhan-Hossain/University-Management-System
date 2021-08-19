@@ -12,12 +12,21 @@ namespace StudentManagementEntity
         public Department()
         {
             Students = new HashSet<Student>();
+            Courses = new HashSet<Course>();
+            Teachers = new HashSet<Teacher>();
         }
         public int Id { get; set; }
         [Required(ErrorMessage = "Name field must be filled")]
         public string Name { get; set; }
         [Required(ErrorMessage = "You must given an valid Department Code")]
         public string Code { get; set; }
-        public ICollection<Student>? Students { get; set; } = null;
+        public ICollection<Student> Students { get; set; }
+        public ICollection<Course> Courses { get; set; }
+
+        public ICollection<Teacher> Teachers { get; set; }
+      /*  public virtual ICollection<RoomAllocation> RoomAllocations { get; set; }*/
+
+
+
     }
 }
