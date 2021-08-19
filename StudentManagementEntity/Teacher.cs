@@ -13,8 +13,6 @@ namespace StudentManagementEntity
         public Teacher()
         {
             Courses = new HashSet<Course>();
-            Departments = new HashSet<Department>();
-            Designations = new HashSet<Designation>();
         }
         public int Id { get; set; }
         [Required(ErrorMessage = "Field must be given")]
@@ -46,8 +44,6 @@ namespace StudentManagementEntity
         public virtual Designation? Designation { get; set; }
 
         public virtual ICollection<Course> Courses { get; set; }
-        public virtual ICollection<Department> Departments { get; set; }
-        public virtual ICollection<Designation> Designations { get; set; }
 
     }
 }

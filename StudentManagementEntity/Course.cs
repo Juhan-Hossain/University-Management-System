@@ -11,10 +11,9 @@ namespace StudentManagementEntity
 {
     public class Course
     {
-      
-        [Required(ErrorMessage = "There must be a Course Code\nSample: CSE-***")]        
+        [Required(ErrorMessage = "There must be a Course Code\nSample: CSE-***")]
         public String Code { get; set; }
-        [Required(ErrorMessage = "There must be a Course Name")]        
+        [Required(ErrorMessage = "There must be a Course Name")]
         public String Name { get; set; }
         [Required(ErrorMessage = "Credit Field Must Be Filled")]
         public float Credit { get; set; }
@@ -32,6 +31,8 @@ namespace StudentManagementEntity
         public Semester? Semester { get; set; }
         public Department? CourseDepartment { get; set; }
         public Teacher? Teacher { get; set; }
+
+        public virtual ICollection<RoomAllocation> RoomAllocations { get; set; }
 
 
 
