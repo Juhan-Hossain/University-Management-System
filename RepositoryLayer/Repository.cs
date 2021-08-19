@@ -80,9 +80,9 @@ namespace RepositoryLayer
             var serviceResponse = new ServiceResponse<TEntity>();
             try
             {
-
-                unit.GetType().GetProperty("Id")?.SetValue(unit, 0);
+                
                 serviceResponse.Data = unit;
+
                
                      _dbContext.Set<TEntity>().Add(serviceResponse.Data);
                      _dbContext.SaveChanges();
@@ -166,30 +166,8 @@ namespace RepositoryLayer
         {
             var ServiceResponse = new ServiceResponse<TEntity>();
 
-            try
-            {
-                ServiceResponse.Data = _dbContext.Set<TEntity>().Find(id);
-                if(ServiceResponse.Data==null)
-                {
-                    ServiceResponse.Message = $"{id} no id do not found to delete ";
-                    ServiceResponse.Success = false;
-                }
-                else
-                {
-                    _dbContext.Set<TEntity>().Remove(ServiceResponse.Data);
-                    _dbContext.SaveChanges();
-                    ServiceResponse.Message = "Deleting details by id";
-                }
-            }
-            catch (Exception)
-            {
-                ServiceResponse.Message = $"{id} no id is a bad request ";
-                ServiceResponse.Success = false;
-            }
-            
-            
-            return ServiceResponse;
-            
+            throw new NotImplementedException();
+
         }   
        
     }

@@ -21,8 +21,8 @@ namespace University_Student_Management.Controllers
         }
 
 
-        [HttpPost]
-        public ActionResult<ServiceResponse<Department>> PostDepartment([FromBody] Department department)
+        [HttpPost("CreateDepartment")]
+        public ActionResult<ServiceResponse<Department>> CreateDepartment([FromBody] Department department)
         {
             /*department.Id = 0;*/
             var serviceResponse = _service.AddDetails(department);

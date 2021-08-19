@@ -24,7 +24,7 @@ namespace StudentManagementEntity
         public ICollection<Course> Courses { get; set; }
 
         public ICollection<Teacher> Teachers { get; set; }
-        public virtual ICollection<RoomAllocation> RoomAllocations { get; set; }
+      /*  public virtual ICollection<RoomAllocation> RoomAllocations { get; set; }*/
 
 
 

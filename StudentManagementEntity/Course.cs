@@ -32,7 +32,7 @@ namespace StudentManagementEntity
         public Department? CourseDepartment { get; set; }
         public Teacher? Teacher { get; set; }
 
-        public virtual ICollection<RoomAllocation> RoomAllocations { get; set; }
+        /*public virtual ICollection<RoomAllocation> RoomAllocations { get; set; }*/
 
 
 

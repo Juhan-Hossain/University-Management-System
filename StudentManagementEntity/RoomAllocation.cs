@@ -12,8 +12,8 @@ namespace StudentManagementEntity
     {
         public RoomAllocation()
         {
-            Courses = new HashSet<Course>();
-            Departments = new HashSet<Department>();
+            /*Courses = new HashSet<Course>();
+            Departments = new HashSet<Department>();*/
             Days = new HashSet<Day>();
         }
 
@@ -47,8 +47,8 @@ namespace StudentManagementEntity
         public Room? Room { set; get; }
         public Day? Day { set; get; }
 
-        public virtual ICollection<Course> Courses { get; set; }
-        public virtual ICollection<Department> Departments { get; set; }
+        /*public virtual ICollection<Course> Courses { get; set; }
+        public virtual ICollection<Department> Departments { get; set; }*/
         public virtual ICollection<Day> Days { get; set; }
 
         public string? ScheduleInfo { get; set; }
