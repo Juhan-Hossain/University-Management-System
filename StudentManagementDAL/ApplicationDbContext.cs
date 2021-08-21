@@ -99,10 +99,10 @@ namespace StudentManagementDAL
             //Course
             modelBuilder.Entity<Course>(entity =>
             {
-                /*entity.HasOne(x => x.CourseDepartments).WithMany(x => x.Courses);
-                entity.HasOne(x => x.Teacher).WithMany(x => x.Courses);*/
+                entity.HasOne(x => x.Department).WithMany(x => x.Courses);
+                entity.HasOne(x => x.Teacher).WithMany(x => x.Courses);
 
-                
+
                 entity.Property(x => x.Name).IsRequired();
                 entity.HasIndex(x => x.Name).IsUnique();
                 entity.Property(x => x.Code).HasMaxLength(9);

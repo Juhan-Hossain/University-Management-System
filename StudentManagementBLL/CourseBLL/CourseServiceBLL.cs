@@ -111,7 +111,7 @@ namespace StudentManagementBLL.CourseBLL
             try
             {
                 serviceResponse.Data = _dbContext.Courses
-                    .Include(x => x.DepartmentId)
+                    .Include(x => x.Department)
                     .Where(x => x.DepartmentId == departmentId).ToList();
 
                 serviceResponse.Message = "Data  with the given id was fetched successfully from the database";
