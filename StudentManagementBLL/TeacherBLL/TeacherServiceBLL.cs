@@ -23,8 +23,7 @@ namespace StudentManagementBLL.TeacherBLL
 
             try
             {
-                var newId = teacher.Id;
-                teacher.Id = 0;
+                teacher.RemainingCredit = teacher.CreditToBeTaken;
                 serviceResponse.Data = teacher;
                 _dbContext.Teachers.Add(serviceResponse.Data);
                 _dbContext.SaveChanges();
