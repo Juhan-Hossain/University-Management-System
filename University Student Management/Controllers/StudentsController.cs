@@ -24,8 +24,9 @@ namespace University_Student_Management.Controllers
 
         public ActionResult<ServiceResponse<Student>> CreateStudent(Student student)
         {
+            
 
-            var serviceResponse = _service.AddDetails(student);
+            var serviceResponse = _service.Add(student);
             if (serviceResponse.Success == false) return BadRequest(serviceResponse);
             return Ok(serviceResponse);
         }

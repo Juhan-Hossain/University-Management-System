@@ -23,7 +23,7 @@ namespace RepositoryLayer
         }
 
         //GetAll
-        public virtual ServiceResponse<IEnumerable<TEntity>> GetDetailsAll()
+        public virtual ServiceResponse<IEnumerable<TEntity>> GetAll()
         {
             var serviceResponse = new ServiceResponse<IEnumerable<TEntity>>();
             try
@@ -43,7 +43,7 @@ namespace RepositoryLayer
 
 
         //GetById
-        public virtual ServiceResponse<TEntity> GetDetailsById(int? id)
+        public virtual ServiceResponse<TEntity> GetById(int? id)
         {
             var serviceResponse = new ServiceResponse<TEntity>();
             try
@@ -75,7 +75,7 @@ namespace RepositoryLayer
         }
 
         //ADD
-        public virtual ServiceResponse<TEntity> AddDetails(TEntity unit)
+        public virtual ServiceResponse<TEntity> Add(TEntity unit)
         {
             var serviceResponse = new ServiceResponse<TEntity>();
             try
@@ -100,7 +100,7 @@ namespace RepositoryLayer
 
 
         //UpdateDetails
-        public virtual ServiceResponse<TEntity> UpdateDetails(TEntity unit)
+        public virtual ServiceResponse<TEntity> Update(TEntity unit)
         {
             var serviceResponse = new ServiceResponse<TEntity>();
             try
@@ -122,7 +122,7 @@ namespace RepositoryLayer
         }
 
         //UpdateDetails
-        public virtual ServiceResponse<TEntity> UpdateDetails(int id, TEntity unit)
+        public virtual ServiceResponse<TEntity> Update(int id, TEntity unit)
         {
             var serviceResponse = new ServiceResponse<TEntity>();
             //from stackoverflow
@@ -151,7 +151,7 @@ namespace RepositoryLayer
 
 
 
-        public virtual ServiceResponse<TEntity> DeleteDetails(TEntity unit)
+        public virtual ServiceResponse<TEntity> Delete(TEntity unit)
         {
             var ServiceResponse = new ServiceResponse<TEntity>();
             throw new NotImplementedException();
@@ -162,7 +162,7 @@ namespace RepositoryLayer
 
 
 
-        public virtual ServiceResponse<TEntity> DeleteDetailsConfirmedById(int id)
+        public virtual ServiceResponse<TEntity> DeleteById(int id)
         {
             var ServiceResponse = new ServiceResponse<TEntity>();
 

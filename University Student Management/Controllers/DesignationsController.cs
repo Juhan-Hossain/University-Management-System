@@ -26,7 +26,7 @@ namespace University_Student_Management.Controllers
         public ActionResult<ServiceResponse<Designation>> PostDesignation(Designation designation)
         {
             designation.Id = 0;
-            var serviceResponse = _service.AddDetails(designation);
+            var serviceResponse = _service.Add(designation);
             if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
             return Ok(serviceResponse);
         }

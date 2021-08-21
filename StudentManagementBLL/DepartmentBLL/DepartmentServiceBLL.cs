@@ -16,7 +16,7 @@ namespace StudentManagementBLL.DepartmentBLL
 
         }
 
-        public override ServiceResponse<Department> AddDetails(Department department)
+        public override ServiceResponse<Department> Add(Department department)
         {
             var serviceResponse = new ServiceResponse<Department>();
 

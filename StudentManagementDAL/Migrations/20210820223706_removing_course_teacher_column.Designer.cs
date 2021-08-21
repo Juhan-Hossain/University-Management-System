@@ -3,21 +3,38 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagementDAL;
 
 namespace StudentManagementDAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210820223706_removing_course_teacher_column")]
+    partial class removing_course_teacher_column
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("CourseTeacher", b =>
+                {
+                    b.Property<int>("CourseTeacherId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CoursesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CourseTeacherId", "CoursesId");
+
+                    b.HasIndex("CoursesId");
+
+                    b.ToTable("CourseTeacher");
+                });
 
             modelBuilder.Entity("StudentManagementEntity.Course", b =>
                 {
@@ -49,12 +66,7 @@ namespace StudentManagementDAL.Migrations
                     b.Property<int?>("SemesterId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TeacherId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("TeacherId");
 
                     b.ToTable("Courses");
                 });
@@ -305,6 +317,9 @@ namespace StudentManagementDAL.Migrations
                     b.Property<int>("ContactNumber")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CourseId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -313,28 +328,21 @@ namespace StudentManagementDAL.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RegistrationNumber")
-                        .HasColumnType("nvarchar(450)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ContactNumber")
-                        .IsUnique();
+                    b.HasIndex("CourseId");
 
                     b.HasIndex("DepartmentId");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.HasIndex("RegistrationNumber")
-                        .IsUnique()
-                        .HasFilter("[RegistrationNumber] IS NOT NULL");
 
                     b.ToTable("Students");
                 });
@@ -446,11 +454,19 @@ namespace StudentManagementDAL.Migrations
                     b.ToTable("Teachers");
                 });
 
-            modelBuilder.Entity("StudentManagementEntity.Course", b =>
+            modelBuilder.Entity("CourseTeacher", b =>
                 {
                     b.HasOne("StudentManagementEntity.Teacher", null)
-                        .WithMany("Courses")
-                        .HasForeignKey("TeacherId");
+                        .WithMany()
+                        .HasForeignKey("CourseTeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StudentManagementEntity.Course", null)
+                        .WithMany()
+                        .HasForeignKey("CoursesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("StudentManagementEntity.CourseAssignment", b =>
@@ -483,7 +499,7 @@ namespace StudentManagementDAL.Migrations
                         .IsRequired();
 
                     b.HasOne("StudentManagementEntity.Student", "Student")
-                        .WithMany("CoursesEnrolled")
+                        .WithMany()
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -520,11 +536,17 @@ namespace StudentManagementDAL.Migrations
 
             modelBuilder.Entity("StudentManagementEntity.Student", b =>
                 {
+                    b.HasOne("StudentManagementEntity.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId");
+
                     b.HasOne("StudentManagementEntity.Department", "Department")
                         .WithMany()
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Course");
 
                     b.Navigation("Department");
                 });
@@ -547,16 +569,6 @@ namespace StudentManagementDAL.Migrations
             modelBuilder.Entity("StudentManagementEntity.Course", b =>
                 {
                     b.Navigation("RoomAllocationList");
-                });
-
-            modelBuilder.Entity("StudentManagementEntity.Student", b =>
-                {
-                    b.Navigation("CoursesEnrolled");
-                });
-
-            modelBuilder.Entity("StudentManagementEntity.Teacher", b =>
-                {
-                    b.Navigation("Courses");
                 });
 #pragma warning restore 612, 618
         }

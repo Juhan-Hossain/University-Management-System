@@ -16,32 +16,37 @@ namespace StudentManagementBLL.StudentBLL
 
         }
 
-        public override ServiceResponse<Student> AddDetails(Student student)
+        
+        public override ServiceResponse<Student> Add(Student student)
         {
             var serviceResponse = new ServiceResponse<Student>();
 
             try
             {
-                var newid =student.Id ;
-                student.Id = 0;
+               
 
-                //finding corresponding department for code
-                var adepartment = _dbContext.Departments.Find(student.DepartmentId);
+                 //finding corresponding department for code
+                 var adepartment = _dbContext.Departments.Find(student.DepartmentId);
                 
-                var newstudent = new Student();
-                newstudent = student;
                 
+                var count = _dbContext.Students.Count();
+                count++;
                 //adding registration number for new student
-                newstudent.RegistrationNumber = $"{adepartment.Code}-{student.Date.Date.Year}-{newid}";
-                serviceResponse.Data = newstudent;
-                _dbContext.Students.Add(newstudent);
+                if (count<10) student.RegistrationNumber = $"{adepartment.Code}-{student.Date.Date.Year}-00{count}";
+                else if (count >= 10 && count<100) student.RegistrationNumber = $"{adepartment.Code}-{student.Date.Date.Year}-0{count}";
+                else if(count>=100) student.RegistrationNumber = $"{adepartment.Code}-{student.Date.Date.Year}-{count}";
+
+
+                serviceResponse.Data = student;
+                _dbContext.Students.Add(student);
                 _dbContext.SaveChanges();
+                 
                 
                 serviceResponse.Message = "Student created successfully in DB";
             }
             catch (Exception exception)
             {
-                serviceResponse.Message = $"Storing action failed in the database for given student\n" +
+                serviceResponse.Message = $"Storing student failed in the database for given student\n" +
                     $"Error Message: {exception.Message}";
                 serviceResponse.Success = false;
             }
