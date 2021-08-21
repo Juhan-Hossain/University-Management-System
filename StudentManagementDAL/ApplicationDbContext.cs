@@ -48,6 +48,12 @@ namespace StudentManagementDAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
+            //CourseAssignment:
+            modelBuilder.Entity<CourseAssignment>(entity =>
+            {
+                entity.HasIndex(x => x.Code).IsUnique();
+            });
+
 
             //Student
             modelBuilder.Entity<Student>(entity =>

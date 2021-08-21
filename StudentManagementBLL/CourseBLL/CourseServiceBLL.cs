@@ -63,7 +63,7 @@ namespace StudentManagementBLL.CourseBLL
         
 
 
-
+        //GetCoursesByDept:
         public ServiceResponse<IEnumerable<Course>> GetCourseByDepartment(int departmentId)
         {
             var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
@@ -72,6 +72,48 @@ namespace StudentManagementBLL.CourseBLL
                 serviceResponse.Data = _dbContext.Courses
                     .Include(x => x.Department)
                     .Where(x => x.DepartmentId == departmentId).ToList();
+
+                serviceResponse.Message = "Data  with the given id was fetched successfully from the database";
+            }
+            catch (Exception exception)
+            {
+
+                serviceResponse.Message = "Some error occurred while fetching data.\nError message: " + exception.Message;
+                serviceResponse.Success = false;
+            }
+            return serviceResponse;
+        }
+
+
+        //ViewCourseByDept:
+        public ServiceResponse<IEnumerable<Course>> ViewCourseByDepartment(int departmentId)
+        {
+            var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
+            try
+            {
+                var data = new List<Course>();
+                var courses = _dbContext.Courses;
+                foreach (Course course in courses)
+                {
+                    if (course.DepartmentId == departmentId)
+                    {
+                        if (course.AssignTo != null)
+                        {
+                            data.Add(course);
+                        }
+                        else
+                        {
+                            course.AssignTo = "Not Assigned Yet!";
+                            data.Add(course);
+                        }
+                    }
+
+                }
+                serviceResponse.Data = data;
+
+                /*serviceResponse.Data = _dbContext.Courses
+                    .Include(x => x.Department)
+                    .Where(x => x.DepartmentId == departmentId).ToList();*/
 
                 serviceResponse.Message = "Data  with the given id was fetched successfully from the database";
             }
