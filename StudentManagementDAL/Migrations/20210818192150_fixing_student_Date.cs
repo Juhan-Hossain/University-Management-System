@@ -2,7 +2,7 @@
 
 namespace StudentManagementDAL.Migrations
 {
-    public partial class fixing_Course : Migration
+    public partial class fixing_student_Date : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

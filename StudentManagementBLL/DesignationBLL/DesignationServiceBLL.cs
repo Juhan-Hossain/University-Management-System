@@ -15,5 +15,26 @@ namespace StudentManagementBLL.DesignationBLL
         {
 
         }
+
+        public override ServiceResponse<Designation> AddDetails(Designation designation)
+        {
+            var serviceResponse = new ServiceResponse<Designation>();
+
+            try
+            {
+                designation.Id = 0;
+                serviceResponse.Data = designation;
+                _dbContext.Designations.Add(serviceResponse.Data);
+                _dbContext.SaveChanges();
+                serviceResponse.Message = "Designation created successfully in DB";
+            }
+            catch (Exception exception)
+            {
+                serviceResponse.Message = $"Storing action failed in the database for given designation\n" +
+                    $"Error Message: {exception.Message}";
+                serviceResponse.Success = false;
+            }          
+            return serviceResponse;
+        }
     }
 }

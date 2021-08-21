@@ -80,8 +80,10 @@ namespace RepositoryLayer
             var serviceResponse = new ServiceResponse<TEntity>();
             try
             {
-                      
-                      serviceResponse.Data = unit;
+                
+                serviceResponse.Data = unit;
+
+               
                      _dbContext.Set<TEntity>().Add(serviceResponse.Data);
                      _dbContext.SaveChanges();
                     serviceResponse.Message = "Unit created successfully in DB";
@@ -123,8 +125,9 @@ namespace RepositoryLayer
         public virtual ServiceResponse<TEntity> UpdateDetails(int id, TEntity unit)
         {
             var serviceResponse = new ServiceResponse<TEntity>();
+            //from stackoverflow
             int UnitId = (int)unit.GetType().GetProperty("Id").GetValue(unit);
-
+            
             var p = _dbContext.Set<TEntity>().Find(id);
             if (id != UnitId)
             {
@@ -163,30 +166,8 @@ namespace RepositoryLayer
         {
             var ServiceResponse = new ServiceResponse<TEntity>();
 
-            try
-            {
-                ServiceResponse.Data = _dbContext.Set<TEntity>().Find(id);
-                if(ServiceResponse.Data==null)
-                {
-                    ServiceResponse.Message = $"{id} no id do not found to delete ";
-                    ServiceResponse.Success = false;
-                }
-                else
-                {
-                    _dbContext.Set<TEntity>().Remove(ServiceResponse.Data);
-                    _dbContext.SaveChanges();
-                    ServiceResponse.Message = "Deleting details by id";
-                }
-            }
-            catch (Exception)
-            {
-                ServiceResponse.Message = $"{id} no id is a bad request ";
-                ServiceResponse.Success = false;
-            }
-            
-            
-            return ServiceResponse;
-            
+            throw new NotImplementedException();
+
         }   
        
     }
