@@ -30,12 +30,12 @@ namespace University_Student_Management.Controllers
         }
 
 
-        [HttpPost("CourseAssignment")]
+        [HttpPost("CreateCourseAssignment")]
 
         public ActionResult<ServiceResponse<CourseAssignment>> CourseAssignment([FromBody] CourseAssignment body)
         {
 
-            var coursekeyresponse = _service.GetByCompositeKey(body.DepartmentId, body.Code, body.TeacherId);
+            var coursekeyresponse = _service.AssignCourseToTeacher(body.DepartmentId, body.Code, body.TeacherId);
 
             //checking if a teacher can be assigned to a course
            /* if (!coursekeyresponse.Success || coursekeyresponse.Data == null )

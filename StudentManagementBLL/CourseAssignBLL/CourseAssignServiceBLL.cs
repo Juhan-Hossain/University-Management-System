@@ -16,7 +16,7 @@ namespace StudentManagementBLL.CourseAssignBLL
 
         }
         //validates the fact of course assignment
-        public virtual ServiceResponse<CourseAssignment> GetByCompositeKey(int departmentId, string CourseCode, int teacherId)
+        public virtual ServiceResponse<CourseAssignment> AssignCourseToTeacher(int departmentId, string CourseCode, int teacherId)
         {
             var serviceResponse = new ServiceResponse<CourseAssignment>();
             try
@@ -107,42 +107,7 @@ namespace StudentManagementBLL.CourseAssignBLL
                     _dbContext.CourseAssignments.Update(serviceResponse.Data);
                     _dbContext.SaveChanges();
                 }
-                /* else
-                     {
-                         *//*//Checking remaining credit
-                         *//*Teacher aTeacher = _dbContext.Teachers.Find(t => t.Id == teacherId);
-                         Course aCourse = _dbContext.Courses.FirstOrDefault(c => c.Id == cid);*//*
-                         CourseAssignment aCourseAssignment = new CourseAssignment();
-                         if (fetchingTeacher.RemainingCredit >= fetchingCourse.Credit)
-                         {
-                         fetchingTeacher.RemainingCredit -= fetchingCourse.Credit;
-                         fetchingTeacher.CreditToBeTaken += fetchingCourse.Credit;
-
-                         fetchingCourse.AssignTo = fetchingTeacher.Name;
-                         fetchingCourse.TeacherId = fetchingTeacher.Id;
-
-                         aCourseAssignment.TeacherId = teacherId;
-                         aCourseAssignment.DepartmentId = departmentId;
-                         aCourseAssignment.CourseId = fetchingCourse.Id;
-                         aCourseAssignment.IsAssigned = true;
-                         aCourseAssignment.Code = CourseCode;
-
-
-                         _dbContext.CourseAssignments.Add( aCourseAssignment);
-                         serviceResponse.Data = aCourseAssignment;
-                         serviceResponse.Success = true;
-
-                          serviceResponse.Message = $"{fetchingTeacher.Name} will start taking {fetchingCourse.Code}" +
-                             $": {fetchingCourse.Name}";
-                         }
-                         else
-                         {
-                             serviceResponse.Message = $"{fetchingTeacher.Name} does not have Remaining" +
-                             $" Credit to take {fetchingCourse.Code}: {fetchingCourse.Name}";
-                             serviceResponse.Success = false;
-                         }*//*
-
-                     }*/
+                
             }
             catch (Exception exception)
             {
@@ -151,5 +116,9 @@ namespace StudentManagementBLL.CourseAssignBLL
             }
             return serviceResponse;
         }
+
+       
+
+
     }
 }
