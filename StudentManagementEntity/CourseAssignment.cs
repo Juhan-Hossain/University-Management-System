@@ -16,17 +16,17 @@ namespace StudentManagementEntity
         
 
         public int DepartmentId { get; set; }
-        
+
 
         public int TeacherId { get; set; }
 
-        public int CourseId { get; set; }
+        public int? CourseId { get; set; }
 
         public bool IsAssigned { get; set; } = false;
 
         [NotMapped]
         public bool IsValidOperation { get; set; } = false;
-
+        [Required]
         public string Code { get; set; }
         /*public virtual Teacher Teacher { get; set; }
         public virtual Course Course { get; set; }
