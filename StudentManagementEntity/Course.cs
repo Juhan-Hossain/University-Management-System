@@ -31,17 +31,20 @@ namespace StudentManagementEntity
         public float Credit { get; set; }
         public String Description { get; set; }
 
-   /*     [ForeignKey("Semester")]*/
+        [ForeignKey("Semester")]
         public int? SemesterId { get; set; }
 
+       /* [ForeignKey("Teacher")]
+        public int? TeacherId { get; set; }*/
 
-/*        [ForeignKey("Department")]*/
+
+        [ForeignKey("Department")]
         public int? DepartmentId { get; set; }
 
         public virtual String AssignTo { get; set; }
 
 
-        /*public virtual ICollection<Teacher> CourseTeacher { get; set; }*/
+      /*  public virtual Teacher Teacher { get; set; }*/
 
         public virtual ICollection<RoomAllocation> RoomAllocationList { get; set; }
 

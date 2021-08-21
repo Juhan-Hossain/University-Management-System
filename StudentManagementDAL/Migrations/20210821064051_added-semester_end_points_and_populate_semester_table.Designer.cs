@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagementDAL;
 
 namespace StudentManagementDAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210821064051_added-semester_end_points_and_populate_semester_table")]
+    partial class addedsemester_end_points_and_populate_semester_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,30 +23,30 @@ namespace StudentManagementDAL.Migrations
 
             modelBuilder.Entity("StudentManagementEntity.Course", b =>
                 {
-                    b.Property<string>("Code")
-                        .HasMaxLength(9)
-                        .HasColumnType("nvarchar(9)");
-
-                    b.Property<int?>("DepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("AssignTo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float>("Credit")
-                        .HasColumnType("real");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AssignTo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Credit")
+                        .HasColumnType("real");
+
+                    b.Property<int?>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("SemesterId")
                         .HasColumnType("int");
@@ -52,53 +54,11 @@ namespace StudentManagementDAL.Migrations
                     b.Property<int?>("TeacherId")
                         .HasColumnType("int");
 
-                    b.HasKey("Code", "DepartmentId");
-
-                    b.HasIndex("Code")
-                        .IsUnique();
-
-                    b.HasIndex("Name")
-                        .IsUnique();
+                    b.HasKey("Id");
 
                     b.HasIndex("TeacherId");
 
                     b.ToTable("Courses");
-
-                    b.HasCheckConstraint("CHK_LengthOfCodeOfCourse", "LEN(Code) >= 5");
-
-                    b.HasCheckConstraint("CHK_CreditRangeOfCourse", "Credit BETWEEN 0.5 AND 5.0");
-
-                    b.HasData(
-                        new
-                        {
-                            Code = "CSE-1102",
-                            DepartmentId = 2,
-                            Credit = 3f,
-                            Description = "",
-                            Id = 0,
-                            Name = "C Lab",
-                            SemesterId = 1
-                        },
-                        new
-                        {
-                            Code = "CSE-1103",
-                            DepartmentId = 2,
-                            Credit = 3f,
-                            Description = "",
-                            Id = 0,
-                            Name = "C++",
-                            SemesterId = 1
-                        },
-                        new
-                        {
-                            Code = "CSE-1104",
-                            DepartmentId = 2,
-                            Credit = 1.5f,
-                            Description = "",
-                            Id = 0,
-                            Name = "C++ Lab",
-                            SemesterId = 1
-                        });
                 });
 
             modelBuilder.Entity("StudentManagementEntity.CourseAssignment", b =>
@@ -110,12 +70,6 @@ namespace StudentManagementDAL.Migrations
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CourseCode")
-                        .HasColumnType("nvarchar(9)");
-
-                    b.Property<int?>("CourseDepartmentId")
-                        .HasColumnType("int");
 
                     b.Property<int?>("CourseId")
                         .HasColumnType("int");
@@ -131,11 +85,11 @@ namespace StudentManagementDAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CourseId");
+
                     b.HasIndex("DepartmentId");
 
                     b.HasIndex("TeacherId");
-
-                    b.HasIndex("CourseCode", "CourseDepartmentId");
 
                     b.ToTable("CourseAssignments");
                 });
@@ -146,13 +100,6 @@ namespace StudentManagementDAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CourseCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(9)");
-
-                    b.Property<int>("CourseDepartmentId")
-                        .HasColumnType("int");
 
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
@@ -174,9 +121,9 @@ namespace StudentManagementDAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("CourseId");
 
-                    b.HasIndex("CourseCode", "CourseDepartmentId");
+                    b.HasIndex("StudentId");
 
                     b.ToTable("CourseEnrolls");
                 });
@@ -290,13 +237,6 @@ namespace StudentManagementDAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CourseCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(9)");
-
-                    b.Property<int>("CourseDepartmentId")
-                        .HasColumnType("int");
-
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
@@ -328,11 +268,11 @@ namespace StudentManagementDAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CourseId");
+
                     b.HasIndex("DepartmentId");
 
                     b.HasIndex("RoomId");
-
-                    b.HasIndex("CourseCode", "CourseDepartmentId");
 
                     b.ToTable("RoomAllocations");
                 });
@@ -346,13 +286,9 @@ namespace StudentManagementDAL.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Id");
-
-                    b.HasIndex("Name");
 
                     b.ToTable("Semesters");
 
@@ -563,6 +499,10 @@ namespace StudentManagementDAL.Migrations
 
             modelBuilder.Entity("StudentManagementEntity.CourseAssignment", b =>
                 {
+                    b.HasOne("StudentManagementEntity.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId");
+
                     b.HasOne("StudentManagementEntity.Department", "Department")
                         .WithMany()
                         .HasForeignKey("DepartmentId");
@@ -570,10 +510,6 @@ namespace StudentManagementDAL.Migrations
                     b.HasOne("StudentManagementEntity.Teacher", "Teacher")
                         .WithMany()
                         .HasForeignKey("TeacherId");
-
-                    b.HasOne("StudentManagementEntity.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseCode", "CourseDepartmentId");
 
                     b.Navigation("Course");
 
@@ -584,15 +520,15 @@ namespace StudentManagementDAL.Migrations
 
             modelBuilder.Entity("StudentManagementEntity.CourseEnroll", b =>
                 {
-                    b.HasOne("StudentManagementEntity.Student", "Student")
-                        .WithMany("CoursesEnrolled")
-                        .HasForeignKey("StudentId")
+                    b.HasOne("StudentManagementEntity.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("StudentManagementEntity.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseCode", "CourseDepartmentId")
+                    b.HasOne("StudentManagementEntity.Student", "Student")
+                        .WithMany("CoursesEnrolled")
+                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -603,6 +539,12 @@ namespace StudentManagementDAL.Migrations
 
             modelBuilder.Entity("StudentManagementEntity.RoomAllocation", b =>
                 {
+                    b.HasOne("StudentManagementEntity.Course", "Course")
+                        .WithMany("RoomAllocationList")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("StudentManagementEntity.Department", "Department")
                         .WithMany()
                         .HasForeignKey("DepartmentId");
@@ -610,12 +552,6 @@ namespace StudentManagementDAL.Migrations
                     b.HasOne("StudentManagementEntity.Room", "Room")
                         .WithMany()
                         .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("StudentManagementEntity.Course", "Course")
-                        .WithMany("RoomAllocationList")
-                        .HasForeignKey("CourseCode", "CourseDepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -97,11 +97,11 @@ namespace StudentManagementDAL
              });*/
 
             //Course
-            /*modelBuilder.Entity<Course>(entity =>
+            modelBuilder.Entity<Course>(entity =>
             {
-               *//* entity.HasOne(x => x.CourseDepartments).WithMany(x => x.Courses);
-                entity.HasOne(x => x.Teacher).WithMany(x => x.Courses);*//*
-                
+                /*entity.HasOne(x => x.CourseDepartments).WithMany(x => x.Courses);
+                entity.HasOne(x => x.Teacher).WithMany(x => x.Courses);*/
+
                 
                 entity.Property(x => x.Name).IsRequired();
                 entity.HasIndex(x => x.Name).IsUnique();
@@ -110,13 +110,13 @@ namespace StudentManagementDAL
                 entity.HasKey(x => new { x.Code, x.DepartmentId }); //setting code & departmentId as composite key
                 entity.HasCheckConstraint("CHK_LengthOfCodeOfCourse", "LEN(Code) >= 5");
                 entity.HasCheckConstraint("CHK_CreditRangeOfCourse", "Credit BETWEEN 0.5 AND 5.0");
-                *//*entity.HasData(
-                    new Course() { Code = "CSE-0101", DepartmentId = 2, Name = "C", Credit = 3, Description = "", TeacherId = 1 },
-                    new Course() { Code = "CSE-0102", DepartmentId = 2, Name = "C++", Credit = 3, Description = "", TeacherId = 1 },
-                    new Course() { Code = "CSE-0103", DepartmentId = 2, Name = "Compiler", Credit = 3, Description = "", TeacherId = 1 }
+                entity.HasData(
+                    new Course() { Code = "CSE-1102", DepartmentId = 2, Name = "C Lab", Credit = 3, Description = "", SemesterId = 1 },
+                    new Course() { Code = "CSE-1103", DepartmentId = 2, Name = "C++", Credit = 3, Description = "", SemesterId = 1 },
+                    new Course() { Code = "CSE-1104", DepartmentId = 2, Name = "C++ Lab", Credit = 1.5F, Description = "", SemesterId = 1 }
 
-                    );*//*
-            });*/
+                    );
+            });
 
             //Teacher
             /* modelBuilder.Entity<Teacher>(entity =>
@@ -136,21 +136,21 @@ namespace StudentManagementDAL
              });*/
 
             //Semester
-            /* modelBuilder.Entity<Semester>(entity =>
-             {
-                 entity.HasKey(x => x.Id);
-                 entity.Property(x => x.Name);
-                 entity.HasData(
-                     new Semester { Id = 1, Name = "1st" },
-                     new Semester { Id = 2, Name = "2nd" },
-                     new Semester { Id = 3, Name = "3rd" },
-                     new Semester { Id = 4, Name = "4th" },
-                     new Semester { Id = 5, Name = "5th" },
-                     new Semester { Id = 6, Name = "6th" },
-                     new Semester { Id = 7, Name = "7th" },
-                     new Semester { Id = 8, Name = "8th" }
-                 );
-             });*/
+            modelBuilder.Entity<Semester>(entity =>
+            {
+                entity.HasIndex(x => x.Id);
+                entity.HasIndex(x => x.Name);
+                entity.HasData(
+                    new Semester { Id = 1, Name = "1st" },
+                    new Semester { Id = 2, Name = "2nd" },
+                    new Semester { Id = 3, Name = "3rd" },
+                    new Semester { Id = 4, Name = "4th" },
+                    new Semester { Id = 5, Name = "5th" },
+                    new Semester { Id = 6, Name = "6th" },
+                    new Semester { Id = 7, Name = "7th" },
+                    new Semester { Id = 8, Name = "8th" }
+                );
+            });
 
             /// Day
             /* modelBuilder.Entity<Day>(entity =>

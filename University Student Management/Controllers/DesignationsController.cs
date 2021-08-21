@@ -22,6 +22,21 @@ namespace University_Student_Management.Controllers
 
 
 
+     
+
+        // GET: api/Teachers:All
+        [HttpGet("GetDesignations")]
+        public ActionResult<ServiceResponse<IEnumerable<Designation>>> GetDesignations()
+        {
+            var serviceResponse = _service.GetAll();
+            if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
+            return Ok(serviceResponse);
+        }
+
+
+
+
+
         [HttpPost]
         public ActionResult<ServiceResponse<Designation>> PostDesignation(Designation designation)
         {

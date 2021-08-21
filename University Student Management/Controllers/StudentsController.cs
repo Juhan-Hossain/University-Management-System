@@ -31,5 +31,14 @@ namespace University_Student_Management.Controllers
             return Ok(serviceResponse);
         }
 
+
+        [HttpGet("GetStudents")]
+        public ActionResult<ServiceResponse<IEnumerable<Student>>> GetStudents()
+        {
+            var serviceResponse = _service.GetAll();
+            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
+            return Ok(serviceResponse);
+        }
+
     }
 }
