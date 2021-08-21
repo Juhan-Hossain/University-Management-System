@@ -11,5 +11,6 @@ namespace StudentManagementBLL.CourseBLL
    public interface ICourseServiceBLL : IRepository<Course>
    {
         public ServiceResponse<IEnumerable<Course>> GetCourseByDepartment(int departmentId);
+        public ServiceResponse<IEnumerable<Course>> ViewCourseByDepartment(int departmentId);
     }
 }
