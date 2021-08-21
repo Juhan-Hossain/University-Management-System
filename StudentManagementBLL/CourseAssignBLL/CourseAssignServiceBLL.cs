@@ -9,24 +9,45 @@ using System.Threading.Tasks;
 
 namespace StudentManagementBLL.CourseAssignBLL
 {
-    public class CourseAssignServiceBLL:Repository<CourseAssignment,ApplicationDbContext>,ICourseAssignServiceBLL
+    public class CourseAssignServiceBLL : Repository<CourseAssignment, ApplicationDbContext>, ICourseAssignServiceBLL
     {
-        public CourseAssignServiceBLL(ApplicationDbContext dbContext):base(dbContext) 
+        public CourseAssignServiceBLL(ApplicationDbContext dbContext) : base(dbContext)
         {
 
         }
         //validates the fact of course assignment
-        public virtual ServiceResponse<CourseAssignment> GetByCompositeKey(int departmentId, int cid, int teacherId)
+        public virtual ServiceResponse<CourseAssignment> GetByCompositeKey(int departmentId, string CourseCode, int teacherId)
         {
             var serviceResponse = new ServiceResponse<CourseAssignment>();
             try
             {
-                serviceResponse.Data = _dbContext.CourseAssignments.FirstOrDefault(x =>
-                x.DepartmentId == departmentId
-                && x.TeacherId != teacherId
-                 && x.CourseId != cid);                   
+                var fetchingCourse = _dbContext.Courses.SingleOrDefault(x => x.Code == CourseCode);
+                var fetchingTeacher = _dbContext.Teachers.SingleOrDefault(x => x.Id == teacherId);
+                var fetchingDepartment = _dbContext.Departments.SingleOrDefault(x => x.Id == departmentId);
+                serviceResponse.Data = _dbContext.CourseAssignments.SingleOrDefault(x =>
+                x.DepartmentId == fetchingDepartment.Id
+                && x.TeacherId == fetchingTeacher.Id
+                 && x.Code != fetchingCourse.Code);
 
-                    if (serviceResponse.Data == null && serviceResponse.Data.IsAssigned)
+
+                if (fetchingCourse is null)
+                {
+                    serviceResponse.Message = "this Course does not exist.";
+                    serviceResponse.Success = false;
+                }
+                else if (fetchingTeacher is null)
+                {
+                    serviceResponse.Message = "this Teacher does not exist.";
+                    serviceResponse.Success = false;
+                }
+                else if (fetchingDepartment is null)
+                {
+                    serviceResponse.Message = "this Department does not exist.";
+                    serviceResponse.Success = false;
+                }
+                else if (serviceResponse.Data == null)
+                {
+                    if ( !serviceResponse.Success)
                     {
                         serviceResponse.Message = "Course is already assigned.";
                         serviceResponse.Success = false;
@@ -34,34 +55,94 @@ namespace StudentManagementBLL.CourseAssignBLL
                     else
                     {
                         //Checking remaining credit
-                        Teacher aTeacher = _dbContext.Teachers.FirstOrDefault(t => t.Id == teacherId);
-                        Course aCourse = _dbContext.Courses.FirstOrDefault(c => c.Id == cid);
+                        /*Teacher aTeacher = _dbContext.Teachers.Find(t => t.Id == teacherId);
+                        Course aCourse = _dbContext.Courses.FirstOrDefault(c => c.Id == cid);*/
                         CourseAssignment aCourseAssignment = new CourseAssignment();
-                        if (aTeacher.RemainingCredit >= aCourse.Credit)
+                        if (fetchingTeacher.RemainingCredit >= fetchingCourse.Credit)
                         {
-                            aTeacher.RemainingCredit -= aCourse.Credit;
-                            aTeacher.CreditToBeTaken += aCourse.Credit;
+                            fetchingTeacher.RemainingCredit -= fetchingCourse.Credit;
+                            fetchingTeacher.CreditToBeTaken += fetchingCourse.Credit;
 
-                        aCourse.AssignTo = aTeacher.Name;
-                        aCourse.TeacherId = aTeacher.Id;
+                            fetchingCourse.AssignTo = fetchingTeacher.Name;
+                            fetchingCourse.TeacherId = fetchingTeacher.Id;
 
-                        aCourseAssignment.TeacherId = teacherId;
-                        aCourseAssignment.DepartmentId = departmentId;
-                        aCourseAssignment.CourseId = cid;
-                        aCourseAssignment.IsAssigned = true;
-                        aCourseAssignment.Code = aCourse.Code;
+                            aCourseAssignment.TeacherId = teacherId;
+                            aCourseAssignment.DepartmentId = departmentId;
+                            aCourseAssignment.CourseId = fetchingCourse.Id;
+                            aCourseAssignment.IsAssigned = true;
+                            aCourseAssignment.Code = CourseCode;
 
 
-                        _dbContext.CourseAssignments.Add(aCourseAssignment);
-                         serviceResponse.Message = $"{aTeacher.Name} will start taking {aCourse.Code}: {aCourse.Name}";
+                            _dbContext.CourseAssignments.Add(aCourseAssignment);
+                            _dbContext.SaveChanges();
+                            serviceResponse.Data = aCourseAssignment;
+                            serviceResponse.Success = true;
+
+                            serviceResponse.Message = $"{fetchingTeacher.Name} will start taking {fetchingCourse.Code}" +
+                               $": {fetchingCourse.Name}";
                         }
                         else
                         {
-                            serviceResponse.Message = $"{aTeacher.Name} does not have Remaining Credit to take {aCourse.Code}: {aCourse.Name}";
+                            serviceResponse.Message = $"{fetchingTeacher.Name} does not have Remaining" +
+                            $" Credit to take {fetchingCourse.Code}: {fetchingCourse.Name}";
                             serviceResponse.Success = false;
                         }
-
                     }
+
+                }
+                else if(serviceResponse.Data.IsAssigned)
+                {
+                    serviceResponse.Message = "Course is already assigned";
+                    serviceResponse.Success = false;
+                }
+                else
+                {
+                   
+                    serviceResponse.Data.IsAssigned = true ;
+                    serviceResponse.Data.DepartmentId = departmentId;
+                    serviceResponse.Data.CourseId = fetchingCourse.Id;
+                    
+                    serviceResponse.Data.Code = CourseCode;
+
+                    _dbContext.CourseAssignments.Update(serviceResponse.Data);
+                    _dbContext.SaveChanges();
+                }
+                /* else
+                     {
+                         *//*//Checking remaining credit
+                         *//*Teacher aTeacher = _dbContext.Teachers.Find(t => t.Id == teacherId);
+                         Course aCourse = _dbContext.Courses.FirstOrDefault(c => c.Id == cid);*//*
+                         CourseAssignment aCourseAssignment = new CourseAssignment();
+                         if (fetchingTeacher.RemainingCredit >= fetchingCourse.Credit)
+                         {
+                         fetchingTeacher.RemainingCredit -= fetchingCourse.Credit;
+                         fetchingTeacher.CreditToBeTaken += fetchingCourse.Credit;
+
+                         fetchingCourse.AssignTo = fetchingTeacher.Name;
+                         fetchingCourse.TeacherId = fetchingTeacher.Id;
+
+                         aCourseAssignment.TeacherId = teacherId;
+                         aCourseAssignment.DepartmentId = departmentId;
+                         aCourseAssignment.CourseId = fetchingCourse.Id;
+                         aCourseAssignment.IsAssigned = true;
+                         aCourseAssignment.Code = CourseCode;
+
+
+                         _dbContext.CourseAssignments.Add( aCourseAssignment);
+                         serviceResponse.Data = aCourseAssignment;
+                         serviceResponse.Success = true;
+
+                          serviceResponse.Message = $"{fetchingTeacher.Name} will start taking {fetchingCourse.Code}" +
+                             $": {fetchingCourse.Name}";
+                         }
+                         else
+                         {
+                             serviceResponse.Message = $"{fetchingTeacher.Name} does not have Remaining" +
+                             $" Credit to take {fetchingCourse.Code}: {fetchingCourse.Name}";
+                             serviceResponse.Success = false;
+                         }*//*
+
+                     }*/
             }
             catch (Exception exception)
             {

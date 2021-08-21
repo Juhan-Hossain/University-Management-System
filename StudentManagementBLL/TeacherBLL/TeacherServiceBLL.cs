@@ -17,7 +17,7 @@ namespace StudentManagementBLL.TeacherBLL
         }
 
         //POST:Teacher
-        public override ServiceResponse<Teacher> Add(Teacher teacher)
+        /*public override ServiceResponse<Teacher> Add(Teacher teacher)
         {
             var serviceResponse = new ServiceResponse<Teacher>();
 
@@ -36,6 +36,6 @@ namespace StudentManagementBLL.TeacherBLL
                 serviceResponse.Success = false;
             }
             return serviceResponse;
-        }
+        }*/
     }
 }
