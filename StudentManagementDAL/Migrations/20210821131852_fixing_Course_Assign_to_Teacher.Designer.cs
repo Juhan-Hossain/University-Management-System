@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagementDAL;
 
 namespace StudentManagementDAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210821131852_fixing_Course_Assign_to_Teacher")]
+    partial class fixing_Course_Assign_to_Teacher
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,11 +139,21 @@ namespace StudentManagementDAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("CourseCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(9)");
+
+                    b.Property<int>("CourseDepartmentId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("GradeName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsEnrolled")
                         .HasColumnType("bit");
@@ -155,6 +167,8 @@ namespace StudentManagementDAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("StudentId");
+
+                    b.HasIndex("CourseCode", "CourseDepartmentId");
 
                     b.ToTable("CourseEnrolls");
                 });
@@ -551,11 +565,21 @@ namespace StudentManagementDAL.Migrations
 
             modelBuilder.Entity("StudentManagementEntity.CourseEnroll", b =>
                 {
-                    b.HasOne("StudentManagementEntity.Student", null)
+                    b.HasOne("StudentManagementEntity.Student", "Student")
                         .WithMany("CoursesEnrolled")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("StudentManagementEntity.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseCode", "CourseDepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("StudentManagementEntity.RoomAllocation", b =>
