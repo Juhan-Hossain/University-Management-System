@@ -19,22 +19,22 @@ namespace University_Student_Management.Controllers
             _service = service;
         }
 
-        // GET: api/Departments
-        [HttpGet]
-        public ActionResult<ServiceResponse<IEnumerable<Teacher>>> GetDepartments()
+        // GET: api/Teachers:All
+        [HttpGet("GetTeachers")]
+        public ActionResult<ServiceResponse<IEnumerable<Teacher>>> GetTeachers()
         {
-            var serviceResponse = _service.GetDetailsAll();
+            var serviceResponse = _service.GetAll();
             if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
             return Ok(serviceResponse);
         }
 
 
-        // POST: api/Departments
-        [HttpPost]
-        public ActionResult<ServiceResponse<Teacher>> PostDepartment( Teacher teacher)
+        // POST: api/CreateTeacher
+        [HttpPost("CreateTeacher")]
+        public ActionResult<ServiceResponse<Teacher>> CreateTeacher( Teacher teacher)
         {
-            teacher.Id = 0;
-            var serviceResponse = _service.AddDetails(teacher);
+            
+            var serviceResponse = _service.Add(teacher);
             if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
             return Ok(serviceResponse.Data);
         }

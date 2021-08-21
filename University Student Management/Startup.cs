@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,6 +11,8 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using StudentManagementBLL.CourseBLL;
 using StudentManagementBLL.DepartmentBLL;
+using StudentManagementBLL.DesignationBLL;
+using StudentManagementBLL.StudentBLL;
 using StudentManagementBLL.TeacherBLL;
 using StudentManagementDAL;
 using System;
@@ -51,11 +54,19 @@ namespace University_Student_Management
             services.AddScoped<IDepartmentServiceBLL, DepartmentServiceBLL>();
             services.AddScoped<ITeacherServiceBLL, TeacherServiceBLL>();
             services.AddScoped<ICourseServiceBLL, CourseServiceBLL>();
+            services.AddScoped<IDesignationServiceBLL, DesignationServiceBLL>();
+            services.AddScoped<IStudentServiceBLL, StudentServiceBLL>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                context.Database.Migrate();
+            }
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

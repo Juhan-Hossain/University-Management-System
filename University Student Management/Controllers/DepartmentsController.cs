@@ -21,11 +21,11 @@ namespace University_Student_Management.Controllers
         }
 
 
-        [HttpPost]
-        public ActionResult<ServiceResponse<Department>> PostDepartment([FromBody] Department department)
+        [HttpPost("CreateDepartment")]
+        public ActionResult<ServiceResponse<Department>> CreateDepartment([FromBody] Department department)
         {
-            department.Id = 0;
-            var serviceResponse = _service.AddDetails(department);
+            /*department.Id = 0;*/
+            var serviceResponse = _service.Add(department);
             if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
             return Ok(serviceResponse.Data);
         }
@@ -34,7 +34,7 @@ namespace University_Student_Management.Controllers
         [HttpGet]
         public ActionResult<ServiceResponse<IEnumerable<Department>>> GetDepartments()
         {
-            var serviceResponse =  _service.GetDetailsAll();
+            var serviceResponse =  _service.GetAll();
             if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
             return Ok(serviceResponse);
         }

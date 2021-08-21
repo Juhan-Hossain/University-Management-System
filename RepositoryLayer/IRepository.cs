@@ -9,12 +9,12 @@ namespace RepositoryLayer
 {
     public interface IRepository<T> where T : class
     {
-        public ServiceResponse<IEnumerable<T>> GetDetailsAll();
-        public ServiceResponse<T> GetDetailsById(int? id);
-        public ServiceResponse<T> AddDetails(T unit);
-        public ServiceResponse<T> UpdateDetails(T unit);
-        public ServiceResponse<T> UpdateDetails(int id, T unit);
-        public ServiceResponse<T> DeleteDetails(T unit);
-        public ServiceResponse<T> DeleteDetailsConfirmedById(int id);
+        public ServiceResponse<IEnumerable<T>> GetAll();
+        public ServiceResponse<T> GetById(int? id);
+        public ServiceResponse<T> Add(T unit);
+        public ServiceResponse<T> Update(T unit);
+        public ServiceResponse<T> Update(int id, T unit);
+        public ServiceResponse<T> Delete(T unit);
+        public ServiceResponse<T> DeleteById(int id);
     }
 }

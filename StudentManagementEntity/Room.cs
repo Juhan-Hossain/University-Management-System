@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace StudentManagementEntity
 {
-    public class Designation
+    public class Room
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public String Name { get; set; }
+        public string Name { get; set; }
     }
 }
