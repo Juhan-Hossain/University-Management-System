@@ -11,6 +11,10 @@ namespace StudentManagementEntity
 {
     public class Department
     {
+        public Department()
+        {
+            Courses = new HashSet<Course>();
+        }
         
 
         [Key]
@@ -26,6 +30,7 @@ namespace StudentManagementEntity
         [StringLength(7, MinimumLength = 3, ErrorMessage = "Code must be between 3 and 7 character in length.")]
 
         public string Code { get; set; }
+        public virtual ICollection<Course> Courses { get; set; }
 
 
 

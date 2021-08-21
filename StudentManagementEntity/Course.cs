@@ -34,17 +34,19 @@ namespace StudentManagementEntity
         [ForeignKey("Semester")]
         public int? SemesterId { get; set; }
 
-       /* [ForeignKey("Teacher")]
-        public int? TeacherId { get; set; }*/
+        [ForeignKey("Teacher")]
+        public int? TeacherId { get; set; }
 
 
         [ForeignKey("Department")]
         public int? DepartmentId { get; set; }
 
         public virtual String AssignTo { get; set; }
+        public virtual Department Department { get; set; }
 
 
-      /*  public virtual Teacher Teacher { get; set; }*/
+
+        public virtual Teacher Teacher { get; set; }
 
         public virtual ICollection<RoomAllocation> RoomAllocationList { get; set; }
 

@@ -34,7 +34,7 @@ namespace University_Student_Management.Controllers
         [HttpGet("CoursesByDepartment")]
         public ActionResult<ServiceResponse<IEnumerable<Course>>> GetCoursesByDepartment(int departmentId)
         {
-            var serviceResponse =  _service.GetCourseByDepartment(departmentId);
+            var serviceResponse = _service.GetCourseByDepartment(departmentId);
             if (serviceResponse.Success == false) return BadRequest(serviceResponse);
             return Ok(serviceResponse);
         }
