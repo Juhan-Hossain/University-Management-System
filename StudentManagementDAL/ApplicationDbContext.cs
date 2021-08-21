@@ -51,7 +51,7 @@ namespace StudentManagementDAL
             //CourseAssignment:
             modelBuilder.Entity<CourseAssignment>(entity =>
             {
-                entity.HasIndex(x => x.Code).IsUnique();
+                entity.HasKey(x => new { x.Code, x.DepartmentId });
             });
 
 
