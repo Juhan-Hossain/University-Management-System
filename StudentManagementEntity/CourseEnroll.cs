@@ -29,9 +29,9 @@ namespace StudentManagementEntity
       
         public bool IsEnrolled { get; set; } = false;
 
-        public virtual Student Student {  get; set; }
-        public virtual Course Course {  get; set; }
-        public virtual string GradeName { set; get; }
+      /*  public virtual Student Student {  get; set; }
+        public virtual Course Course {  get; set; }*/
+        /*public virtual string GradeName { set; get; }*/
 
 
     }
