@@ -39,8 +39,8 @@ namespace StudentManagementEntity
         [Required(ErrorMessage = "CreditToBeTaken must be given")]
 
         public double CreditToBeTaken { get; set; } = 100;
-        [Required(ErrorMessage = "RemainingCredit must be given")]
-        public double RemainingCredit { get; set; } = 100;
+        
+        public double? RemainingCredit { get; set; } 
  
         public int? DepartmentId { get; set; }
         public virtual Department Department { get; set; }
