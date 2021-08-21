@@ -107,6 +107,7 @@ namespace StudentManagementBLL.CourseBLL
                             data.Add(course);
                         }
                     }
+                    
 
                 }
                 serviceResponse.Data = data;
@@ -114,8 +115,17 @@ namespace StudentManagementBLL.CourseBLL
                 /*serviceResponse.Data = _dbContext.Courses
                     .Include(x => x.Department)
                     .Where(x => x.DepartmentId == departmentId).ToList();*/
+                if (data.Count()>0)
+                {
+                    serviceResponse.Message = "Data  with the given id was fetched successfully from the database";
+                }
+                else
+                {
+                    serviceResponse.Message = "This dept does not have any data!";
+                    serviceResponse.Success = false;
+                }
 
-                serviceResponse.Message = "Data  with the given id was fetched successfully from the database";
+                
             }
             catch (Exception exception)
             {

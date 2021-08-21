@@ -39,6 +39,15 @@ namespace University_Student_Management.Controllers
             return Ok(serviceResponse);
         }
 
+        // GET: Courses
+        [HttpGet("ViewCoursesByDepartment")]
+        public ActionResult<ServiceResponse<IEnumerable<Course>>> ViewCoursesByDept(int departmentId)
+        {
+            var serviceResponse = _service.ViewCourseByDepartment(departmentId);
+            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
+            return Ok(serviceResponse);
+        }
+
         //POST:Course
         [HttpPost("CreateCourse")]
         
