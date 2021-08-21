@@ -17,7 +17,7 @@ namespace StudentManagementBLL.TeacherBLL
         }
 
         //POST:Teacher
-        public override ServiceResponse<Teacher> AddDetails(Teacher teacher)
+        public override ServiceResponse<Teacher> Add(Teacher teacher)
         {
             var serviceResponse = new ServiceResponse<Teacher>();
 

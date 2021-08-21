@@ -16,7 +16,7 @@ namespace StudentManagementBLL.DesignationBLL
 
         }
 
-        public override ServiceResponse<Designation> AddDetails(Designation designation)
+        public override ServiceResponse<Designation> Add(Designation designation)
         {
             var serviceResponse = new ServiceResponse<Designation>();
 

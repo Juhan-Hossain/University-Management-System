@@ -10,48 +10,55 @@ namespace StudentManagementEntity
 {
     public class RoomAllocation
     {
-        public RoomAllocation()
-        {
-            /*Courses = new HashSet<Course>();
-            Departments = new HashSet<Department>();*/
-            Days = new HashSet<Day>();
-        }
+      
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
         public int Id { get; set; }
 
 
-        public int DepartmentId { set; get; }
-       
-        public string Code { set; get; }
-        
+        [Display(Name = "Department")]
+      /*  [ForeignKey("Department")]*/
+        public int DeptId { get; set; }
 
-        
-        [ForeignKey("Room")]
-        public int RoomId { set; get; }
-        
+        [Display(Name = "Course")]
+       /* [ForeignKey("Course")]*/
+        public int CourseId { get; set; }
 
-        
-        [ForeignKey("Day")]
-        public int DayId { set; get; }
-        
-        //format(HH:MM 24 hours)
+        [Display(Name = "Room No")]
+/*        [ForeignKey("Room")]*/
+        public int RoomId { get; set; }
+        public Day Day { get; set; } //using enum which will store int value to database
+
         [Required(ErrorMessage = "Start time is required")]
+        [Display(Name = "Start time (Formate HH:MM) (24 Hours)")]
         public string StartTime { set; get; }
         [Required(ErrorMessage = "End time is required")]
+        [Display(Name = "End time (Formate HH:MM) (24 Hours)")]
         public string EndTime { set; get; }
+        public string FromMeridiem { get; set; }  //return value AM or PM
+        public string ToMeridiem { get; set; } //return value AM or PM
+        
+        public virtual Course Course { get; set; }
+        public virtual Department Department { get; set; }
+        public virtual Room Room { get; set; }
 
-
-
-        public virtual Department? Department { set; get; }
-        public virtual Course? Course { set; get; }
-        public Room? Room { set; get; }
-        public Day? Day { set; get; }
-
-        /*public virtual ICollection<Course> Courses { get; set; }
-        public virtual ICollection<Department> Departments { get; set; }*/
-        public virtual ICollection<Day> Days { get; set; }
-
-        public string? ScheduleInfo { get; set; }
 
     }
+    public enum Day
+    {
+        Saturday,
+        Sunday,
+        Monday,
+        Tuesday,
+        Wednessday,
+        Thursday,
+        Friday
+    }
+
+  
+
+
+
+
 }

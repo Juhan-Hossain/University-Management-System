@@ -23,7 +23,7 @@ namespace University_Student_Management.Controllers
         [HttpGet("GetTeachers")]
         public ActionResult<ServiceResponse<IEnumerable<Teacher>>> GetTeachers()
         {
-            var serviceResponse = _service.GetDetailsAll();
+            var serviceResponse = _service.GetAll();
             if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
             return Ok(serviceResponse);
         }
@@ -34,7 +34,7 @@ namespace University_Student_Management.Controllers
         public ActionResult<ServiceResponse<Teacher>> CreateTeacher( Teacher teacher)
         {
             
-            var serviceResponse = _service.AddDetails(teacher);
+            var serviceResponse = _service.Add(teacher);
             if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
             return Ok(serviceResponse.Data);
         }

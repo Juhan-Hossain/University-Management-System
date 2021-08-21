@@ -21,12 +21,12 @@ namespace StudentManagementBLL.CourseBLL
 
 
         //GET:All:COurse
-        public override ServiceResponse<IEnumerable<Course>> GetDetailsAll()
+        public override ServiceResponse<IEnumerable<Course>> GetAll()
         {
             var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
             try
             {
-                serviceResponse.Data = _dbContext.Courses.Include(x => x.Teacher).ToList();
+                serviceResponse.Data = _dbContext.Courses.Include(x => x.AssignTo).ToList();
 
                 serviceResponse.Message = "Course data & Assigning teacher fetched successfully from the database";
             }
@@ -39,7 +39,7 @@ namespace StudentManagementBLL.CourseBLL
         }
 
         //POST:Course
-        public override ServiceResponse<Course> AddDetails(Course course)
+        public override ServiceResponse<Course> Add(Course course)
         {
             var serviceResponse = new ServiceResponse<Course>();
 
@@ -61,39 +61,39 @@ namespace StudentManagementBLL.CourseBLL
 
 
         //validates the fact of course assignment
-        public virtual ServiceResponse<Course> GetByCompositeKey(int departmentId, string Code,int teacherId)
+        public virtual ServiceResponse<Course> GetByCompositeKey(int departmentId, string Code, int teacherId)
         {
             var serviceResponse = new ServiceResponse<Course>();
             try
             {
-                serviceResponse.Data =  _dbContext.Courses.Include(x => x.Teacher)
+               /* serviceResponse.Data = _dbContext.Courses.Include(x => x.CourseTeacher)
                     .SingleOrDefault(x => (x.DepartmentId == departmentId
-                                            && x.Code == Code) && x.TeacherId!=teacherId);
-                /* if(serviceResponse.Data.Credit>serviceResponse.Data.TeacherId.)*/
+                                            && x.Code == Code) && x.TeacherId != teacherId);*/
+                /*if (serviceResponse.Data.Credit > serviceResponse.Data.AssignTo)
 
-                if (serviceResponse.Data == null)
-                {
-                    serviceResponse.Message = "Data not found with the given constrain.";
-                    serviceResponse.Success = false;
-                }
-                else
-                {
-                    //Checking remaining credit
-                    Teacher aTeacher = _dbContext.Teachers.FirstOrDefault(t=> t.Id==teacherId);
-                    Course aCourse = _dbContext.Courses.FirstOrDefault(c => c.Code == Code);
-                    if(aTeacher.RemainingCredit>=aCourse.Credit)
+                    if (serviceResponse.Data == null)
                     {
-                        aTeacher.RemainingCredit -= aCourse.Credit;
-                        aTeacher.CreditTaken += aCourse.Credit;
-                        serviceResponse.Message = $"{aTeacher.Name} will start taking {aCourse.Code}: {aCourse.Name}";
+                        serviceResponse.Message = "Data not found with the given constrain.";
+                        serviceResponse.Success = false;
                     }
                     else
                     {
-                        serviceResponse.Message = $"{aTeacher.Name} does not have time to take {aCourse.Code}: {aCourse.Name}";
-                        serviceResponse.Success = false;
-                    }
-                    
-                }
+                        //Checking remaining credit
+                        Teacher aTeacher = _dbContext.Teachers.FirstOrDefault(t => t.Id == teacherId);
+                        Course aCourse = _dbContext.Courses.FirstOrDefault(c => c.Code == Code);
+                        if (aTeacher.RemainingCredit >= aCourse.Credit)
+                        {
+                            aTeacher.RemainingCredit -= aCourse.Credit;
+                            aTeacher.CreditToBeTaken += aCourse.Credit;
+                            serviceResponse.Message = $"{aTeacher.Name} will start taking {aCourse.Code}: {aCourse.Name}";
+                        }
+                        else
+                        {
+                            serviceResponse.Message = $"{aTeacher.Name} does not have time to take {aCourse.Code}: {aCourse.Name}";
+                            serviceResponse.Success = false;
+                        }
+
+                    }*/
             }
             catch (Exception exception)
             {
@@ -105,13 +105,13 @@ namespace StudentManagementBLL.CourseBLL
 
 
 
-        public ServiceResponse<IEnumerable<Course>> GetCourseDetailsByDepartment(int departmentId)
+        public ServiceResponse<IEnumerable<Course>> GetCourseByDepartment(int departmentId)
         {
             var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
             try
             {
                 serviceResponse.Data = _dbContext.Courses
-                    .Include(x => x.Teacher)
+                    .Include(x => x.DepartmentId)
                     .Where(x => x.DepartmentId == departmentId).ToList();
 
                 serviceResponse.Message = "Data  with the given id was fetched successfully from the database";
