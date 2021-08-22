@@ -36,17 +36,6 @@ namespace University_Student_Management.Controllers
         {
 
             var coursekeyresponse = _service.AssignCourseToTeacher(body.DepartmentId, body.Code, body.TeacherId);
-
-            //checking if a teacher can be assigned to a course
-           /* if (!coursekeyresponse.Success || coursekeyresponse.Data == null )
-            {
-                coursekeyresponse.Success = false;
-                coursekeyresponse.Message = $"Can not Assign {body.Code} to TeacherId no: {body.TeacherId}";
-                return BadRequest(coursekeyresponse);
-            }*/
-
-            /*coursekeyresponse.Data.TeacherId = body.TeacherId;*/
-           /* var updateresponse = _service.Add(coursekeyresponse.Data);*/
             if (!coursekeyresponse.Success) return BadRequest(coursekeyresponse);
 
             coursekeyresponse.Message = $" {body.Code} Successfully assign to TeacherId no: {body.TeacherId}";

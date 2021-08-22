@@ -14,7 +14,8 @@ namespace StudentManagementEntity
     {
         public Course()
         {
-           /* CourseTeacher = new HashSet<Teacher>();*/
+            CourseEnrolls = new HashSet<CourseEnroll>();
+            Students = new HashSet<Student>();
             RoomAllocationList = new HashSet<RoomAllocation>();
         }
 
@@ -49,6 +50,8 @@ namespace StudentManagementEntity
         public virtual Teacher Teacher { get; set; }
 
         public virtual ICollection<RoomAllocation> RoomAllocationList { get; set; }
+        public virtual ICollection<Student> Students { get; set; }
+        public virtual ICollection<CourseEnroll> CourseEnrolls { get; set; }
 
     }
 }

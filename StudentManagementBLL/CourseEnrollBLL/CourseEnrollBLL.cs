@@ -31,38 +31,58 @@ namespace StudentManagementBLL.CourseEnrollBLL
                 var acourseName = _dbContext.Courses
                     .SingleOrDefault(x => x.Name == courseName)
                     .Name;
+                var acourseCode = _dbContext.Courses
+                    .SingleOrDefault(x => x.Name == courseName).Code;
+                var aDepartmentId = _dbContext.Students
+                        .SingleOrDefault(x => x.RegistrationNumber == sdtRegNo)
+                        .DepartmentId;
                 CourseEnroll acourseEnroll = new CourseEnroll();
 
 
                 serviceresponse.Data = _dbContext.CourseEnrolls.SingleOrDefault(x =>
-                x.CourseId == aCourseId
+                x.EnrolledCourseId == aCourseId
                 && x.StudentRegNo == aStudentRegNo);
 
-
-
-                if (serviceresponse.Data == null)
+                if (acourseCode is null)
                 {
-
-
-                    serviceresponse.Data.CourseId = aCourseId;
-                    serviceresponse.Data.Date = DateTime.Today;
-                    serviceresponse.Data.IsEnrolled = true;
-                    serviceresponse.Data.StudentId = _dbContext.Students
-                        .SingleOrDefault(x => x.RegistrationNumber == sdtRegNo)
-                        .Id;
-                    serviceresponse.Data.StudentRegNo = aStudentRegNo;
-
-                    _dbContext.CourseEnrolls.Add(serviceresponse.Data);
-                    _dbContext.SaveChanges();
-
-                    serviceresponse.Success = true;
-
-                    serviceresponse.Message = $"{astudentName} will start taking {acourseName}";
+                    serviceresponse.Message = "this Course does not exist.";
+                    serviceresponse.Success = false;
                 }
-                
+                else if (aStudentRegNo is null)
+                {
+                    serviceresponse.Message = "this aStudentRegNo does not exist.";
+                    serviceresponse.Success = false;
+                }
+
+                else if (serviceresponse.Data == null)
+                {
+                    if (!serviceresponse.Success)
+                    {
+                        serviceresponse.Message = "Course is already assigned.";
+                        serviceresponse.Success = false;
+                    }
+                    else
+                    {
+                        acourseEnroll.EnrolledCourseId = aCourseId;
+                        acourseEnroll.Date = DateTime.Today;
+                        acourseEnroll.IsEnrolled = true;
+                        acourseEnroll.EnrolledStudentId = _dbContext.Students
+                            .SingleOrDefault(x => x.RegistrationNumber == sdtRegNo)
+                            .Id;
+                        acourseEnroll.StudentRegNo = sdtRegNo;
+                        acourseEnroll.DepartmentId = aDepartmentId;
+
+                        acourseEnroll.CourseCode = acourseCode;
 
 
+                        _dbContext.CourseEnrolls.Add(acourseEnroll);
+                        _dbContext.SaveChanges();
+                        serviceresponse.Data = acourseEnroll;
+                        serviceresponse.Success = true;
 
+                        serviceresponse.Message = $"{astudentName} will start taking {acourseName}";
+                    }
+                }
                 else if (serviceresponse.Data.IsEnrolled)
                 {
                     serviceresponse.Message = "Course is already Enrolled";
@@ -71,17 +91,22 @@ namespace StudentManagementBLL.CourseEnrollBLL
                 else
                 {
 
-                    serviceresponse.Data.CourseId = aCourseId;
-                    serviceresponse.Data.Date = DateTime.Today;
-                    serviceresponse.Data.IsEnrolled = true;
-                    serviceresponse.Data.StudentId = _dbContext.Students
+                    acourseEnroll.EnrolledCourseId = aCourseId;
+                    acourseEnroll.Date = DateTime.Today;
+                    acourseEnroll.IsEnrolled = true;
+                    acourseEnroll.EnrolledStudentId = _dbContext.Students
                         .SingleOrDefault(x => x.RegistrationNumber == sdtRegNo)
                         .Id;
-                    serviceresponse.Data.StudentRegNo = aStudentRegNo;
+                    acourseEnroll.StudentRegNo = sdtRegNo;
+                    acourseEnroll.DepartmentId = aDepartmentId;
+
+                    acourseEnroll.CourseCode = acourseCode;
 
 
-                    _dbContext.CourseEnrolls.Update(serviceresponse.Data);
+                    _dbContext.CourseEnrolls.Update(acourseEnroll);
                     _dbContext.SaveChanges();
+                    serviceresponse.Data = acourseEnroll;
+                    serviceresponse.Message = "Course Enrollment Updated";
                 }
 
             }

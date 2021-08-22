@@ -12,7 +12,8 @@ namespace StudentManagementEntity
     {
         public Student()
         {
-            CoursesEnrolled = new HashSet<CourseEnroll>();
+            CourseEnrolls = new HashSet<CourseEnroll>();
+            Courses = new HashSet<Course>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -36,9 +37,9 @@ namespace StudentManagementEntity
 
         public virtual string RegistrationNumber { get; set; }
 
-        public virtual ICollection<CourseEnroll> CoursesEnrolled { get; set; }
+        public virtual ICollection<CourseEnroll> CourseEnrolls { get; set; }
         public virtual Department Department { get; set; }
-        public virtual ICollection<Course> Course { get; set; }
+        public virtual ICollection<Course> Courses { get; set; }
 
 
     }

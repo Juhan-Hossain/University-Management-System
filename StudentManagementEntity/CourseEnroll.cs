@@ -16,22 +16,21 @@ namespace StudentManagementEntity
 
         public string StudentRegNo { get; set; }
 
-
-        [Required(ErrorMessage = "Course can't be empty")]
-        /*[ForeignKey("Course")]*/
-        public int CourseId { set; get; }
-
-
-        [Required(ErrorMessage = "Student can't be empty")]
-        /*[ForeignKey("Student")]*/
-        public int StudentId { get; set; }
+        public string CourseCode { get; set; }
+        public int? EnrolledCourseId { set; get; }
+        [ForeignKey("Student")]
+        public int? EnrolledStudentId { get; set; }
+        public int? DepartmentId { get; set; }
         public DateTime Date { get; set; }
       
         public bool IsEnrolled { get; set; } = false;
 
-      /*  public virtual Student Student {  get; set; }
-        public virtual Course Course {  get; set; }*/
-        /*public virtual string GradeName { set; get; }*/
+
+        public virtual Student Student { get; set; }
+        public virtual Department Department { get; set; }
+
+        public virtual Course Course { get; set; }
+
 
 
     }
