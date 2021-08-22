@@ -12,5 +12,8 @@ namespace StudentManagementBLL.CourseBLL
    {
         public ServiceResponse<IEnumerable<Course>> GetCourseByDepartment(int departmentId);
         public ServiceResponse<IEnumerable<Course>> ViewCourseByDepartment(int departmentId);
+        public ServiceResponse<IEnumerable<Course>> ViewCourseBystdRegNo(string stdRegNo);
+
+
     }
 }
