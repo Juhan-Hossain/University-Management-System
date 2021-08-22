@@ -62,8 +62,22 @@ namespace StudentManagementDAL
                 entity.HasIndex(x => x.Email).IsUnique();
                 entity.HasIndex(x => x.ContactNumber).IsUnique();
                 entity.HasIndex(x => x.RegistrationNumber).IsUnique();
+                entity.HasMany(x => x.Courses)
+                .WithMany(x => x.Students);
+
                 
 
+            });
+
+
+            //CourseEnrollment:
+            modelBuilder.Entity<CourseEnroll>(entity =>
+            {
+                entity.HasKey(x => new { x.StudentRegNo, x.CourseCode,x.DepartmentId });
+                entity.HasOne(x => x.Student)
+                .WithMany(x => x.CourseEnrolls).HasForeignKey(x=>x.EnrolledStudentId);
+                entity.HasOne(x => x.Course)
+                .WithMany(x => x.CourseEnrolls).HasForeignKey(x=>new { x.CourseCode,x.DepartmentId });
             });
 
 
@@ -227,17 +241,7 @@ namespace StudentManagementDAL
                    );
             });
 
-            //CourseEnrollment:
-            /* modelBuilder.Entity<CourseEnroll>(entity =>
-             {
-                 entity.HasKey(x => new { x.DeptId, x.Code, x.StudentId });
-                 entity.HasOne(x => x.Student).WithMany(x => x.CourseEnrolls).HasForeignKey(x => x.StudentId);
-                 entity.HasOne(x => x.Course).WithMany(x => x.CourseEnrolls).HasForeignKey(x => new { x.Code, x.DeptId });
-                 entity.HasIndex(x => x.Code).IsUnique();
-                 entity.HasIndex(x => x.StudentRegNum).IsUnique();
-
-
-             });*/
+            
 
         }
     }

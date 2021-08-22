@@ -20,6 +20,19 @@ namespace University_Student_Management.Controllers
 
         }
 
-        
+        [HttpPost("CreateCourseEnroll")]
+
+        public ActionResult<ServiceResponse<CourseEnroll>> CourseEnrollment(string stdregno,string coursename)
+        {
+
+            var response = _service.EnrollCourseToStudent(stdregno,coursename);
+            if (!response.Success) return BadRequest(response);
+
+            response.Message = $" {coursename} Successfully enrolled by student {stdregno}";
+            return Ok();
+
+        }
+
+
     }
 }

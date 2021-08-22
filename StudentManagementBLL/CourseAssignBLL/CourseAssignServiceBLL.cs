@@ -47,14 +47,14 @@ namespace StudentManagementBLL.CourseAssignBLL
                 }
                 else if (serviceResponse.Data == null)
                 {
-                    if ( !serviceResponse.Success)
+                    if (!serviceResponse.Success)
                     {
                         serviceResponse.Message = "Course is already assigned.";
                         serviceResponse.Success = false;
                     }
                     else
                     {
-                        
+
                         CourseAssignment aCourseAssignment = new CourseAssignment();
                         if (fetchingTeacher.RemainingCredit >= fetchingCourse.Credit)
                         {
@@ -88,24 +88,24 @@ namespace StudentManagementBLL.CourseAssignBLL
                     }
 
                 }
-                else if(serviceResponse.Data.IsAssigned)
+                else if (serviceResponse.Data.IsAssigned)
                 {
                     serviceResponse.Message = "Course is already assigned";
                     serviceResponse.Success = false;
                 }
                 else
                 {
-                   
-                    serviceResponse.Data.IsAssigned = true ;
+
+                    serviceResponse.Data.IsAssigned = true;
                     serviceResponse.Data.DepartmentId = departmentId;
                     serviceResponse.Data.CourseId = fetchingCourse.Id;
-                    
+
                     serviceResponse.Data.Code = CourseCode;
 
                     _dbContext.CourseAssignments.Update(serviceResponse.Data);
                     _dbContext.SaveChanges();
                 }
-                
+
             }
             catch (Exception exception)
             {
@@ -114,9 +114,5 @@ namespace StudentManagementBLL.CourseAssignBLL
             }
             return serviceResponse;
         }
-
-       
-
-
     }
 }
