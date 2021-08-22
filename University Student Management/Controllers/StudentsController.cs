@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RepositoryLayer;
 using StudentManagementBLL.StudentBLL;
 using StudentManagementEntity;
@@ -14,12 +15,14 @@ namespace University_Student_Management.Controllers
     public class StudentsController : ControllerBase
     {
         private readonly IStudentServiceBLL _service;
+      
         public StudentsController(IStudentServiceBLL service)
         {
             _service = service;
 
         }
 
+        //Post:CreateStudent
         [HttpPost("CreateStudent")]
 
         public ActionResult<ServiceResponse<Student>> CreateStudent(Student student)

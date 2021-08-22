@@ -54,9 +54,7 @@ namespace StudentManagementBLL.CourseAssignBLL
                     }
                     else
                     {
-                        //Checking remaining credit
-                        /*Teacher aTeacher = _dbContext.Teachers.Find(t => t.Id == teacherId);
-                        Course aCourse = _dbContext.Courses.FirstOrDefault(c => c.Id == cid);*/
+                        
                         CourseAssignment aCourseAssignment = new CourseAssignment();
                         if (fetchingTeacher.RemainingCredit >= fetchingCourse.Credit)
                         {

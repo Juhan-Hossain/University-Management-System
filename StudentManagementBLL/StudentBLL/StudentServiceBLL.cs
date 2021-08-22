@@ -16,7 +16,7 @@ namespace StudentManagementBLL.StudentBLL
 
         }
 
-        
+        //POST:Add Student
         public override ServiceResponse<Student> Add(Student student)
         {
             var serviceResponse = new ServiceResponse<Student>();

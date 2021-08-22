@@ -112,9 +112,7 @@ namespace StudentManagementBLL.CourseBLL
                 }
                 serviceResponse.Data = data;
 
-                /*serviceResponse.Data = _dbContext.Courses
-                    .Include(x => x.Department)
-                    .Where(x => x.DepartmentId == departmentId).ToList();*/
+                
                 if (data.Count()>0)
                 {
                     serviceResponse.Message = "Data  with the given id was fetched successfully from the database";
