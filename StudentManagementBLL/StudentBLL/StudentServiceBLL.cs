@@ -16,7 +16,32 @@ namespace StudentManagementBLL.StudentBLL
 
         }
 
-        
+        /*//GET:GetAllStudentRegNo:
+        public ServiceResponse<IEnumerable<Student>> GetAllStudentRegNo()
+        {
+            var serviceResponse = new ServiceResponse<IEnumerable<Student>>();
+            try
+            {
+
+                *//*var aDepartment = _dbContext.Departments.ToList();
+                var aCourse=_dbContext.Courses
+                var  = _dbContext.Students.Select(x=>x.DepartmentId);*//*
+                serviceResponse.Message = "Student Reg No loaded in ServiceResponse.Data Successfully";
+            }
+            catch (Exception exception)
+            {
+
+                serviceResponse.Message = "Error occurred while loading Student Reg No." +
+                    "\nError message: " + exception.Message;
+                serviceResponse.Success = false;
+            }
+
+            return serviceResponse;
+
+        }*/
+
+
+
         public override ServiceResponse<Student> Add(Student student)
         {
             var serviceResponse = new ServiceResponse<Student>();
