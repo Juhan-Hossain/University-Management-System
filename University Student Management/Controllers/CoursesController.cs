@@ -59,33 +59,39 @@ namespace University_Student_Management.Controllers
             return Ok(serviceResponse);
         }
 
-
-        
-
-
-       /* [HttpPost("CourseEnrollment")]
-
-        public ActionResult<ServiceResponse<Course>> CourseEnrollment([FromBody] CourseAssignment body)
+        [HttpGet("CoursesByStudentRegNo")]
+        public ActionResult<ServiceResponse<IEnumerable<Course>>> GetCoursesByStudentRegNo(string stdRegNo)
         {
+            var serviceResponse = _service.ViewCourseBystdRegNo(stdRegNo);
+            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
+            return Ok(serviceResponse);
+        }
 
-            var coursekeyresponse = _service.GetByCompositeKey(body.DepartmentId, body.Code, body.TeacherId);
 
-            //checking if a teacher can be assigned to a course
-            if (!coursekeyresponse.Success || coursekeyresponse.Data == null || (coursekeyresponse.Data.TeacherId != null))
-            {
-                coursekeyresponse.Success = false;
-                coursekeyresponse.Message = $"Can not Assign {body.Code} to TeacherId no: {body.TeacherId}";
-                return BadRequest(coursekeyresponse);
-            }
 
-            coursekeyresponse.Data.TeacherId = body.TeacherId;
-            var updateresponse = _service.UpdateDetails(coursekeyresponse.Data);
-            if (!updateresponse.Success) return BadRequest(updateresponse);
+        /* [HttpPost("CourseEnrollment")]
 
-            coursekeyresponse.Message = $" {body.Code} Successfully assign to TeacherId no: {body.TeacherId}";
-            return Ok();
+         public ActionResult<ServiceResponse<Course>> CourseEnrollment([FromBody] CourseAssignment body)
+         {
 
-        }*/
+             var coursekeyresponse = _service.GetByCompositeKey(body.DepartmentId, body.Code, body.TeacherId);
+
+             //checking if a teacher can be assigned to a course
+             if (!coursekeyresponse.Success || coursekeyresponse.Data == null || (coursekeyresponse.Data.TeacherId != null))
+             {
+                 coursekeyresponse.Success = false;
+                 coursekeyresponse.Message = $"Can not Assign {body.Code} to TeacherId no: {body.TeacherId}";
+                 return BadRequest(coursekeyresponse);
+             }
+
+             coursekeyresponse.Data.TeacherId = body.TeacherId;
+             var updateresponse = _service.UpdateDetails(coursekeyresponse.Data);
+             if (!updateresponse.Success) return BadRequest(updateresponse);
+
+             coursekeyresponse.Message = $" {body.Code} Successfully assign to TeacherId no: {body.TeacherId}";
+             return Ok();
+
+         }*/
 
     }
 }

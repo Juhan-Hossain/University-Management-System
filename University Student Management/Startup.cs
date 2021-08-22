@@ -9,8 +9,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
+using StudentManagementBLL;
 using StudentManagementBLL.CourseAssignBLL;
 using StudentManagementBLL.CourseBLL;
+using StudentManagementBLL.CourseEnrollBLL;
 using StudentManagementBLL.DepartmentBLL;
 using StudentManagementBLL.DesignationBLL;
 using StudentManagementBLL.StudentBLL;
@@ -58,6 +60,8 @@ namespace University_Student_Management
             services.AddScoped<IDesignationServiceBLL, DesignationServiceBLL>();
             services.AddScoped<IStudentServiceBLL, StudentServiceBLL>();
             services.AddScoped<ICourseAssignServiceBLL, CourseAssignServiceBLL>();
+            services.AddScoped<ICourseEnrollBLL, CourseEnrollBLL>();
+            
 
         }
 
@@ -76,9 +80,17 @@ namespace University_Student_Management
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "University_Student_Management v1"));
             }
 
+            app.UseCors(x => x
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200")
+                             .AllowAnyMethod()
+                             .AllowAnyHeader());
 
             app.UseAuthorization();
 

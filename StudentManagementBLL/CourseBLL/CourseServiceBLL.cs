@@ -136,6 +136,31 @@ namespace StudentManagementBLL.CourseBLL
             return serviceResponse;
         }
 
+        //GetCourseByStdRegNo
+        public ServiceResponse<IEnumerable<Course>> ViewCourseBystdRegNo(string stdRegNo)
+        {
+            var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
+            try
+            {
+                int aStudentId;
+                 aStudentId = _dbContext.Students
+                   .FirstOrDefault(x => x.RegistrationNumber == stdRegNo)
+                   .DepartmentId;
+
+                serviceResponse.Data = _dbContext.Courses
+                    .Include(x => x.Department)
+                    .Where(x => x.DepartmentId == aStudentId).ToList();
+                serviceResponse.Message = "Data  with the given id was fetched successfully from the database";
+            }
+            catch (Exception exception)
+            {
+
+                serviceResponse.Message = "Some error occurred while fetching data.\nError message: " + exception.Message;
+                serviceResponse.Success = false;
+            }
+            return serviceResponse;
+        }
+
 
 
     }
