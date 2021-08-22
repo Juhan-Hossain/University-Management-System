@@ -10,7 +10,8 @@ namespace StudentManagementBLL.CourseEnrollBLL
 {
     public interface ICourseEnrollBLL : IRepository<CourseEnroll>
     {
+        public ServiceResponse<CourseEnroll> EnrollCourseToStudent(string sdtRegNo, string courseName);
 
-        
+
     }
 }
