@@ -30,6 +30,7 @@ namespace StudentManagementDAL
         public DbSet<CourseEnroll> CourseEnrolls { get; set; }
 
         public DbSet<StudentGrade> StudentGrades { get; set; }
+        public DbSet<StudentResult> StudentResults { get; set; }
 
         
 
@@ -47,6 +48,15 @@ namespace StudentManagementDAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            //StudentResuult:
+            modelBuilder.Entity<StudentResult>(entity =>
+            {
+                entity.HasIndex(x => new { x.CourseName, x.StudentRegNo }).IsUnique();
+                /*entity.HasOne(x => x.StudentGrade).WithMany(x=> new)*/
+
+
+            });
 
             //CourseAssignment:
             modelBuilder.Entity<CourseAssignment>(entity =>
@@ -78,6 +88,7 @@ namespace StudentManagementDAL
                 .WithMany(x => x.CourseEnrolls).HasForeignKey(x=>x.EnrolledStudentId);
                 entity.HasOne(x => x.Course)
                 .WithMany(x => x.CourseEnrolls).HasForeignKey(x=>new { x.CourseCode,x.DepartmentId });
+                
             });
 
 
