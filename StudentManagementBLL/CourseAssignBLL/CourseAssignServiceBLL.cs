@@ -115,7 +115,7 @@ namespace StudentManagementBLL.CourseAssignBLL
             return serviceResponse;
         }
 
-        public virtual void UnassignTeacher(bool flag)
+        /*public virtual void UnassignTeacher(bool flag)
         {
             var courses = _dbContext.CourseAssignments;
             if (flag)
@@ -147,6 +147,6 @@ namespace StudentManagementBLL.CourseAssignBLL
             }
 
 
-        }
+        }*/
     }
 }

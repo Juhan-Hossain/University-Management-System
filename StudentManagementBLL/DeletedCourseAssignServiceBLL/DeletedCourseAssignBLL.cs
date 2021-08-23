@@ -17,27 +17,36 @@ namespace StudentManagementBLL.DeletedCourseAssignServiceBLL
 
         }
 
-
+        
 
         public ServiceResponse<DeletedCourseAssign> UnassignTeacher(bool flag)
         {
             var serviceResponse = new ServiceResponse<DeletedCourseAssign>();
 
-            var courses = _dbContext.CourseAssignments;
+            var assignCourses = _dbContext.CourseAssignments;
+
             if (flag)
             {
-                DeletedCourseAssign courseAssign = new DeletedCourseAssign();
+                DeletedCourseAssign deletedCourseAssign = new DeletedCourseAssign();
+                
 
-                foreach (CourseAssignment assign in courses)
+
+
+
+
+                foreach (CourseAssignment assign in assignCourses)
                 {
                     var fetchingCourse = _dbContext.Courses.SingleOrDefault(x => x.Code == assign.Code);
                     var fetchingTeacher = _dbContext.Teachers.SingleOrDefault(x => x.Id == assign.TeacherId);
                     var fetchingDepartment = _dbContext.Departments.SingleOrDefault(x => x.Id == assign.DepartmentId);
 
-                    courseAssign.Code = assign.Code;
-                    courseAssign.CourseId = assign.CourseId;
-                    courseAssign.DepartmentId = assign.DepartmentId;
-                    courseAssign.TeacherId = assign.TeacherId;
+                   
+
+
+                    deletedCourseAssign.Code = assign.Code;
+                    deletedCourseAssign.CourseId = assign.CourseId;
+                    deletedCourseAssign.DepartmentId = assign.DepartmentId;
+                    deletedCourseAssign.TeacherId = assign.TeacherId;
 
 
                     assign.IsAssigned = 3;
@@ -45,7 +54,7 @@ namespace StudentManagementBLL.DeletedCourseAssignServiceBLL
                     fetchingTeacher.RemainingCredit += fetchingCourse.Credit;
                     fetchingTeacher.CreditToBeTaken -= fetchingCourse.Credit;
 
-                    _dbContext.DeletedCourseAssigns.Add(courseAssign);
+                    _dbContext.DeletedCourseAssigns.Add(deletedCourseAssign);
                     serviceResponse.Message = "Unassigned All Courses";
                     serviceResponse.Success = true;
 
