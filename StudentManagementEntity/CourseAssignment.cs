@@ -22,7 +22,7 @@ namespace StudentManagementEntity
 
         public int? CourseId { get; set; }
 
-        public bool IsAssigned { get; set; } = false;
+        public int IsAssigned { get; set; } = 1;
 
         [NotMapped]
         public bool IsValidOperation { get; set; } = false;
