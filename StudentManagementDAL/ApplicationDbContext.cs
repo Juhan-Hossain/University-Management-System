@@ -31,8 +31,9 @@ namespace StudentManagementDAL
 
         public DbSet<StudentGrade> StudentGrades { get; set; }
         public DbSet<StudentResult> StudentResults { get; set; }
+        public DbSet<DeletedCourseAssign> DeletedCourseAssigns { get; set; }
 
-        
+
 
 
 
@@ -60,6 +61,11 @@ namespace StudentManagementDAL
 
             //CourseAssignment:
             modelBuilder.Entity<CourseAssignment>(entity =>
+            {
+                entity.HasKey(x => new { x.Code, x.DepartmentId });
+            });
+
+            modelBuilder.Entity<DeletedCourseAssign>(entity =>
             {
                 entity.HasKey(x => new { x.Code, x.DepartmentId });
             });
