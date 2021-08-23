@@ -22,6 +22,7 @@ namespace StudentManagementBLL.StudentResultBLL
             try
             {
                 var aStudentRegNo = _dbContext.Students.SingleOrDefault(x => x.RegistrationNumber == studentResult.StudentRegNo).ToString();
+                //----------------------
                 var aCourseId = _dbContext.Courses.SingleOrDefault(x => x.Name == studentResult.CourseName).Id;
                 var astudentName = _dbContext.Students
                         .SingleOrDefault(x => x.RegistrationNumber == studentResult.StudentRegNo)
@@ -30,8 +31,8 @@ namespace StudentManagementBLL.StudentResultBLL
                     .SingleOrDefault(x => x.Name == studentResult.CourseName)
                     .Name;
                 //------------------------------------------------------------------
-                /*var acourseCode = _dbContext.Courses
-                    .SingleOrDefault(x => x.Name == studentResult.CourseName).Code;*/
+                var acourseCode = _dbContext.Courses
+                    .SingleOrDefault(x => x.Name == studentResult.CourseName).Code;
                 var courseList = new List<Course>();
                 courseList = (List<Course>)GetEnrolledCoursesBystdRegNo(aStudentRegNo).Data;
 
@@ -92,8 +93,8 @@ namespace StudentManagementBLL.StudentResultBLL
                         _dbContext.SaveChanges();
                         serviceresponse.Data = aResult;
                         //------------------------------------------
-                        /*
-                        serviceresponse.Success = true;*/
+
+                        serviceresponse.Success = true;
 
                         serviceresponse.Message = $"{astudentName} will start taking {acourseName}";
                     }
@@ -156,6 +157,7 @@ namespace StudentManagementBLL.StudentResultBLL
                             {
                                 if (course != null)
                                 {
+                                    //----------------------
                                     if (courseEnroll.EnrolledCourseId == course.Id)
                                     {
                                         CourseListf.Add(courseEnroll.Course);

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagementDAL;
 
 namespace StudentManagementDAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210823213543_fixing_keyIdentity_course_courseAssign")]
+    partial class fixing_keyIdentity_course_courseAssign
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,9 +57,6 @@ namespace StudentManagementDAL.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -93,7 +92,6 @@ namespace StudentManagementDAL.Migrations
                             DepartmentId = 2,
                             Credit = 3f,
                             Description = "",
-                            Id = 0,
                             Name = "C Lab",
                             SemesterId = 1
                         },
@@ -103,7 +101,6 @@ namespace StudentManagementDAL.Migrations
                             DepartmentId = 2,
                             Credit = 3f,
                             Description = "",
-                            Id = 0,
                             Name = "C++",
                             SemesterId = 1
                         },
@@ -113,7 +110,6 @@ namespace StudentManagementDAL.Migrations
                             DepartmentId = 2,
                             Credit = 1.5f,
                             Description = "",
-                            Id = 0,
                             Name = "C++ Lab",
                             SemesterId = 1
                         });
@@ -128,9 +124,6 @@ namespace StudentManagementDAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.Property<int>("IsAssigned")

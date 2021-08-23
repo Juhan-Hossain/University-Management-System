@@ -43,7 +43,7 @@ namespace StudentManagementDAL
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=BS-161\\SQLEXPRESS;Initial Catalog=StudentManagementRuetLatest;Integrated Security=True");
+                optionsBuilder.UseSqlServer("Data Source=BS-161\\SQLEXPRESS;"+"Initial Catalog=StudentManagementRuetLatest;"+"Integrated Security=True;"+ "MultipleActiveResultSets = True;"); 
             }
         }
 
@@ -65,10 +65,10 @@ namespace StudentManagementDAL
                 entity.HasKey(x => new { x.Code, x.DepartmentId });
             });
 
-            modelBuilder.Entity<DeletedCourseAssign>(entity =>
+            /*modelBuilder.Entity<DeletedCourseAssign>(entity =>
             {
                 entity.HasKey(x => new { x.Code, x.DepartmentId });
-            });
+            });*/
 
 
             //Student
@@ -137,7 +137,7 @@ namespace StudentManagementDAL
             modelBuilder.Entity<Course>(entity =>
             {
                 entity.HasOne(x => x.Department).WithMany(x => x.Courses);
-                entity.HasOne(x => x.Teacher).WithMany(x => x.Courses);
+   /*             entity.HasOne(x => x.Teacher).WithMany(x => x.Courses);*/
 
 
                 entity.Property(x => x.Name).IsRequired();
