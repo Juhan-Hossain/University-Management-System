@@ -140,15 +140,34 @@ namespace StudentManagementBLL.CourseBLL
             var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
             try
             {
-                int aStudentId;
-                 aStudentId = _dbContext.Students
-                   .FirstOrDefault(x => x.RegistrationNumber == stdRegNo)
-                   .DepartmentId;
+                Student aStudent;
+                 aStudent = _dbContext.Students
+                   .SingleOrDefault(x => x.RegistrationNumber == stdRegNo);
+                if(aStudent != null)
+                {
+                    var tempcourses = _dbContext.Courses
+                        .Include(x => x.Department)
+                    .Where(x => x.DepartmentId == aStudent.DepartmentId).ToList(); ;
 
-                serviceResponse.Data = _dbContext.Courses
-                    .Include(x => x.Department)
-                    .Where(x => x.DepartmentId == aStudentId).ToList();
-                serviceResponse.Message = "Data  with the given id was fetched successfully from the database";
+                    /*foreach (Course course in tempcourses)
+                    {
+                        if ()
+                    }*/
+                    if (tempcourses is null)
+                    {
+                        serviceResponse.Message = "student do not exist";
+                        serviceResponse.Success = false;
+                    }
+
+                    serviceResponse.Message = "Data  with the given id was fetched successfully from the database";
+                }
+                else
+                {
+                    serviceResponse.Message = "Student does not exist";
+                    serviceResponse.Success = false;
+                }
+
+                
             }
             catch (Exception exception)
             {
@@ -159,9 +178,9 @@ namespace StudentManagementBLL.CourseBLL
             return serviceResponse;
         }
 
-        /*//Get Enrolled Courses By StdReg No:
-       
-        public ServiceResponse<IEnumerable<Course>> GetEnrolledCourseBystdRegNo(string stdRegNo)
+/*        //Get Enrolled Courses By StdReg No:
+
+        public ServiceResponse<IEnumerable<Course>> GetEnrolledCoursesBystdRegNo(string stdRegNo)
         {
             var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
             try
@@ -172,12 +191,17 @@ namespace StudentManagementBLL.CourseBLL
                 aStudent = _dbContext.Students
                   .SingleOrDefault(x => x.RegistrationNumber == stdRegNo);
                 CourseList = _dbContext.Courses.Where(x => x.DepartmentId == aStudent.DepartmentId).ToList();
+                *//*  CourseList = (List<Course>)ViewCourseBystdRegNo(stdRegNo).Data;*/
+                /*CourseList = _dbContext.Courses
+                        .Include(x => x.CourseEnrolls).ThenInclude(x => x.IsEnrolled)
+                        
+                        .ToList();*//*
                 if (aStudent != null)
                 {
 
                     foreach (var courseEnroll in _dbContext.CourseEnrolls)
                     {
-                        if (courseEnroll != null)
+                        if (courseEnroll != null && courseEnroll.IsEnrolled)
                         {
                             foreach (var course in CourseList)
                             {
@@ -192,9 +216,16 @@ namespace StudentManagementBLL.CourseBLL
                             }
                         }
                     }
-                    serviceResponse.Data = CourseListf;
-                    serviceResponse.Message = "Enrolled courses loaded successfully";
-
+                    if (CourseListf != null)
+                    {
+                        serviceResponse.Data = CourseListf;
+                        serviceResponse.Message = "Enrolled courses loaded successfully";
+                    }
+                    else
+                    {
+                        serviceResponse.Message = "No COursees Enrolled!!!";
+                        serviceResponse.Success = false;
+                    }
                 }
                 else
                 {

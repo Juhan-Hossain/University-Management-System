@@ -114,5 +114,28 @@ namespace StudentManagementBLL.CourseAssignBLL
             }
             return serviceResponse;
         }
+
+        /*public virtual void UnassignTeacher(bool flag)
+        {
+            var courses = _dbContext.CourseAssignments;
+            
+            
+           
+            if (flag)
+            {
+
+                foreach (CourseAssignment assign in courses)
+                {
+                    var fetchingCourse = _dbContext.Courses.SingleOrDefault(x => x.Code == assign.Code);
+                    var fetchingTeacher = _dbContext.Teachers.SingleOrDefault(x => x.Id == assign.TeacherId);
+                    var fetchingDepartment = _dbContext.Departments.SingleOrDefault(x => x.Id == assign.DepartmentId);
+
+                    assign.IsAssigned = false;
+                    
+                }
+            }
+            
+            
+        }*/
     }
 }
