@@ -159,6 +159,59 @@ namespace StudentManagementBLL.CourseBLL
             return serviceResponse;
         }
 
+        /*//Get Enrolled Courses By StdReg No:
+       
+        public ServiceResponse<IEnumerable<Course>> GetEnrolledCourseBystdRegNo(string stdRegNo)
+        {
+            var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
+            try
+            {
+                List<Course> CourseList = new List<Course>();
+                List<Course> CourseListf = new List<Course>();
+                Student aStudent;
+                aStudent = _dbContext.Students
+                  .SingleOrDefault(x => x.RegistrationNumber == stdRegNo);
+                CourseList = _dbContext.Courses.Where(x => x.DepartmentId == aStudent.DepartmentId).ToList();
+                if (aStudent != null)
+                {
+
+                    foreach (var courseEnroll in _dbContext.CourseEnrolls)
+                    {
+                        if (courseEnroll != null)
+                        {
+                            foreach (var course in CourseList)
+                            {
+                                if (course != null)
+                                {
+                                    if (courseEnroll.EnrolledCourseId == course.Id)
+                                    {
+                                        CourseListf.Add(courseEnroll.Course);
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                    serviceResponse.Data = CourseListf;
+                    serviceResponse.Message = "Enrolled courses loaded successfully";
+
+                }
+                else
+                {
+                    serviceResponse.Message = "student with given reg no does not exist";
+                    serviceResponse.Success = false;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Message = "Error occurred while fetching data from DB for\n" + ex.Message;
+                serviceResponse.Success = false;
+            }
+            return serviceResponse;
+        }*/
+
 
 
     }

@@ -20,14 +20,23 @@ namespace University_Student_Management.Controllers
         }
 
 
-        // POST: api/CreateTeacher
+        // POST: api/StudentResult/CreateStudentResult
         [HttpPost("CreateStudentResult")]
-        public ActionResult<ServiceResponse<StudentResult>> CreateTeacher(StudentResult studentResult)
+        public ActionResult<ServiceResponse<StudentResult>> CreateStudentResult(StudentResult studentResult)
         {
 
             var serviceResponse = _service.Add(studentResult);
             if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
             return Ok(serviceResponse.Data);
+        }
+
+        //Get: api/StudentResult
+        [HttpGet("GetStudentResult")]
+        public ActionResult<ServiceResponse<StudentResult>> GetStudentResult(string stdRegNo)
+        {
+            var serviceResponse = _service.GetResultBystdRegNo(stdRegNo);
+            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
+            return Ok(serviceResponse);
         }
     }
 }
