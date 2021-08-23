@@ -120,5 +120,57 @@ namespace StudentManagementBLL.StudentResultBLL
             return serviceresponse;
         }
 
+
+        /*//ViewStudentResultByStudentRegNo:
+        public ServiceResponse<IEnumerable<StudentResult>> ViewResultBystdRegNo(string stdRegNo)
+        {
+            var serviceResponse = new ServiceResponse<IEnumerable<StudentResult>>();
+            try
+            {
+                Course courses = new Course();
+                int aStudentId;
+                aStudentId = _dbContext.Students
+                  .SingleOrDefault(x => x.RegistrationNumber == stdRegNo)
+                  .Id;
+                int aStudentDeptId;
+                aStudentDeptId = _dbContext.Students
+                  .SingleOrDefault(x => x.RegistrationNumber == stdRegNo)
+                  .Id;
+                
+                var astudentName = _dbContext.Students
+                        .SingleOrDefault(x => x.RegistrationNumber == stdRegNo)
+                        .Name;
+                var astudentEmail = _dbContext.Students
+                        .SingleOrDefault(x => x.RegistrationNumber == stdRegNo)
+                        .Email;
+                var astudentDeptName = _dbContext.Departments
+                        .SingleOrDefault(x => x.Id == aStudentDeptId)
+                        .Name;
+
+                var astudentCourseId = _dbContext.Courses
+                    .
+                        .SingleOrDefault(x => x.CourseEnrolls == aStudentDeptId)
+                        .Name;
+
+                foreach (CourseEnroll result  in _dbContext.CourseEnrolls)
+                {
+                    var courseId = result.EnrolledCourseId.Equals();
+                }
+
+
+                serviceResponse.Data = _dbContext.CourseEnrolls
+                    .Select(x=>x.CourseCode && x.)
+                    .Where(x => x == aStudentId).ToList();
+                serviceResponse.Message = "Data  with the given id was fetched successfully from the database";
+            }
+            catch (Exception exception)
+            {
+
+                serviceResponse.Message = "Some error occurred while fetching data.\nError message: " + exception.Message;
+                serviceResponse.Success = false;
+            }
+            return serviceResponse;
+        }*/
+
     }
 }
