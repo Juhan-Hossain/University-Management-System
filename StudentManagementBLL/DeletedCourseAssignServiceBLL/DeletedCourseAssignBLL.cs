@@ -44,15 +44,15 @@ namespace StudentManagementBLL.DeletedCourseAssignServiceBLL
                     deletedCourseAssign.TeacherId = assign.TeacherId;
                     assign.IsAssigned = 3;
 
-                    fetchingTeacher.CreditToBeTaken += fetchingCourse.Credit;
-                    fetchingTeacher.RemainingCredit = (fetchingTeacher.CreditToBeTaken+fetchingCourse.Credit);
+                    
+                    fetchingTeacher.RemainingCredit = fetchingTeacher.CreditToBeTaken;
                     
                     fetchingCourse.AssignTo = null;
                     fetchingCourse.TeacherId = null;
 
                     _dbContext.Courses.Update(fetchingCourse);
 
-                    _dbContext.SaveChanges();
+             
                     _dbContext.CourseAssignments.Update(assign);
                     _dbContext.DeletedCourseAssigns.Add(deletedCourseAssign);
                     

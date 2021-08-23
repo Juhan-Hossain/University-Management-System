@@ -29,7 +29,5 @@ namespace StudentManagementEntity
         [Required]
         public string Code { get; set; }
         public virtual Teacher Teacher { get; set; }
-     /*   public virtual Course Course { get; set; }
-        public virtual Department Department { get; set; }*/
     }
 }
