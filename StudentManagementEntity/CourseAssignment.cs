@@ -20,7 +20,7 @@ namespace StudentManagementEntity
 
         public int TeacherId { get; set; }
 
-        public int? CourseId { get; set; }
+        public int CourseId { get; set; }
 
         public int IsAssigned { get; set; } = 1;
 
@@ -28,8 +28,8 @@ namespace StudentManagementEntity
         public bool IsValidOperation { get; set; } = false;
         [Required]
         public string Code { get; set; }
-        /*public virtual Teacher Teacher { get; set; }
+        public virtual Teacher Teacher { get; set; }
         public virtual Course Course { get; set; }
-        public virtual Department Department { get; set; }*/
+        public virtual Department Department { get; set; }
     }
 }

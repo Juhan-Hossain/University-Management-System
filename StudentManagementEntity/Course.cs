@@ -52,6 +52,7 @@ namespace StudentManagementEntity
         public virtual ICollection<RoomAllocation> RoomAllocationList { get; set; }
         public virtual ICollection<Student> Students { get; set; }
         public virtual ICollection<CourseEnroll> CourseEnrolls { get; set; }
+        public virtual ICollection<CourseAssignment> CourseAssignments { get; set; }
 
     }
 }

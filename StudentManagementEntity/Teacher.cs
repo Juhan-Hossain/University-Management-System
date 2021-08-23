@@ -48,7 +48,8 @@ namespace StudentManagementEntity
         public virtual Designation Designation { get; set; }
 
         public virtual ICollection<Course> Courses { get; set; }
-     
+        public virtual ICollection<CourseAssignment> CourseAssignments { get; set; }
+
 
     }
 }
