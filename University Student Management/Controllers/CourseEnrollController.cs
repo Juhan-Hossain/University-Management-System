@@ -29,7 +29,7 @@ namespace University_Student_Management.Controllers
             if (!response.Success) return BadRequest(response);
 
             response.Message = $" {coursename} Successfully enrolled by student {stdregno}";
-            return Ok();
+            return Ok(response);
 
         }
 

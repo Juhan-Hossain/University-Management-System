@@ -13,6 +13,7 @@ using StudentManagementBLL;
 using StudentManagementBLL.CourseAssignBLL;
 using StudentManagementBLL.CourseBLL;
 using StudentManagementBLL.CourseEnrollBLL;
+using StudentManagementBLL.DeletedCourseAssignServiceBLL;
 using StudentManagementBLL.DepartmentBLL;
 using StudentManagementBLL.DesignationBLL;
 using StudentManagementBLL.StudentBLL;
@@ -63,7 +64,7 @@ namespace University_Student_Management
             services.AddScoped<ICourseAssignServiceBLL, CourseAssignServiceBLL>();
             services.AddScoped<ICourseEnrollBLL, CourseEnrollBLL>();
             services.AddScoped<IStudentResultBLL, StudentResultBLL>();
-
+            services.AddScoped<IDeletedCourseAssignBLL, DeletedCourseAssignBLL>();
 
         }
 
