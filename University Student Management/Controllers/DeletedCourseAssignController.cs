@@ -28,6 +28,7 @@ namespace University_Student_Management.Controllers
 
             var response = _service.UnassignTeacher(flag);
             if (!response.Success) return BadRequest(response);
+
             return Ok(response);
         }
 

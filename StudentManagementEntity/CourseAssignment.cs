@@ -10,10 +10,10 @@ namespace StudentManagementEntity
 {
     public class CourseAssignment
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
 
+        /*   [DatabaseGenerated(DatabaseGeneratedOption.Identity)]*/
+        [Key]
+        public int Id { get; set; }
 
         public int DepartmentId { get; set; }
 
@@ -28,8 +28,8 @@ namespace StudentManagementEntity
         public bool IsValidOperation { get; set; } = false;
         [Required]
         public string Code { get; set; }
-        /*public virtual Teacher Teacher { get; set; }
-        public virtual Course Course { get; set; }
+        public virtual Teacher Teacher { get; set; }
+     /*   public virtual Course Course { get; set; }
         public virtual Department Department { get; set; }*/
     }
 }

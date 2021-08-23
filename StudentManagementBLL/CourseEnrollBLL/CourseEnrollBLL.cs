@@ -24,6 +24,7 @@ namespace StudentManagementBLL.CourseEnrollBLL
             try
             {
                 var aStudentRegNo = _dbContext.Students.SingleOrDefault(x => x.RegistrationNumber == sdtRegNo).ToString();
+                //----------------
                 var aCourseId = _dbContext.Courses.SingleOrDefault(x => x.Name == courseName).Id;
                 var astudentName = _dbContext.Students
                         .SingleOrDefault(x => x.RegistrationNumber == sdtRegNo)
@@ -38,7 +39,7 @@ namespace StudentManagementBLL.CourseEnrollBLL
                         .DepartmentId;
                 CourseEnroll acourseEnroll = new CourseEnroll();
 
-
+                //------------
                 serviceresponse.Data = _dbContext.CourseEnrolls.SingleOrDefault(x =>
                 x.EnrolledCourseId == aCourseId
                 && x.StudentRegNo == aStudentRegNo);
@@ -63,6 +64,7 @@ namespace StudentManagementBLL.CourseEnrollBLL
                     }
                     else
                     {
+                        //----------
                         acourseEnroll.EnrolledCourseId = aCourseId;
                         acourseEnroll.Date = DateTime.Today;
                         acourseEnroll.IsEnrolled = true;
@@ -90,7 +92,7 @@ namespace StudentManagementBLL.CourseEnrollBLL
                 }
                 else
                 {
-
+                    //------------------------------
                     acourseEnroll.EnrolledCourseId = aCourseId;
                     acourseEnroll.Date = DateTime.Today;
                     acourseEnroll.IsEnrolled = true;

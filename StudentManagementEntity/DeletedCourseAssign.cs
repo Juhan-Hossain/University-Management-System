@@ -11,7 +11,7 @@ namespace StudentManagementEntity
     public class DeletedCourseAssign
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+      /*  [DatabaseGenerated(DatabaseGeneratedOption.Identity)]*/
         public int Id { get; set; }
 
 
@@ -22,7 +22,7 @@ namespace StudentManagementEntity
 
         public int? CourseId { get; set; }
 
-        public bool IsAssigned { get; set; } = false;
+        public int IsAssigned { get; set; } = 3;
 
         [NotMapped]
         public bool IsValidOperation { get; set; } = false;

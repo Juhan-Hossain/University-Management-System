@@ -58,8 +58,8 @@ namespace StudentManagementBLL.CourseAssignBLL
                         CourseAssignment aCourseAssignment = new CourseAssignment();
                         if (fetchingTeacher.RemainingCredit >= fetchingCourse.Credit)
                         {
-                            fetchingTeacher.RemainingCredit -= fetchingCourse.Credit;
-                            fetchingTeacher.CreditToBeTaken += fetchingCourse.Credit;
+                            fetchingTeacher.RemainingCredit = (fetchingTeacher.CreditToBeTaken - fetchingCourse.Credit);
+                            fetchingTeacher.CreditToBeTaken -= fetchingCourse.Credit;
 
                             fetchingCourse.AssignTo = fetchingTeacher.Name;
                             fetchingCourse.TeacherId = fetchingTeacher.Id;
@@ -74,7 +74,7 @@ namespace StudentManagementBLL.CourseAssignBLL
                             _dbContext.CourseAssignments.Add(aCourseAssignment);
                             _dbContext.SaveChanges();
                             serviceResponse.Data = aCourseAssignment;
-                            /*serviceResponse.Success = true;*/
+                            serviceResponse.Success = true;
 
                             serviceResponse.Message = $"{fetchingTeacher.Name} will start taking {fetchingCourse.Code}" +
                                $": {fetchingCourse.Name}";
@@ -90,7 +90,7 @@ namespace StudentManagementBLL.CourseAssignBLL
                 }
                 else if (serviceResponse.Data.IsAssigned == 1 || serviceResponse.Data.IsAssigned == 3)
                 {
-                    serviceResponse.Message = "Course is already assigned";
+                    serviceResponse.Message = "Course is not assigned or need to be updated";
                     serviceResponse.Success = false;
                 }
                 else

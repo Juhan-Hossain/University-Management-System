@@ -31,17 +31,37 @@ namespace StudentManagementBLL.DeletedCourseAssignServiceBLL
                 DeletedCourseAssign deletedCourseAssign = new DeletedCourseAssign();
 
                 _dbContext.CourseAssignments.FromSqlRaw<CourseAssignment>("SpGetDeletedCourseAssignTable01");
+                
+                foreach (CourseAssignment assign in assignCourses)
+                {
+                    Course fetchingCourse = _dbContext.Courses.SingleOrDefault(x => x.Code == assign.Code);
+                    Teacher fetchingTeacher = _dbContext.Teachers.SingleOrDefault(x => x.Id == assign.TeacherId);
+                    Department fetchingDepartment = _dbContext.Departments.SingleOrDefault(x => x.Id == assign.DepartmentId);
+                   
+                    deletedCourseAssign.Code = assign.Code;
+                    deletedCourseAssign.CourseId = assign.CourseId;
+                    deletedCourseAssign.DepartmentId = assign.DepartmentId;
+                    deletedCourseAssign.TeacherId = assign.TeacherId;
+                    assign.IsAssigned = 3;
+
+                    fetchingTeacher.CreditToBeTaken += fetchingCourse.Credit;
+                    fetchingTeacher.RemainingCredit = (fetchingTeacher.CreditToBeTaken+fetchingCourse.Credit);
+                    
+                    fetchingCourse.AssignTo = null;
+                    fetchingCourse.TeacherId = null;
+
+                    _dbContext.Courses.Update(fetchingCourse);
+
+                    _dbContext.SaveChanges();
+                    _dbContext.CourseAssignments.Update(assign);
+                    _dbContext.DeletedCourseAssigns.Add(deletedCourseAssign);
+                    
+                }
+                serviceResponse.Message = "Unassigned All Courses";
+                    serviceResponse.Success = true;
                 _dbContext.SaveChanges();
 
 
-
-
-               
-                    serviceResponse.Message = "Unassigned All Courses";
-                    serviceResponse.Success = true;
-
-
-               
             }
             return serviceResponse;
         }
