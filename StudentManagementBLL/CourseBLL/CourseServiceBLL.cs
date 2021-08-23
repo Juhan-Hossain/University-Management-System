@@ -160,7 +160,7 @@ namespace StudentManagementBLL.CourseBLL
         }
 
         /*//Get Enrolled Courses By StdReg No:
-       
+
         public ServiceResponse<IEnumerable<Course>> GetEnrolledCourseBystdRegNo(string stdRegNo)
         {
             var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
