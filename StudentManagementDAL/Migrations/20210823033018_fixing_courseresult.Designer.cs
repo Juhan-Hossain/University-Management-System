@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagementDAL;
 
 namespace StudentManagementDAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210823033018_fixing_courseresult")]
+    partial class fixing_courseresult
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -522,47 +524,6 @@ namespace StudentManagementDAL.Migrations
                         });
                 });
 
-            modelBuilder.Entity("StudentManagementEntity.StudentResult", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CourseName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DepartmentName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GradeLetter")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Result")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("StudentRegNo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GradeLetter");
-
-                    b.HasIndex("CourseName", "StudentRegNo")
-                        .IsUnique();
-
-                    b.ToTable("StudentResults");
-                });
-
             modelBuilder.Entity("StudentManagementEntity.Teacher", b =>
                 {
                     b.Property<int>("Id")
@@ -704,17 +665,6 @@ namespace StudentManagementDAL.Migrations
                     b.HasOne("StudentManagementEntity.StudentGrade", null)
                         .WithMany("StudentResults")
                         .HasForeignKey("StudentGradeGrade");
-                });
-
-            modelBuilder.Entity("StudentManagementEntity.StudentResult", b =>
-                {
-                    b.HasOne("StudentManagementEntity.StudentGrade", "StudentGrade")
-                        .WithMany()
-                        .HasForeignKey("GradeLetter")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("StudentGrade");
                 });
 
             modelBuilder.Entity("StudentManagementEntity.Teacher", b =>

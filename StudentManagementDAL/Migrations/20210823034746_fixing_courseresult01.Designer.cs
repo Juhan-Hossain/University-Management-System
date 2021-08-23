@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagementDAL;
 
 namespace StudentManagementDAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210823034746_fixing_courseresult01")]
+    partial class fixing_courseresult01
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -546,9 +548,6 @@ namespace StudentManagementDAL.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Result")
-                        .HasColumnType("bit");
-
                     b.Property<string>("StudentRegNo")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -560,7 +559,7 @@ namespace StudentManagementDAL.Migrations
                     b.HasIndex("CourseName", "StudentRegNo")
                         .IsUnique();
 
-                    b.ToTable("StudentResults");
+                    b.ToTable("StudentResult");
                 });
 
             modelBuilder.Entity("StudentManagementEntity.Teacher", b =>
