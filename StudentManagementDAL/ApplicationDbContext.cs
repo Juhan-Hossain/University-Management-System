@@ -81,7 +81,7 @@ namespace StudentManagementDAL
                 entity.HasMany(x => x.Courses)
                 .WithMany(x => x.Students);
 
-                
+
 
             });
 
@@ -89,12 +89,12 @@ namespace StudentManagementDAL
             //CourseEnrollment:
             modelBuilder.Entity<CourseEnroll>(entity =>
             {
-                entity.HasKey(x => new { x.StudentRegNo, x.CourseCode,x.DepartmentId });
+                entity.HasKey(x => new { x.StudentRegNo, x.CourseCode, x.DepartmentId });
                 entity.HasOne(x => x.Student)
-                .WithMany(x => x.CourseEnrolls).HasForeignKey(x=>x.EnrolledStudentId);
+                .WithMany(x => x.CourseEnrolls).HasForeignKey(x => x.EnrolledStudentId);
                 entity.HasOne(x => x.Course)
-                .WithMany(x => x.CourseEnrolls).HasForeignKey(x=>new { x.CourseCode,x.DepartmentId });
-                
+                .WithMany(x => x.CourseEnrolls).HasForeignKey(x => new { x.CourseCode, x.DepartmentId });
+
             });
 
 
@@ -103,10 +103,10 @@ namespace StudentManagementDAL
             modelBuilder.Entity<Department>(entity =>
             {
                 entity.HasKey(x => x.Id);
-               
+
                 entity.HasIndex(x => x.Name).IsUnique();
-                
-                
+
+
                 entity.HasIndex(x => x.Code).IsUnique();
                 /*entity.HasCheckConstraint("CHK_LengthOfCode", "len(code) >= 2 and len(code) <= 7");*/
                 entity.HasData(
@@ -158,7 +158,6 @@ namespace StudentManagementDAL
             //Teacher
             /* modelBuilder.Entity<Teacher>(entity =>
              {
-
                  entity.Property(x => x.Name).IsRequired();
                  entity.HasIndex(x => x.Name).IsUnique();
                  entity.HasIndex(x => x.Email).IsUnique();
@@ -168,7 +167,6 @@ namespace StudentManagementDAL
                  *//*entity.HasData(
                      new Teacher() { Id = 1, Name = "Ezaz Raihan", Address = "fjdsf", Email = "saif@gmail.com", Contact = 123445, DesignationId = 2, CreditToBeTaken = 100, RemainingCredit = 97, DepartmentId = 2 },
                      new Teacher() { Id = 2, Name = "Ashek", Address = "adafsf", Email = "ashek@gmail.com", Contact = 12312445, DesignationId = 1, CreditToBeTaken = 100, RemainingCredit = 70, DepartmentId = 2 }
-
                      );*//*
              });*/
 
@@ -227,13 +225,11 @@ namespace StudentManagementDAL
                   entity.HasKey(x => new { x.DayId, x.RoomId, x.StartTime, x.EndTime });
                   entity.HasIndex(x => x.ScheduleInfo).IsUnique();
                   entity.HasIndex(p => p.Department)
-
                         .WithMany(c => c.Products)
                         .HasForeignKey(p => new { p.CategoryId1, p.CategoryId2 });
                   entity.HasData(
                       new Teacher() { Id = 1, Name = "Ezaz Raihan", Address = "fjdsf", Email = "saif@gmail.com", Contact = 123445, DesignationId = 2, CreditTaken = 3, RemainingCredit = 97, DepartmentId = 2 },
                       new Teacher() { Id = 2, Name = "Ashek", Address = "adafsf", Email = "ashek@gmail.com", Contact = 12312445, DesignationId = 1, CreditTaken = 30, RemainingCredit = 70, DepartmentId = 2 }
-
                       );
               });*/
 
@@ -258,7 +254,7 @@ namespace StudentManagementDAL
                    );
             });
 
-            
+
 
         }
     }

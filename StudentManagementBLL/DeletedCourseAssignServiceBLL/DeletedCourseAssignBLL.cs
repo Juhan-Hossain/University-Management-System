@@ -36,32 +36,12 @@ namespace StudentManagementBLL.DeletedCourseAssignServiceBLL
 
 
 
-                foreach (CourseAssignment assign in assignCourses)
-                {
-                    Course fetchingCourse = _dbContext.Courses.SingleOrDefault(x => x.Code == assign.Code);
-                    Teacher fetchingTeacher = _dbContext.Teachers.SingleOrDefault(x => x.Id == assign.TeacherId);
-                    Department fetchingDepartment = _dbContext.Departments.SingleOrDefault(x => x.Id == assign.DepartmentId);
-
-                   
-
-
-                    deletedCourseAssign.Code = assign.Code;
-                    deletedCourseAssign.CourseId = assign.CourseId;
-                    deletedCourseAssign.DepartmentId = assign.DepartmentId;
-                    deletedCourseAssign.TeacherId = assign.TeacherId;
-
-
-                    assign.IsAssigned = 3;
-
-                    fetchingTeacher.RemainingCredit += fetchingCourse.Credit;
-                    fetchingTeacher.CreditToBeTaken -= fetchingCourse.Credit;
-
-                    _dbContext.DeletedCourseAssigns.Add(deletedCourseAssign);
+               
                     serviceResponse.Message = "Unassigned All Courses";
                     serviceResponse.Success = true;
 
 
-                }
+               
             }
             return serviceResponse;
         }

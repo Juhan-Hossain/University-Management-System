@@ -23,9 +23,9 @@ namespace StudentManagementEntity
 
         [Display(Name = "Course")]
        /* [ForeignKey("Course")]*/
-        public int CourseId { get; set; }
+       // public int CourseId { get; set; }
 
-        [Display(Name = "Room No")]
+     //   [Display(Name = "Room No")]
 /*        [ForeignKey("Room")]*/
         public int RoomId { get; set; }
         public Day Day { get; set; } //using enum which will store int value to database
@@ -39,7 +39,7 @@ namespace StudentManagementEntity
         public string FromMeridiem { get; set; }  //return value AM or PM
         public string ToMeridiem { get; set; } //return value AM or PM
         
-        public virtual Course Course { get; set; }
+      //  public virtual Course Course { get; set; }
         public virtual Department Department { get; set; }
         public virtual Room Room { get; set; }
 

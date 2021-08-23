@@ -88,7 +88,7 @@ namespace StudentManagementBLL.CourseAssignBLL
                     }
 
                 }
-                else if (serviceResponse.Data.IsAssigned==1 || serviceResponse.Data.IsAssigned == 3)
+                else if (serviceResponse.Data.IsAssigned == 1 || serviceResponse.Data.IsAssigned == 3)
                 {
                     serviceResponse.Message = "Course is already assigned";
                     serviceResponse.Success = false;
@@ -121,32 +121,21 @@ namespace StudentManagementBLL.CourseAssignBLL
             if (flag)
             {
                 DeletedCourseAssign courseAssign = new DeletedCourseAssign();
-
                 foreach (CourseAssignment assign in courses)
                 {
                     var fetchingCourse = _dbContext.Courses.SingleOrDefault(x => x.Code == assign.Code);
                     var fetchingTeacher = _dbContext.Teachers.SingleOrDefault(x => x.Id == assign.TeacherId);
                     var fetchingDepartment = _dbContext.Departments.SingleOrDefault(x => x.Id == assign.DepartmentId);
-
                     courseAssign.Code = assign.Code;
                     courseAssign.CourseId = assign.CourseId;
                     courseAssign.DepartmentId = assign.DepartmentId;
                     courseAssign.TeacherId = assign.TeacherId;
-
-
                     assign.IsAssigned = 3;
-
                     fetchingTeacher.RemainingCredit += fetchingCourse.Credit;
                     fetchingTeacher.CreditToBeTaken -= fetchingCourse.Credit;
-
                     _dbContext.DeletedCourseAssigns.Add(courseAssign);
-
-
-
                 }
             }
-
-
         }*/
     }
 }
