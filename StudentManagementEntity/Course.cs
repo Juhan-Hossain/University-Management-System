@@ -26,7 +26,7 @@ namespace StudentManagementEntity
         [Required(ErrorMessage = "There must be a Course Code\nSample: CSE-***")]
         public String Code { get; set; }
         [Required(ErrorMessage = "There must be a Course Name")]
-      
+
         public String Name { get; set; }
         [Required(ErrorMessage = "Credit Field Must Be Filled")]
         public float Credit { get; set; }
