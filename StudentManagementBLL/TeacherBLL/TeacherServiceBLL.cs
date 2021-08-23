@@ -16,26 +16,6 @@ namespace StudentManagementBLL.TeacherBLL
 
         }
 
-        //POST:Teacher
-        /*public override ServiceResponse<Teacher> Add(Teacher teacher)
-        {
-            var serviceResponse = new ServiceResponse<Teacher>();
 
-            try
-            {
-                teacher.RemainingCredit = teacher.CreditToBeTaken;
-                serviceResponse.Data = teacher;
-                _dbContext.Teachers.Add(serviceResponse.Data);
-                _dbContext.SaveChanges();
-                serviceResponse.Message = "Designation created successfully in DB";
-            }
-            catch (Exception exception)
-            {
-                serviceResponse.Message = $"Storing action failed in the database for given designation\n" +
-                    $"Error Message: {exception.Message}";
-                serviceResponse.Success = false;
-            }
-            return serviceResponse;
-        }*/
     }
 }
