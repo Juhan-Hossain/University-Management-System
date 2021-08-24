@@ -13,10 +13,11 @@ namespace StudentManagementBLL.CourseBLL
 {
     public class CourseServiceBLL : Repository<Course, ApplicationDbContext>, ICourseServiceBLL
     {
+        private readonly ApplicationDbContext courseDbContext;
+
         public CourseServiceBLL(ApplicationDbContext dbContext):base(dbContext)
         {
-
-
+            this.courseDbContext = dbContext;
         }
 
 
@@ -46,8 +47,8 @@ namespace StudentManagementBLL.CourseBLL
             try
             {
                 serviceResponse.Data = course;
-                _dbContext.Courses.Add(serviceResponse.Data);
-                _dbContext.SaveChanges();
+                courseDbContext.Courses.Add(serviceResponse.Data);
+                courseDbContext.SaveChanges();
                 serviceResponse.Message = "Designation created successfully in DB";
             }
             catch (Exception exception)
@@ -69,7 +70,7 @@ namespace StudentManagementBLL.CourseBLL
             var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
             try
             {
-                serviceResponse.Data = _dbContext.Courses
+                serviceResponse.Data = courseDbContext.Courses
                     .Include(x => x.Department)
                     .Where(x => x.DepartmentId == departmentId).ToList();
 
@@ -91,8 +92,8 @@ namespace StudentManagementBLL.CourseBLL
             var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
             try
             {
-                var data = new List<Course>();
-                var courses = _dbContext.Courses;
+                List<Course> data = new List<Course>();
+                DbSet<Course> courses = courseDbContext.Courses;
                 foreach (Course course in courses)
                 {
                     if (course.DepartmentId == departmentId)
@@ -141,11 +142,11 @@ namespace StudentManagementBLL.CourseBLL
             try
             {
                 Student aStudent;
-                 aStudent = _dbContext.Students
+                 aStudent = courseDbContext.Students
                    .SingleOrDefault(x => x.RegistrationNumber == stdRegNo);
                 if(aStudent != null)
                 {
-                    var tempcourses = _dbContext.Courses
+                    var tempcourses = courseDbContext.Courses
                         .Include(x => x.Department)
                     .Where(x => x.DepartmentId == aStudent.DepartmentId).ToList(); ;
 
