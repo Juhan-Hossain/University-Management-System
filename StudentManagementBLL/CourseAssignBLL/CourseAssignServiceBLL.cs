@@ -56,7 +56,8 @@ namespace StudentManagementBLL.CourseAssignBLL
                     {
 
                         CourseAssignment aCourseAssignment = new CourseAssignment();
-                        if (fetchingTeacher.RemainingCredit >= fetchingCourse.Credit)
+
+                        if (fetchingTeacher.RemainingCredit >= fetchingCourse.Credit  || fetchingTeacher.RemainingCredit==null )
                         {
                             fetchingTeacher.RemainingCredit = (fetchingTeacher.CreditToBeTaken - fetchingCourse.Credit);
                             fetchingTeacher.CreditToBeTaken -= fetchingCourse.Credit;
