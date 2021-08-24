@@ -14,6 +14,7 @@ namespace StudentManagementEntity
         public Department()
         {
             Courses = new HashSet<Course>();
+            Teachers = new HashSet<Teacher>();
         }
         
 
@@ -31,6 +32,7 @@ namespace StudentManagementEntity
 
         public string Code { get; set; }
         public virtual ICollection<Course> Courses { get; set; }
+        public virtual ICollection<Teacher> Teachers { get; set; }
 
 
 

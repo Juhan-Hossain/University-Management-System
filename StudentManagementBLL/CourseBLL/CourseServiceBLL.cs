@@ -86,7 +86,7 @@ namespace StudentManagementBLL.CourseBLL
 
 
         //ViewCourseByDept:
-        public ServiceResponse<IEnumerable<Course>> ViewCourseByDepartment(int departmentId)
+        public ServiceResponse<IEnumerable<Course>> AssignedCoursesByDepartment(int departmentId)
         {
             var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
             try
