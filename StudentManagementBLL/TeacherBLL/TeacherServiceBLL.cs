@@ -18,7 +18,7 @@ namespace StudentManagementBLL.TeacherBLL
 
 
         //GET:GET teacher by department:
-        public ServiceResponse<IEnumerable<Teacher>> GetTeacherByDepartment(int departmentId)
+        public ServiceResponse<IEnumerable<Teacher>> GetTeachersByDepartment(int departmentId)
         {
             var serviceResponse = new ServiceResponse<IEnumerable<Teacher>>();
             try
