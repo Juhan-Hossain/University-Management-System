@@ -28,6 +28,14 @@ namespace University_Student_Management.Controllers
             return Ok(serviceResponse);
         }
 
+        [HttpGet("Department/{departmentId}")]
+        public ActionResult<ServiceResponse<IEnumerable<Teacher>>> GetTeachersById(int departmentId)
+        {
+            var serviceResponse = _service.GetTeachersByDepartment(departmentId);
+            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
+            return Ok(serviceResponse);
+        }
+
 
         // POST: api/CreateTeacher
         [HttpPost("CreateTeacher")]
@@ -39,12 +47,6 @@ namespace University_Student_Management.Controllers
             return Ok(serviceResponse.Data);
         }
 
-        [HttpGet("Department/{departmentId}")]
-        public ActionResult<ServiceResponse<IEnumerable<Teacher>>> GetTeachersByDepartment(int departmentId)
-        {
-            var serviceResponse = _service.GetTeachersByDepartment(departmentId);
-            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
-            return Ok(serviceResponse);
-        }
+        
     }
 }

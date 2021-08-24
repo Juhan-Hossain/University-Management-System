@@ -11,9 +11,11 @@ namespace StudentManagementBLL.TeacherBLL
 {
     public class TeacherServiceBLL: Repository<Teacher, ApplicationDbContext>, ITeacherServiceBLL
     {
+        private readonly ApplicationDbContext Context;
+
         public TeacherServiceBLL(ApplicationDbContext dbContext):base(dbContext)
         {
-
+            this.Context = dbContext;
         }
 
 
@@ -23,14 +25,14 @@ namespace StudentManagementBLL.TeacherBLL
             var serviceResponse = new ServiceResponse<IEnumerable<Teacher>>();
             try
             {
-                serviceResponse.Data = _dbContext.Teachers.Where(x => x.DepartmentId == departmentId).ToList();
+                serviceResponse.Data = Context.Teachers.Where(x => x.DepartmentId == departmentId).ToList();
 
-                serviceResponse.Message = "Data  with the given id was fetched successfully from the database";
+                serviceResponse.Message = "teacher with the given dept.id was fetched successfully from the database";
             }
             catch (Exception exception)
             {
 
-                serviceResponse.Message = "Some error occurred while fetching data.\nError message: " + exception.Message;
+                serviceResponse.Message = "Some error occurred while fetching teacher by dept.id .\nError message: " + exception.Message;
                 serviceResponse.Success = false;
             }
             return serviceResponse;
