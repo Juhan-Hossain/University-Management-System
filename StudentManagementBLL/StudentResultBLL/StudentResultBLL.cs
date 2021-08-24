@@ -11,9 +11,11 @@ namespace StudentManagementBLL.StudentResultBLL
 {
     public class StudentResultBLL : Repository<StudentResult, ApplicationDbContext>, IStudentResultBLL
     {
+        private readonly ApplicationDbContext Context;
+
         public StudentResultBLL(ApplicationDbContext dbContext) : base(dbContext)
         {
-
+            this.Context = dbContext;
         }
 
         public override ServiceResponse<StudentResult> Add(StudentResult studentResult)
@@ -21,33 +23,42 @@ namespace StudentManagementBLL.StudentResultBLL
             var serviceresponse = new ServiceResponse<StudentResult>();
             try
             {
-                var aStudentRegNo = _dbContext.Students.SingleOrDefault(x => x.RegistrationNumber == studentResult.StudentRegNo).ToString();
-                //----------------------
-                var aCourseId = _dbContext.Courses.SingleOrDefault(x => x.Name == studentResult.CourseName).Id;
-                var astudentName = _dbContext.Students
+                //fetching student with reg no
+                string aStudentRegNo = Context.Students.SingleOrDefault(x => x.RegistrationNumber == studentResult.StudentRegNo).ToString();
+                //fetching course with id
+                int aCourseId = Context.Courses.SingleOrDefault(x => x.Name == studentResult.CourseName).Id;
+                //fetching student name with reg no
+                string astudentName = Context.Students
                         .SingleOrDefault(x => x.RegistrationNumber == studentResult.StudentRegNo)
                         .Name;
-                var acourseName = _dbContext.Courses
+                //fetching coursename 
+                string acourseName = Context.Courses
                     .SingleOrDefault(x => x.Name == studentResult.CourseName)
                     .Name;
                 //------------------------------------------------------------------
-                var acourseCode = _dbContext.Courses
+
+                string acourseCode = Context.Courses
                     .SingleOrDefault(x => x.Name == studentResult.CourseName).Code;
-                var courseList = new List<Course>();
+                List<Course> courseList = new List<Course>();
+                //get enrolled course list from GetEnrolledCoursesBystdRegNo()
                 courseList = (List<Course>)GetEnrolledCoursesBystdRegNo(aStudentRegNo).Data;
 
-
-                var aDepartmentId = _dbContext.Students
+                //fetching departmentId with stdRegno
+                int aDepartmentId = Context.Students
                         .SingleOrDefault(x => x.RegistrationNumber == studentResult.StudentRegNo)
                         .DepartmentId;
-                var aDepartmentName = _dbContext.Departments.SingleOrDefault(x => x.Id == aDepartmentId).Name;
+                //fetching departmentId with departmentId
+                string aDepartmentName = Context.Departments.SingleOrDefault(x => x.Id == aDepartmentId).Name;
+
                 StudentResult aResult = new StudentResult();
-                var astudentEmail = _dbContext.Students
+
+                //fetching departmentId with stdRegno
+                string astudentEmail = Context.Students
                         .SingleOrDefault(x => x.RegistrationNumber == studentResult.StudentRegNo)
                         .Email;
 
-
-                serviceresponse.Data = _dbContext.StudentResults.SingleOrDefault(x =>
+                //fetching data if there exist any or return null
+                serviceresponse.Data = Context.StudentResults.SingleOrDefault(x =>
                 x.CourseName == studentResult.CourseName
                 && x.StudentRegNo == studentResult.StudentRegNo);
 
@@ -67,15 +78,62 @@ namespace StudentManagementBLL.StudentResultBLL
                     serviceresponse.Success = false;
                 }
 
+                //data does not exist so have to put it
                 else if (serviceresponse.Data == null)
                 {
+                    //got error in the previous any case
                     if (!serviceresponse.Success)
                     {
-                        serviceresponse.Message = "Course is already assigne.";
+                        serviceresponse.Message = "got any previous case error";
                         serviceresponse.Success = false;
                     }
                     else
                     {
+                        try
+                        {
+                            //this block adding new student result
+                            aResult.StudentRegNo = studentResult.StudentRegNo;
+
+                            aResult.Name = astudentName;
+                            aResult.CourseName = studentResult.CourseName;
+                            aResult.Email = astudentEmail;
+                            aResult.DepartmentName = aDepartmentName;
+                            aResult.GradeLetter = studentResult.GradeLetter;
+                            aResult.Result = true;
+
+
+
+
+
+                            Context.StudentResults.Add(aResult);
+                            Context.SaveChanges();
+                            serviceresponse.Data = aResult;
+
+                            serviceresponse.Success = true;
+
+                            serviceresponse.Message = $"{astudentName} will start taking {acourseName}";
+                        }
+                        catch (Exception ex)
+                        {
+                            serviceresponse.Message = "Error occured while adding student result\n" +
+                                ex.Message;
+                            serviceresponse.Success = false;
+                        }
+
+
+                    }
+                }
+                //already exist result for this syudent with this course
+                else if (serviceresponse.Data.Result)
+                {
+                    serviceresponse.Message = "already exist result for this syudent with this course";
+                    serviceresponse.Success = false;
+                }
+                else
+                {
+                    try
+                    {
+                        //this block updating already existing student result
                         aResult.StudentRegNo = studentResult.StudentRegNo;
 
                         aResult.Name = astudentName;
@@ -86,41 +144,19 @@ namespace StudentManagementBLL.StudentResultBLL
                         aResult.Result = true;
 
 
-
-
-
-                        _dbContext.StudentResults.Add(aResult);
-                        _dbContext.SaveChanges();
+                        Context.StudentResults.Update(aResult);
+                        Context.SaveChanges();
                         serviceresponse.Data = aResult;
-                        //------------------------------------------
-
-                        serviceresponse.Success = true;
-
-                        serviceresponse.Message = $"{astudentName} will start taking {acourseName}";
+                        serviceresponse.Message = "student result Updated";
                     }
-                }
-                else if (serviceresponse.Data.Result)
-                {
-                    serviceresponse.Message = "Course is already Enrolled";
-                    serviceresponse.Success = false;
-                }
-                else
-                {
-
-                    aResult.StudentRegNo = studentResult.StudentRegNo;
-
-                    aResult.Name = astudentName;
-                    aResult.CourseName = studentResult.CourseName;
-                    aResult.Email = astudentEmail;
-                    aResult.DepartmentName = aDepartmentName;
-                    aResult.GradeLetter = studentResult.GradeLetter;
-                    aResult.Result = true;
+                    catch (Exception ex)
+                    {
+                        serviceresponse.Message = "This error occured while updating student result\n" +
+                            ex.Message;
+                        serviceresponse.Success = false;
+                    }
 
 
-                    _dbContext.StudentResults.Update(aResult);
-                    _dbContext.SaveChanges();
-                    serviceresponse.Data = aResult;
-                    serviceresponse.Message = "Course Enrollment Updated";
                 }
 
             }
@@ -143,30 +179,39 @@ namespace StudentManagementBLL.StudentResultBLL
                 List<Course> CourseList = new List<Course>();
                 List<Course> CourseListf = new List<Course>();
                 Student aStudent;
-                aStudent = _dbContext.Students
+                aStudent = Context.Students
                   .SingleOrDefault(x => x.RegistrationNumber == stdRegNo);
-                CourseList = _dbContext.Courses.Where(x => x.DepartmentId == aStudent.DepartmentId).ToList();
+                CourseList = Context.Courses.Where(x => x.DepartmentId == aStudent.DepartmentId).ToList();
                 if (aStudent != null)
                 {
-
-                    foreach (var courseEnroll in _dbContext.CourseEnrolls)
+                    try
                     {
-                        if (courseEnroll != null)
+                        foreach (var courseEnroll in Context.CourseEnrolls)
                         {
-                            foreach (var course in CourseList)
+                            if (courseEnroll != null)
                             {
-                                if (course != null)
+                                foreach (var course in CourseList)
                                 {
-                                    //----------------------
-                                    if (courseEnroll.EnrolledCourseId == course.Id)
+                                    if (course != null)
                                     {
-                                        CourseListf.Add(courseEnroll.Course);
+                                        if (courseEnroll.EnrolledCourseId == course.Id)
+                                        {
+                                            CourseListf.Add(courseEnroll.Course);
+                                        }
                                     }
-                                }
 
+                                }
                             }
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        serviceResponse.Message = "Error occured while fetching enrolled course with loop\n" +
+                            ex.Message;
+                        serviceResponse.Success = false;
+                    }
+
+                    //succeded in fetching course
                     if (CourseListf != null)
                     {
                         serviceResponse.Data = CourseListf;
@@ -174,7 +219,7 @@ namespace StudentManagementBLL.StudentResultBLL
                     }
                     else
                     {
-                        serviceResponse.Message = "No COursees Enrolled!!!";
+                        serviceResponse.Message = "No Courses Enrolled found!!!";
                         serviceResponse.Success = false;
                     }
                 }
@@ -210,46 +255,45 @@ namespace StudentManagementBLL.StudentResultBLL
                 List<CourseEnroll> EnrolledCourseList = new List<CourseEnroll>();
 
                 Student aStudent;
-                aStudent = _dbContext.Students
+                aStudent = Context.Students
                   .SingleOrDefault(x => x.RegistrationNumber == stdRegNo);
                 //Taking list to load courselist of given student
                 if (aStudent != null)
                 {
-
-                    /* foreach (var result in _dbContext.CourseEnrolls)
-                     {
-                         if (result.EnrolledStudentId == aStudent.Id)
-                         {
-                             CourseList.Add(result.Course);
-                         }
-                     }*/
-                    /*CourseList = _dbContext.Courses.Where(x => x.DepartmentId == aStudent.DepartmentId).ToList();*/
                     var response = GetEnrolledCoursesBystdRegNo(stdRegNo);
                     CourseList = (List<Course>)GetEnrolledCoursesBystdRegNo(stdRegNo).Data;
+
+
+
                     if (CourseList != null || !response.Success)
                     {
-
-                        foreach (var course in CourseList)
+                        try
                         {
-                            if (course != null)
+                            foreach (var course in CourseList)
                             {
-                                foreach (var result in _dbContext.StudentResults)
+                                if (course != null)
                                 {
-                                    if (result != null)
+                                    foreach (var result in Context.StudentResults)
                                     {
-                                        /*var student = new Student();
-                                        student.RegistrationNumber = stdRegNo;*/
-                                        if (course.Name == result.CourseName && result.StudentRegNo == stdRegNo)
+                                        if (result != null)
                                         {
-                                            Results.Add(result);
+                                            
+                                            if (course.Name == result.CourseName && result.StudentRegNo == stdRegNo)
+                                            {
+                                                Results.Add(result);
+                                            }
                                         }
                                     }
-
-
                                 }
                             }
-
                         }
+                        catch (Exception ex)
+                        {
+                            serviceResponse.Message = "error occured while adding result in container with loop \n" +
+                                ex.Message;
+                        }
+
+
                         if (Results != null)
                         {
                             serviceResponse.Data = Results;
@@ -273,7 +317,7 @@ namespace StudentManagementBLL.StudentResultBLL
             catch (Exception exception)
             {
 
-                serviceResponse.Message = "Some error occurred while fetching data.\nError message: " + exception.Message;
+                serviceResponse.Message = "Some error occurred while fetching result.\nError message: " + exception.Message;
                 serviceResponse.Success = false;
             }
             return serviceResponse;
