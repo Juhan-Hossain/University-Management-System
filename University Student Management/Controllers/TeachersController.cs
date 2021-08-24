@@ -38,5 +38,13 @@ namespace University_Student_Management.Controllers
             if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
             return Ok(serviceResponse.Data);
         }
+
+        [HttpGet("Department/{departmentId}")]
+        public ActionResult<ServiceResponse<IEnumerable<Teacher>>> GetTeachersByDepartment(int departmentId)
+        {
+            var serviceResponse = _service.GetTeachersByDepartment(departmentId);
+            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
+            return Ok(serviceResponse);
+        }
     }
 }
