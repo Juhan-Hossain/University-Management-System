@@ -24,10 +24,9 @@ namespace University_Student_Management.Controllers
         [HttpPost("CreateDepartment")]
         public ActionResult<ServiceResponse<Department>> CreateDepartment([FromBody] Department department)
         {
-            /*department.Id = 0;*/
             var serviceResponse = _service.Add(department);
-            if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
-            return Ok(serviceResponse.Data);
+            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
+            return Ok(serviceResponse);
         }
 
         // GET: api/Departments

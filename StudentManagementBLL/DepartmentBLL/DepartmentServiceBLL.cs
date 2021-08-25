@@ -11,9 +11,11 @@ namespace StudentManagementBLL.DepartmentBLL
 {
     public class DepartmentServiceBLL:Repository<Department,ApplicationDbContext>,IDepartmentServiceBLL
     {
+        private readonly ApplicationDbContext Context;
+
         public DepartmentServiceBLL(ApplicationDbContext dbContext) : base(dbContext)
         {
-
+            this.Context = dbContext;
         }
 
         public override ServiceResponse<Department> Add(Department department)
@@ -23,15 +25,15 @@ namespace StudentManagementBLL.DepartmentBLL
             try
             {
                 var newId = department.Id;
-                department.Id = 0;
+              /*  department.Id = 0;*/
                 serviceResponse.Data = department;
-                _dbContext.Departments.Add(serviceResponse.Data);
-                _dbContext.SaveChanges();
+                Context.Departments.Add(serviceResponse.Data);
+                Context.SaveChanges();
                 serviceResponse.Message = "Department created successfully in DB";
             }
             catch (Exception exception)
             {
-                serviceResponse.Message = $"Storing action failed in the database for given department\n" +
+                serviceResponse.Message = $"this department already exist\n" +
                     $"Error Message: {exception.Message}";
                 serviceResponse.Success = false;
             }
