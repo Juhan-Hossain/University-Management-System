@@ -23,6 +23,30 @@ namespace StudentManagementBLL.CourseBLL
 
 
 
+
+        //POST:Course
+        public override ServiceResponse<Course> Add(Course course)
+        {
+            var serviceResponse = new ServiceResponse<Course>();
+
+            try
+            {
+                serviceResponse.Data = course;
+                courseDbContext.Courses.Add(serviceResponse.Data);
+                courseDbContext.SaveChanges();
+                serviceResponse.Message = "Course created successfully in DB";
+            }
+            catch (Exception exception)
+            {
+                serviceResponse.Message = $"{course.Code}/{course.Name} already stored in the Db\n" +
+                    $"Error Message: {exception.Message}";
+                serviceResponse.Success = false;
+            }
+            return serviceResponse;
+        }
+
+
+
         
 
 
