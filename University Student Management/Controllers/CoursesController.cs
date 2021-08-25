@@ -55,7 +55,10 @@ namespace University_Student_Management.Controllers
         {
            /* course.Id = 0;*/
             var serviceResponse = _service.Add(course);
-            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
+            if (serviceResponse.Success == false)
+            {
+                return BadRequest(serviceResponse);
+            }
             return Ok(serviceResponse);
         }
 

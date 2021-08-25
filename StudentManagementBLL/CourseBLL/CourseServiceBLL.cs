@@ -49,11 +49,11 @@ namespace StudentManagementBLL.CourseBLL
                 serviceResponse.Data = course;
                 courseDbContext.Courses.Add(serviceResponse.Data);
                 courseDbContext.SaveChanges();
-                serviceResponse.Message = "Designation created successfully in DB";
+                serviceResponse.Message = "Course created successfully in DB";
             }
             catch (Exception exception)
             {
-                serviceResponse.Message = $"Storing action failed in the database for given designation\n" +
+                serviceResponse.Message = $"{course.Code}/{course.Name} already stored in the Db\n" +
                     $"Error Message: {exception.Message}";
                 serviceResponse.Success = false;
             }
