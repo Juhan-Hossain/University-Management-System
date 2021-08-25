@@ -31,7 +31,7 @@ namespace University_Student_Management.Controllers
         }
 
         // GET: Courses
-        [HttpGet("CoursesByDepartment")]
+        [HttpGet("CoursesByDepartment&Code")]
         public ActionResult<ServiceResponse<IEnumerable<Course>>> GetCoursesByDepartment(int departmentId,string courseCode)
         {
             var serviceResponse = _service.GetCourseByDepartment(departmentId,courseCode);
@@ -53,7 +53,7 @@ namespace University_Student_Management.Controllers
         
         public ActionResult<ServiceResponse<Course>> CreateCourse(Course course)
         {
-           /* course.Id = 0;*/
+           
             var serviceResponse = _service.Add(course);
             if (serviceResponse.Success == false)
             {

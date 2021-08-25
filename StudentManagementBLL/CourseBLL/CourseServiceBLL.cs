@@ -21,23 +21,8 @@ namespace StudentManagementBLL.CourseBLL
         }
 
 
-        //GET:All:COurse
-      /*  public override ServiceResponse<IEnumerable<Course>> GetAll()
-        {
-            var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
-            try
-            {
-                serviceResponse.Data = _dbContext.Courses.Include(x => x.).ToList();
 
-                serviceResponse.Message = "Course data & Assigning teacher fetched successfully from the database";
-            }
-            catch (Exception exception)
-            {
-                serviceResponse.Message = "Some error occurred while fetching data.\nError message: " + exception.Message;
-                serviceResponse.Success = false;
-            }
-            return serviceResponse;
-        }*/
+
 
         //POST:Course
         public override ServiceResponse<Course> Add(Course course)
@@ -59,6 +44,7 @@ namespace StudentManagementBLL.CourseBLL
             }
             return serviceResponse;
         }
+
 
 
         
