@@ -55,7 +55,7 @@ namespace StudentManagementBLL.DeletedCourseAssignServiceBLL
                     Context.Courses.Update(fetchingCourse);
 
 
-                    Context.CourseAssignments.Update(assign);
+                    Context.CourseAssignments.Remove(assign);
                     Context.DeletedCourseAssigns.Add(deletedCourseAssign);
 
                 }
