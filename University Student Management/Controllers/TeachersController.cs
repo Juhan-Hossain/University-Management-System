@@ -41,7 +41,7 @@ namespace University_Student_Management.Controllers
         [HttpPost("CreateTeacher")]
         public ActionResult<ServiceResponse<Teacher>> CreateTeacher( Teacher teacher)
         {
-            
+            teacher.RemainingCredit = teacher.CreditToBeTaken;
             var serviceResponse = _service.Add(teacher);
             if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
             return Ok(serviceResponse.Data);

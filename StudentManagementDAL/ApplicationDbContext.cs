@@ -156,19 +156,19 @@ namespace StudentManagementDAL
             });
 
             //Teacher
-            /* modelBuilder.Entity<Teacher>(entity =>
-             {
-                 entity.Property(x => x.Name).IsRequired();
-                 entity.HasIndex(x => x.Name).IsUnique();
-                 entity.HasIndex(x => x.Email).IsUnique();
-                 *//*entity.HasOne(a => a.Department).WithMany(b => b.Teachers);*//*
-                 entity.HasCheckConstraint("CHK_CreditToBeTakenByTeacher", "CreditToBeTaken >= 0");
-                 entity.HasCheckConstraint("CHK_RemainingCreditOfTeacher", "RemainingCredit BETWEEN 0 AND CreditTaken");
-                 *//*entity.HasData(
-                     new Teacher() { Id = 1, Name = "Ezaz Raihan", Address = "fjdsf", Email = "saif@gmail.com", Contact = 123445, DesignationId = 2, CreditToBeTaken = 100, RemainingCredit = 97, DepartmentId = 2 },
-                     new Teacher() { Id = 2, Name = "Ashek", Address = "adafsf", Email = "ashek@gmail.com", Contact = 12312445, DesignationId = 1, CreditToBeTaken = 100, RemainingCredit = 70, DepartmentId = 2 }
-                     );*//*
-             });*/
+            modelBuilder.Entity<Teacher>(entity =>
+            {
+                entity.Property(x => x.Name).IsRequired();
+                entity.HasIndex(x => x.Name).IsUnique();
+                entity.HasIndex(x => x.Email).IsUnique();
+                entity.HasOne(a => a.Department).WithMany(b => b.Teachers);
+                entity.HasCheckConstraint("CHK_CreditToBeTakenByTeacher", "CreditToBeTaken >= 0");
+                entity.HasCheckConstraint("CHK_RemainingCreditOfTeacher", "RemainingCredit BETWEEN 0 AND CreditToBeTaken");
+                entity.HasData(
+                    new Teacher() { Id = 1, Name = "Ezaz Raihan", Address = "fjdsf", Email = "saif@gmail.com", Contact = 123445, DesignationId = 2, CreditToBeTaken = 100, RemainingCredit = 97, DepartmentId = 2 },
+                    new Teacher() { Id = 2, Name = "Ashek", Address = "adafsf", Email = "ashek@gmail.com", Contact = 12312445, DesignationId = 1, CreditToBeTaken = 100, RemainingCredit = 70, DepartmentId = 2 }
+                    );
+            });
 
             //Semester
             modelBuilder.Entity<Semester>(entity =>

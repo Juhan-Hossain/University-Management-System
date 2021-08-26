@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagementDAL;
 
 namespace StudentManagementDAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210826074437_fixing_course_assign_table_keyId_from_database_generated_recreated_idColumn")]
+    partial class fixing_course_assign_table_keyId_from_database_generated_recreated_idColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -612,11 +614,11 @@ namespace StudentManagementDAL.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double?>("RemainingCredit")
                         .HasColumnType("float");
@@ -627,43 +629,7 @@ namespace StudentManagementDAL.Migrations
 
                     b.HasIndex("DesignationId");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
                     b.ToTable("Teachers");
-
-                    b.HasCheckConstraint("CHK_CreditToBeTakenByTeacher", "CreditToBeTaken >= 0");
-
-                    b.HasCheckConstraint("CHK_RemainingCreditOfTeacher", "RemainingCredit BETWEEN 0 AND CreditToBeTaken");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "fjdsf",
-                            Contact = 123445L,
-                            CreditToBeTaken = 100.0,
-                            DepartmentId = 2,
-                            DesignationId = 2,
-                            Email = "saif@gmail.com",
-                            Name = "Ezaz Raihan",
-                            RemainingCredit = 97.0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Address = "adafsf",
-                            Contact = 12312445L,
-                            CreditToBeTaken = 100.0,
-                            DepartmentId = 2,
-                            DesignationId = 1,
-                            Email = "ashek@gmail.com",
-                            Name = "Ashek",
-                            RemainingCredit = 70.0
-                        });
                 });
 
             modelBuilder.Entity("CourseStudent", b =>
