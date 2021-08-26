@@ -63,8 +63,8 @@ namespace StudentManagementBLL.CourseAssignBLL
                         {
                             try
                             {
-                                fetchingTeacher.RemainingCredit = (fetchingTeacher.CreditToBeTaken - fetchingCourse.Credit);
-                                fetchingTeacher.CreditToBeTaken -= fetchingCourse.Credit;
+                                fetchingTeacher.RemainingCredit  -= fetchingCourse.Credit;/*
+                                fetchingTeacher.CreditToBeTaken -= fetchingCourse.Credit;*/
 
                                 fetchingCourse.AssignTo = fetchingTeacher.Name;
                                 fetchingCourse.TeacherId = fetchingTeacher.Id;
