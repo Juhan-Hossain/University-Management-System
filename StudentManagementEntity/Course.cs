@@ -33,8 +33,9 @@ namespace StudentManagementEntity
         public float Credit { get; set; }
         public String Description { get; set; }
 
-        [ForeignKey("Semester")]
+   /*     [ForeignKey("Semester")]*/
         public int? SemesterId { get; set; }
+        public string SemesterName { get; set; }
 
         [ForeignKey("Teacher")]
         public int? TeacherId { get; set; }
