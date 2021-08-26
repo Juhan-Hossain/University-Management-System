@@ -75,6 +75,8 @@ namespace StudentManagementBLL.CourseBLL
         //ViewCourseByDept:
         public ServiceResponse<IEnumerable<Course>> AssignedCoursesByDepartment(int departmentId)
         {
+                
+            
             var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
             try
             {
@@ -84,19 +86,24 @@ namespace StudentManagementBLL.CourseBLL
                 {
                     if (course.DepartmentId == departmentId)
                     {
-                        if (course.AssignTo != null)
+                        /*if (course.AssignTo != null)
                         {
                             data.Add(course);
-                        }
-                        else
+                        }*/
+                        if (course.AssignTo == null)
                         {
                             course.AssignTo = "Not Assigned Yet!";
-                            data.Add(course);
                         }
+                        var semestername = courseDbContext.Semesters
+                                .FirstOrDefault(x => x.Id == course.SemesterId).Name;
+                        if (course.SemesterName == null)
+                        {
+                            course.SemesterName =semestername; 
+                        }
+                        data.Add(course);
                     }
-                    
-
                 }
+
                 serviceResponse.Data = data;
 
                 
