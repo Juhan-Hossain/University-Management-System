@@ -11,9 +11,11 @@ namespace StudentManagementBLL.StudentBLL
 {
     public class StudentServiceBLL : Repository<Student,ApplicationDbContext>,IStudentServiceBLL
     {
+        private readonly ApplicationDbContext Context;
+
         public StudentServiceBLL(ApplicationDbContext dbContext):base(dbContext)
         {
-
+            this.Context = dbContext;
         }
 
         //POST:Add Student
@@ -26,10 +28,10 @@ namespace StudentManagementBLL.StudentBLL
                
 
                  //finding corresponding department for code
-                 var adepartment = _dbContext.Departments.Find(student.DepartmentId);
+                 var adepartment = Context.Departments.Find(student.DepartmentId);
                 
                 
-                var count = _dbContext.Students.Count();
+                var count = Context.Students.Count();
                 count++;
                 //adding registration number for new student
                 if (count<10) student.RegistrationNumber = $"{adepartment.Code}-{student.Date.Date.Year}-00{count}";
@@ -38,8 +40,8 @@ namespace StudentManagementBLL.StudentBLL
 
 
                 serviceResponse.Data = student;
-                _dbContext.Students.Add(student);
-                _dbContext.SaveChanges();
+                Context.Students.Add(student);
+                Context.SaveChanges();
                  
                 
                 serviceResponse.Message = "Student created successfully in DB";
