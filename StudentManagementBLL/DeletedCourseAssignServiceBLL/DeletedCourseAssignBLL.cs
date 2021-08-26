@@ -12,10 +12,11 @@ namespace StudentManagementBLL.DeletedCourseAssignServiceBLL
 {
     public class DeletedCourseAssignBLL : Repository<DeletedCourseAssign, ApplicationDbContext>, IDeletedCourseAssignBLL
     {
+        private readonly ApplicationDbContext Context;
 
         public DeletedCourseAssignBLL(ApplicationDbContext dbContext) : base(dbContext)
         {
-
+            this.Context = dbContext;
         }
 
         
@@ -24,19 +25,19 @@ namespace StudentManagementBLL.DeletedCourseAssignServiceBLL
         {
             var serviceResponse = new ServiceResponse<DeletedCourseAssign>();
 
-            var assignCourses = _dbContext.CourseAssignments;
+            var assignCourses = Context.CourseAssignments;
 
             if (flag)
             {
                 DeletedCourseAssign deletedCourseAssign = new DeletedCourseAssign();
 
-                _dbContext.CourseAssignments.FromSqlRaw<CourseAssignment>("SpGetDeletedCourseAssignTable01");
+                Context.CourseAssignments.FromSqlRaw<CourseAssignment>("SpGetDeletedCourseAssignTable01");
                 
                 foreach (CourseAssignment assign in assignCourses)
                 {
-                    Course fetchingCourse = _dbContext.Courses.SingleOrDefault(x => x.Code == assign.Code);
-                    Teacher fetchingTeacher = _dbContext.Teachers.SingleOrDefault(x => x.Id == assign.TeacherId);
-                    Department fetchingDepartment = _dbContext.Departments.SingleOrDefault(x => x.Id == assign.DepartmentId);
+                    Course fetchingCourse = Context.Courses.SingleOrDefault(x => x.Code == assign.Code);
+                    Teacher fetchingTeacher = Context.Teachers.SingleOrDefault(x => x.Id == assign.TeacherId);
+                    Department fetchingDepartment = Context.Departments.SingleOrDefault(x => x.Id == assign.DepartmentId);
                    
                     deletedCourseAssign.Code = assign.Code;
                     deletedCourseAssign.CourseId = assign.CourseId;
@@ -50,16 +51,16 @@ namespace StudentManagementBLL.DeletedCourseAssignServiceBLL
                     fetchingCourse.AssignTo = null;
                     fetchingCourse.TeacherId = null;
 
-                    _dbContext.Courses.Update(fetchingCourse);
+                    Context.Courses.Update(fetchingCourse);
 
-             
-                    _dbContext.CourseAssignments.Update(assign);
-                    _dbContext.DeletedCourseAssigns.Add(deletedCourseAssign);
+
+                    Context.CourseAssignments.Remove(assign);
+                    Context.DeletedCourseAssigns.Add(deletedCourseAssign);
                     
                 }
                 serviceResponse.Message = "Unassigned All Courses";
                     serviceResponse.Success = true;
-                _dbContext.SaveChanges();
+                Context.SaveChanges();
 
 
             }
