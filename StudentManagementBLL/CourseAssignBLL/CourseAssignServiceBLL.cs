@@ -1,4 +1,4 @@
-﻿using RepositoryLayer;
+using RepositoryLayer;
 using StudentManagementDAL;
 using StudentManagementEntity;
 using System;

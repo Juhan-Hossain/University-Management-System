@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using RepositoryLayer;
 using StudentManagementBLL.DepartmentBLL;
 using StudentManagementEntity;
