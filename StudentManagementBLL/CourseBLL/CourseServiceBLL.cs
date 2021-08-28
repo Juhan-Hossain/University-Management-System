@@ -143,17 +143,13 @@ namespace StudentManagementBLL.CourseBLL
                         .Include(x => x.Department)
                     .Where(x => x.DepartmentId == aStudent.DepartmentId).ToList(); ;
 
-                    /*foreach (Course course in tempcourses)
-                    {
-                        if ()
-                    }*/
                     if (tempcourses is null)
                     {
-                        serviceResponse.Message = "student do not exist";
+                        serviceResponse.Message = "department does not have courses now";
                         serviceResponse.Success = false;
                     }
-
-                    serviceResponse.Message = "Data  with the given id was fetched successfully from the database";
+                    serviceResponse.Data = tempcourses;
+                    serviceResponse.Message = "this student department courses fetched successfully from Db";
                 }
                 else
                 {
