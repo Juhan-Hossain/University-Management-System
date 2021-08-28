@@ -25,21 +25,52 @@ namespace StudentManagementBLL.RoomAllocationBLL
             Department aDepartment = Context.Departments.SingleOrDefault(x => x.Id == body.DepartmentId);
             Room aRoom = Context.Rooms.SingleOrDefault(x => x.Id == body.RoomId);
             WeekDay aDay = Context.weekDays.SingleOrDefault(x => x.Id == body.DayId);
-            RoomAllocationList SelectedRoom = Context.RoomAllocationLists.Find();
+
+            var start = body.StartTime;
+            var end = body.EndTime;
+
+            if(start==end || start>end)
+            {
+                serviceresponse.Message = "please enter a valid start & end time";
+                serviceresponse.Success = false;
+                return serviceresponse;
+            }
 
 
 
 
+
+
+
+            RoomAllocationList SelectedRoom = Context.RoomAllocationLists.SingleOrDefault(x => x.DayId == body.DayId && x.RoomId == body.RoomId
+                && (x.StartTime < end && x.EndTime > start)
+            );
+            serviceresponse.Data = SelectedRoom;
+            if(SelectedRoom!=null)
+            {
+                serviceresponse.Message = $"{body.RoomId} is busy right now";
+                serviceresponse.Success = false;
+                return serviceresponse;
+            }
+            if(SelectedRoom==null)
+            {
+                try
+                {
+                    Context.RoomAllocationLists.Add(body);
+                    Context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    serviceresponse.Message = "error occured while allocating room :\n" +
+                        "error: "+ex.Message;
+                    serviceresponse.Success = false;
+                }
+               
+
+            }
             return serviceresponse;
+
         }
-
-
-
-
-
-
-
-
 
     }
 }

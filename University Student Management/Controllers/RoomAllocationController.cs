@@ -25,12 +25,20 @@ namespace University_Student_Management.Controllers
 
         public ActionResult<ServiceResponse<RoomAllocationList>> AllocateRoom([FromBody] RoomAllocationList body)
         {
-            var coursekeyresponse = _service.Add(body);
+            var response = _service.CreateRoomAllocation(body);
 
-            if (!coursekeyresponse.Success) return BadRequest();
 
-            coursekeyresponse.Message = $" {body.CourseCode} Successfully assign to RoomId no: {body.RoomId}";
-            return Ok();
+            if (response.Success)
+            {
+                response.Message = $" {body.CourseCode} Successfully assign to RoomId no: {body.RoomId}";
+                return Ok(response);
+            }
+            else
+            {
+                response.Message = "error occured while allocating rooms";
+                return BadRequest(response);
+            }
+           
         }
 
     }

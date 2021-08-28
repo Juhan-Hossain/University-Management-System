@@ -404,37 +404,39 @@ namespace StudentManagementDAL.Migrations
 
             modelBuilder.Entity("StudentManagementEntity.RoomAllocationList", b =>
                 {
-                    b.Property<int>("DayId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoomId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StartTime")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("EndTime")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CourseCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(9)");
-
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FromMeridiem")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("CourseCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(9)");
+
+                    b.Property<int>("DayId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FromMeridiem")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ToMeridiem")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("DayId", "RoomId", "StartTime", "EndTime");
+                    b.HasKey("Id");
+
+                    b.HasIndex("DayId");
 
                     b.HasIndex("DepartmentId");
 
@@ -866,7 +868,7 @@ namespace StudentManagementDAL.Migrations
             modelBuilder.Entity("StudentManagementEntity.RoomAllocationList", b =>
                 {
                     b.HasOne("StudentManagementEntity.WeekDay", "WeekDay")
-                        .WithMany()
+                        .WithMany("RoomAllocationLists")
                         .HasForeignKey("DayId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -878,7 +880,7 @@ namespace StudentManagementDAL.Migrations
                         .IsRequired();
 
                     b.HasOne("StudentManagementEntity.Room", "Room")
-                        .WithMany()
+                        .WithMany("RoomAllocationLists")
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -956,6 +958,11 @@ namespace StudentManagementDAL.Migrations
                     b.Navigation("Teachers");
                 });
 
+            modelBuilder.Entity("StudentManagementEntity.Room", b =>
+                {
+                    b.Navigation("RoomAllocationLists");
+                });
+
             modelBuilder.Entity("StudentManagementEntity.Student", b =>
                 {
                     b.Navigation("CourseEnrolls");
@@ -969,6 +976,11 @@ namespace StudentManagementDAL.Migrations
             modelBuilder.Entity("StudentManagementEntity.Teacher", b =>
                 {
                     b.Navigation("Courses");
+                });
+
+            modelBuilder.Entity("StudentManagementEntity.WeekDay", b =>
+                {
+                    b.Navigation("RoomAllocationLists");
                 });
 #pragma warning restore 612, 618
         }

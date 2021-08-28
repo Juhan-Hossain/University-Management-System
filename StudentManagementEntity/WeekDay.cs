@@ -14,5 +14,6 @@ namespace StudentManagementEntity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string DayName { get; set; }
+        public virtual ICollection<RoomAllocationList> RoomAllocationLists { get; set; }
     }
 }
