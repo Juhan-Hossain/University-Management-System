@@ -22,13 +22,13 @@ namespace University_Student_Management.Controllers
 
         [HttpPost("CreateCourseEnroll")]
 
-        public ActionResult<ServiceResponse<CourseEnroll>> CourseEnrollment(string stdregno,string coursename)
+        public ActionResult<ServiceResponse<CourseEnroll>> CourseEnrollment([FromBody] CourseEnroll courseEnroll)
         {
 
-            var response = _service.EnrollCourseToStudent(stdregno,coursename);
+            var response = _service.EnrollCourseToStudent(courseEnroll.StudentRegNo, courseEnroll.CourseCode);
             if (!response.Success) return BadRequest(response);
 
-            response.Message = $" {coursename} Successfully enrolled by student {stdregno}";
+            response.Message = $" {courseEnroll.StudentRegNo} Successfully enrolled by student {courseEnroll.CourseCode}";
             return Ok(response);
 
         }
