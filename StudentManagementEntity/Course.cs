@@ -16,12 +16,13 @@ namespace StudentManagementEntity
         {
             CourseEnrolls = new HashSet<CourseEnroll>();
             Students = new HashSet<Student>();
-            RoomAllocationList = new HashSet<RoomAllocation>();
+            RoomAllocationLists = new HashSet<RoomAllocationList>();
         }
 
 
-        /*[DatabaseGenerated(DatabaseGeneratedOption.Identity)]*/
+        
         [Key]
+       
         public int Id { get; set; }
 
         [Required(ErrorMessage = "There must be a Course Code\nSample: CSE-***")]
@@ -51,7 +52,7 @@ namespace StudentManagementEntity
 
 /*        public virtual Teacher? Teacher { get; set; }*/
 
-        public virtual ICollection<RoomAllocation> RoomAllocationList { get; set; }
+        public virtual ICollection<RoomAllocationList> RoomAllocationLists { get; set; }
         public virtual ICollection<Student> Students { get; set; }
         public virtual ICollection<CourseEnroll> CourseEnrolls { get; set; }
 
