@@ -13,6 +13,7 @@ using StudentManagementBLL;
 using StudentManagementBLL.CourseAssignBLL;
 using StudentManagementBLL.CourseBLL;
 using StudentManagementBLL.CourseEnrollBLL;
+using StudentManagementBLL.DayBLL;
 using StudentManagementBLL.DeletedCourseAssignServiceBLL;
 using StudentManagementBLL.DepartmentBLL;
 using StudentManagementBLL.DesignationBLL;
@@ -70,6 +71,7 @@ namespace University_Student_Management
 
             services.AddScoped<ISemesterServiceBLL, SemesterServiceBLL>();
             services.AddScoped<IRoomAllocationBLL, RoomAllocationBLL>();
+            services.AddScoped<IDayBLL, DayBLL>();
 
 
         }
