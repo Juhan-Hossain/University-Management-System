@@ -15,6 +15,7 @@ namespace StudentManagementEntity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
         public int Id { get; set; }
+        [Required]
          public string CourseCode { get; set; }
         public int DepartmentId { get; set; }
 
