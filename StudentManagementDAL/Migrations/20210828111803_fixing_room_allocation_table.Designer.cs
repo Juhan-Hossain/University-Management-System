@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagementDAL;
 
 namespace StudentManagementDAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210828111803_fixing_room_allocation_table")]
+    partial class fixing_room_allocation_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -404,39 +406,37 @@ namespace StudentManagementDAL.Migrations
 
             modelBuilder.Entity("StudentManagementEntity.RoomAllocationList", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("DayId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StartTime")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("EndTime")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CourseCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(9)");
 
-                    b.Property<int>("DayId")
-                        .HasColumnType("int");
-
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("EndTime")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("FromMeridiem")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoomId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("StartTime")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ToMeridiem")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("DayId");
+                    b.HasKey("DayId", "RoomId", "StartTime", "EndTime");
 
                     b.HasIndex("DepartmentId");
 
@@ -868,7 +868,7 @@ namespace StudentManagementDAL.Migrations
             modelBuilder.Entity("StudentManagementEntity.RoomAllocationList", b =>
                 {
                     b.HasOne("StudentManagementEntity.WeekDay", "WeekDay")
-                        .WithMany("RoomAllocationLists")
+                        .WithMany()
                         .HasForeignKey("DayId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -880,7 +880,7 @@ namespace StudentManagementDAL.Migrations
                         .IsRequired();
 
                     b.HasOne("StudentManagementEntity.Room", "Room")
-                        .WithMany("RoomAllocationLists")
+                        .WithMany()
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -958,11 +958,6 @@ namespace StudentManagementDAL.Migrations
                     b.Navigation("Teachers");
                 });
 
-            modelBuilder.Entity("StudentManagementEntity.Room", b =>
-                {
-                    b.Navigation("RoomAllocationLists");
-                });
-
             modelBuilder.Entity("StudentManagementEntity.Student", b =>
                 {
                     b.Navigation("CourseEnrolls");
@@ -976,11 +971,6 @@ namespace StudentManagementDAL.Migrations
             modelBuilder.Entity("StudentManagementEntity.Teacher", b =>
                 {
                     b.Navigation("Courses");
-                });
-
-            modelBuilder.Entity("StudentManagementEntity.WeekDay", b =>
-                {
-                    b.Navigation("RoomAllocationLists");
                 });
 #pragma warning restore 612, 618
         }

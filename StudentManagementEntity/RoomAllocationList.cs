@@ -15,6 +15,7 @@ namespace StudentManagementEntity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
         public int Id { get; set; }
+        [Required]
          public string CourseCode { get; set; }
         public int DepartmentId { get; set; }
 
@@ -24,10 +25,10 @@ namespace StudentManagementEntity
 
         [Required(ErrorMessage = "Start time is required")]
         [Display(Name = "Start time (Formate HH:MM) (24 Hours)")]
-        public string StartTime { set; get; }
+        public DateTime StartTime { set; get; }
         [Required(ErrorMessage = "End time is required")]
         [Display(Name = "End time (Formate HH:MM) (24 Hours)")]
-        public string EndTime { set; get; }
+        public DateTime EndTime { set; get; }
         public string FromMeridiem { get; set; }  //return value AM or PM
         public string ToMeridiem { get; set; } //return value AM or PM
 

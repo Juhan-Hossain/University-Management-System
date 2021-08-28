@@ -68,7 +68,11 @@ namespace StudentManagementDAL
             ///RoomAllocation
             modelBuilder.Entity<RoomAllocationList>(entity =>
             {
-                entity.HasKey(x => new { x.DayId, x.RoomId, x.StartTime, x.EndTime });
+                entity.HasOne(x => x.Room)
+                .WithMany(x => x.RoomAllocationLists).HasForeignKey(x => x.RoomId);
+                entity.HasOne(x => x.WeekDay)
+                .WithMany(x => x.RoomAllocationLists).HasForeignKey(x => x.DayId);
+
                 entity.HasOne(x => x.Course)
                 .WithMany(x => x.RoomAllocationLists).HasForeignKey(x => new { x.CourseCode, x.DepartmentId });
 
