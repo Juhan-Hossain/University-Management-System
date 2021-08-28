@@ -417,6 +417,7 @@ namespace StudentManagementDAL.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CourseCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(9)");
 
                     b.Property<int>("DepartmentId")
@@ -884,7 +885,9 @@ namespace StudentManagementDAL.Migrations
 
                     b.HasOne("StudentManagementEntity.Course", "Course")
                         .WithMany("RoomAllocationLists")
-                        .HasForeignKey("CourseCode", "DepartmentId");
+                        .HasForeignKey("CourseCode", "DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Course");
 
