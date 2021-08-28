@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagementDAL;
 
 namespace StudentManagementDAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210828110118_populating_room_allocation_table_andWeekday_table")]
+    partial class populating_room_allocation_table_andWeekday_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -397,11 +399,16 @@ namespace StudentManagementDAL.Migrations
                     b.Property<string>("ToMeridiem")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("WeekDayId")
+                        .HasColumnType("int");
+
                     b.HasKey("DayId", "RoomId", "StartTime", "EndTime");
 
                     b.HasIndex("DepartmentId");
 
                     b.HasIndex("RoomId");
+
+                    b.HasIndex("WeekDayId");
 
                     b.HasIndex("CourseCode", "DepartmentId");
 
@@ -828,12 +835,6 @@ namespace StudentManagementDAL.Migrations
 
             modelBuilder.Entity("StudentManagementEntity.RoomAllocationList", b =>
                 {
-                    b.HasOne("StudentManagementEntity.WeekDay", "WeekDay")
-                        .WithMany()
-                        .HasForeignKey("DayId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("StudentManagementEntity.Department", "Department")
                         .WithMany()
                         .HasForeignKey("DepartmentId")
@@ -845,6 +846,10 @@ namespace StudentManagementDAL.Migrations
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("StudentManagementEntity.WeekDay", "WeekDay")
+                        .WithMany()
+                        .HasForeignKey("WeekDayId");
 
                     b.HasOne("StudentManagementEntity.Course", "Course")
                         .WithMany("RoomAllocationLists")
