@@ -150,12 +150,12 @@ namespace StudentManagementBLL.StudentResultBLL
                 List<Course> CourseList = new List<Course>();
                 List<CourseEnroll> EnrolledCourseList = new List<CourseEnroll>();
 
-                
+
                 var aStudent = Context.Students
                   .SingleOrDefault(x => x.RegistrationNumber == StudentRegNo);
                 var aStudentResult = Context.StudentResults.Where(x => x.StudentRegNo == StudentRegNo).ToList();
                 //Taking list to load courselist of given student
-                if (aStudentResult.Count>0)
+                if (aStudentResult.Count > 0)
                 {
                     serviceResponse.Data = aStudentResult;
                     serviceResponse.Message = "fetched student result successfully";

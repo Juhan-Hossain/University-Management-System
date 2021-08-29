@@ -58,12 +58,12 @@ namespace StudentManagementBLL.CourseAssignBLL
                     {
 
                         CourseAssignment aCourseAssignment = new CourseAssignment();
-                        
-                        if (fetchingTeacher.RemainingCredit >= fetchingCourse.Credit  || fetchingTeacher.RemainingCredit==null )
+
+                        if (fetchingTeacher.RemainingCredit >= fetchingCourse.Credit || fetchingTeacher.RemainingCredit == null)
                         {
                             try
                             {
-                                fetchingTeacher.RemainingCredit  -= fetchingCourse.Credit;/*
+                                fetchingTeacher.RemainingCredit -= fetchingCourse.Credit;/*
                                 fetchingTeacher.CreditToBeTaken -= fetchingCourse.Credit;*/
 
                                 fetchingCourse.AssignTo = fetchingTeacher.Name;
@@ -77,7 +77,7 @@ namespace StudentManagementBLL.CourseAssignBLL
 
 
                                 Context.CourseAssignments.Add(aCourseAssignment);
-                               
+
                                 serviceResponse.Data = aCourseAssignment;/*
                                 serviceResponse.Success = true;*/
 
@@ -90,7 +90,7 @@ namespace StudentManagementBLL.CourseAssignBLL
                                     ex.Message;
                                 serviceResponse.Success = false;
                             }
-                            
+
                         }
                         else
                         {
@@ -119,7 +119,7 @@ namespace StudentManagementBLL.CourseAssignBLL
                             error.Message;
                         throw;
                     }
-                    
+
                 }
                 else
                 {
