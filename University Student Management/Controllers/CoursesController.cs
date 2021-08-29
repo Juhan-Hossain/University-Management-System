@@ -71,13 +71,13 @@ namespace University_Student_Management.Controllers
         }
 
 
-     /*   [HttpGet("EnrolledCoursesByStudentRegNo")]
+        [HttpGet("EnrolledCoursesByStudentRegNo")]
         public ActionResult<ServiceResponse<IEnumerable<Course>>> EnrolledCoursesByStudentRegNo(string stdRegNo)
         {
             var serviceResponse = _service.GetEnrolledCoursesBystdRegNo(stdRegNo);
             if (serviceResponse.Success == false) return BadRequest(serviceResponse);
             return Ok(serviceResponse);
-        }*/
+        }
 
 
 
