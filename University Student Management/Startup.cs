@@ -13,9 +13,13 @@ using StudentManagementBLL;
 using StudentManagementBLL.CourseAssignBLL;
 using StudentManagementBLL.CourseBLL;
 using StudentManagementBLL.CourseEnrollBLL;
+using StudentManagementBLL.DayBLL;
 using StudentManagementBLL.DeletedCourseAssignServiceBLL;
 using StudentManagementBLL.DepartmentBLL;
 using StudentManagementBLL.DesignationBLL;
+using StudentManagementBLL.RoomAllocationBLL;
+using StudentManagementBLL.RoomBLL;
+using StudentManagementBLL.SemesterBLL;
 using StudentManagementBLL.StudentBLL;
 using StudentManagementBLL.StudentResultBLL;
 using StudentManagementBLL.TeacherBLL;
@@ -65,6 +69,12 @@ namespace University_Student_Management
             services.AddScoped<ICourseEnrollBLL, CourseEnrollBLL>();
             services.AddScoped<IStudentResultBLL, StudentResultBLL>();
             services.AddScoped<IDeletedCourseAssignBLL, DeletedCourseAssignBLL>();
+
+            services.AddScoped<ISemesterServiceBLL, SemesterServiceBLL>();
+            services.AddScoped<IRoomAllocationBLL, RoomAllocationBLL>();
+            services.AddScoped<IDayBLL, DayBLL>();
+            services.AddScoped<IRoomBLL, RoomBLL>();
+
 
         }
 

@@ -43,8 +43,12 @@ namespace University_Student_Management.Controllers
         {
             teacher.RemainingCredit = teacher.CreditToBeTaken;
             var serviceResponse = _service.Add(teacher);
-            if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
-            return Ok(serviceResponse.Data);
+            if (serviceResponse.Success == false)
+            {
+                serviceResponse.Message = "Create unique name & email for teacher";
+                return BadRequest(serviceResponse);
+            }
+            return Ok(serviceResponse);
         }
 
         
