@@ -10,6 +10,6 @@ namespace StudentManagementBLL.StudentResultBLL
 {
     public interface IStudentResultBLL : IRepository<StudentResult>
     {
-        public ServiceResponse<IEnumerable<StudentResult>> GetResultBystdRegNo(string stdRegNo);
+        public ServiceResponse<IEnumerable<StudentResult>> GetResultBystdRegNo(string StudentRegNo);
     }
 }
