@@ -168,58 +168,37 @@ namespace StudentManagementBLL.CourseBLL
             return serviceResponse;
         }
 
-/*        //Get Enrolled Courses By StdReg No:
+        //Get Enrolled Courses By StdReg No:
 
+        //GetCourseByStdRegNo:
         public ServiceResponse<IEnumerable<Course>> GetEnrolledCoursesBystdRegNo(string stdRegNo)
         {
             var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
             try
             {
-                List<Course> CourseList = new List<Course>();
-                List<Course> CourseListf = new List<Course>();
-                Student aStudent;
-                aStudent = _dbContext.Students
-                  .SingleOrDefault(x => x.RegistrationNumber == stdRegNo);
-                CourseList = _dbContext.Courses.Where(x => x.DepartmentId == aStudent.DepartmentId).ToList();
-                *//*  CourseList = (List<Course>)ViewCourseBystdRegNo(stdRegNo).Data;*/
-                /*CourseList = _dbContext.Courses
-                        .Include(x => x.CourseEnrolls).ThenInclude(x => x.IsEnrolled)
-                        
-                        .ToList();*//*
-                if (aStudent != null)
+                List<Course> EnrolledCourses = new List<Course>();
+
+                foreach (var enroll in courseDbContext.CourseEnrolls)
+                {
+                    if(enroll.StudentRegNo==stdRegNo)
+                    {
+                        var selectedCourse = courseDbContext.Courses.SingleOrDefault(x => x.Code == enroll.CourseCode);
+                        EnrolledCourses.Add(selectedCourse);
+                    }
+                }
+
+              
+                
+                    
+                if (EnrolledCourses != null)
                 {
 
-                    foreach (var courseEnroll in _dbContext.CourseEnrolls)
-                    {
-                        if (courseEnroll != null && courseEnroll.IsEnrolled)
-                        {
-                            foreach (var course in CourseList)
-                            {
-                                if (course != null)
-                                {
-                                    if (courseEnroll.EnrolledCourseId == course.Id)
-                                    {
-                                        CourseListf.Add(courseEnroll.Course);
-                                    }
-                                }
-
-                            }
-                        }
-                    }
-                    if (CourseListf != null)
-                    {
-                        serviceResponse.Data = CourseListf;
-                        serviceResponse.Message = "Enrolled courses loaded successfully";
-                    }
-                    else
-                    {
-                        serviceResponse.Message = "No COursees Enrolled!!!";
-                        serviceResponse.Success = false;
-                    }
+                    serviceResponse.Data = EnrolledCourses;
+                    serviceResponse.Message = "enrolled courses fetched successfully";
                 }
                 else
                 {
-                    serviceResponse.Message = "student with given reg no does not exist";
+                    serviceResponse.Message = "student do not have any enrolled course";
                     serviceResponse.Success = false;
                 }
 
@@ -231,7 +210,7 @@ namespace StudentManagementBLL.CourseBLL
                 serviceResponse.Success = false;
             }
             return serviceResponse;
-        }*/
+        }
 
 
 
