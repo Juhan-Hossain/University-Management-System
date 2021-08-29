@@ -1,4 +1,4 @@
-﻿using RepositoryLayer;
+using RepositoryLayer;
 using StudentManagementDAL;
 using StudentManagementEntity;
 using System;
@@ -150,20 +150,12 @@ namespace StudentManagementBLL.StudentResultBLL
                 List<Course> CourseList = new List<Course>();
                 List<CourseEnroll> EnrolledCourseList = new List<CourseEnroll>();
 
-<<<<<<< HEAD
 
-=======
-                
->>>>>>> a277d2137235d34bffb92c2c5d04081b4e51e600
                 var aStudent = Context.Students
                   .SingleOrDefault(x => x.RegistrationNumber == StudentRegNo);
                 var aStudentResult = Context.StudentResults.Where(x => x.StudentRegNo == StudentRegNo).ToList();
                 //Taking list to load courselist of given student
-<<<<<<< HEAD
                 if (aStudentResult.Count > 0)
-=======
-                if (aStudentResult.Count>0)
->>>>>>> a277d2137235d34bffb92c2c5d04081b4e51e600
                 {
                     serviceResponse.Data = aStudentResult;
                     serviceResponse.Message = "fetched student result successfully";

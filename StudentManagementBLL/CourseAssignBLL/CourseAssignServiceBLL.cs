@@ -31,42 +31,8 @@ namespace StudentManagementBLL.CourseAssignBLL
                 && x.TeacherId == fetchingTeacher.Id
                  && x.Code != fetchingCourse.Code);
 
-<<<<<<< HEAD
-            Course fetchingCourse = Context.Courses.SingleOrDefault(x => x.Code == CourseCode);
-            Teacher fetchingTeacher = Context.Teachers.SingleOrDefault(x => x.Id == teacherId);
-            Department fetchingDepartment = Context.Departments.SingleOrDefault(x => x.Id == departmentId);
-            serviceResponse.Data = Context.CourseAssignments.SingleOrDefault(x =>
-            x.DepartmentId == fetchingDepartment.Id
-            && x.TeacherId == fetchingTeacher.Id
-             && x.Code != fetchingCourse.Code);
-            
-            if (fetchingCourse is null)
-            {
-                serviceResponse.Message = "this Course does not exist.";
-                serviceResponse.Success = false;
-                return serviceResponse;
-            }
-            if (fetchingTeacher is null)
-            {
-                serviceResponse.Message = "this Teacher does not exist.";
-                serviceResponse.Success = false;
-                return serviceResponse;
-            }
-            if (fetchingDepartment is null)
-            {
-                serviceResponse.Message = "this Department does not exist.";
-                serviceResponse.Success = false;
-                return serviceResponse;
-            }
-            if (serviceResponse.Data == null)
-            {
-                CourseAssignment aCourseAssignment = new CourseAssignment();
-               
-                if (fetchingTeacher.RemainingCredit - fetchingCourse.Credit >= 0 && fetchingCourse.TeacherId == null)
-=======
 
                 if (fetchingCourse is null)
->>>>>>> a277d2137235d34bffb92c2c5d04081b4e51e600
                 {
                     serviceResponse.Message = "this Course does not exist.";
                     serviceResponse.Success = false;
@@ -91,24 +57,13 @@ namespace StudentManagementBLL.CourseAssignBLL
                     else
                     {
 
-<<<<<<< HEAD
-                        aCourseAssignment.TeacherId = fetchingTeacher.Id;
-                        aCourseAssignment.DepartmentId = fetchingDepartment.Id;
-                        aCourseAssignment.CourseId = fetchingCourse.Id;
-                        aCourseAssignment.IsAssigned = 2;
-                        aCourseAssignment.Code = fetchingCourse.Code;
-                        var p = Context.CourseAssignments
-                            .Any(x => x.Code == fetchingCourse.Code && x.IsAssigned == 2);
-                        if (!p)
-=======
                         CourseAssignment aCourseAssignment = new CourseAssignment();
-                        
-                        if (fetchingTeacher.RemainingCredit >= fetchingCourse.Credit  || fetchingTeacher.RemainingCredit==null )
->>>>>>> a277d2137235d34bffb92c2c5d04081b4e51e600
+
+                        if (fetchingTeacher.RemainingCredit >= fetchingCourse.Credit || fetchingTeacher.RemainingCredit == null)
                         {
                             try
                             {
-                                fetchingTeacher.RemainingCredit  -= fetchingCourse.Credit;/*
+                                fetchingTeacher.RemainingCredit -= fetchingCourse.Credit;/*
                                 fetchingTeacher.CreditToBeTaken -= fetchingCourse.Credit;*/
 
                                 fetchingCourse.AssignTo = fetchingTeacher.Name;
@@ -122,7 +77,7 @@ namespace StudentManagementBLL.CourseAssignBLL
 
 
                                 Context.CourseAssignments.Add(aCourseAssignment);
-                               
+
                                 serviceResponse.Data = aCourseAssignment;/*
                                 serviceResponse.Success = true;*/
 
@@ -135,38 +90,17 @@ namespace StudentManagementBLL.CourseAssignBLL
                                     ex.Message;
                                 serviceResponse.Success = false;
                             }
-                            
+
                         }
                         else
                         {
-<<<<<<< HEAD
-
-                            serviceResponse.Message = "course already assigned to a teacher";
-=======
                             serviceResponse.Message = $"{fetchingTeacher.Name} does not have Remaining" +
                             $" Credit to take {fetchingCourse.Code}: {fetchingCourse.Name}";
->>>>>>> a277d2137235d34bffb92c2c5d04081b4e51e600
                             serviceResponse.Success = false;
                         }
                     }
 
                 }
-<<<<<<< HEAD
-
-                /*//need to be redirect this call
-                serviceResponse.Message = $"{fetchingTeacher.Name} does not have Remaining" +
-                $" Credit to take {fetchingCourse.Code}: {fetchingCourse.Name}";
-                serviceResponse.Success = false;
-                _dbContext.SaveChanges();
-                return serviceResponse;*/
-            }
-
-
-
-            else
-            {
-                serviceResponse.Message = "error occured while adding to course assign table";
-=======
                 else if (serviceResponse.Data.IsAssigned == 1 || serviceResponse.Data.IsAssigned == 3)
                 {
                     try
@@ -185,7 +119,7 @@ namespace StudentManagementBLL.CourseAssignBLL
                             error.Message;
                         throw;
                     }
-                    
+
                 }
                 else
                 {
@@ -197,7 +131,6 @@ namespace StudentManagementBLL.CourseAssignBLL
             catch (Exception exception)
             {
                 serviceResponse.Message = "Some error occurred while fetching data.\nError message: " + exception.Message;
->>>>>>> a277d2137235d34bffb92c2c5d04081b4e51e600
                 serviceResponse.Success = false;
             }
             return serviceResponse;
