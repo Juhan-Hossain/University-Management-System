@@ -32,9 +32,9 @@ namespace University_Student_Management.Controllers
 
         //Get: api/StudentResult
         [HttpGet("GetStudentResult")]
-        public ActionResult<ServiceResponse<StudentResult>> GetStudentResult(string stdRegNo)
+        public ActionResult<ServiceResponse<StudentResult>> GetStudentResult(string StudentRegNo)
         {
-            var serviceResponse = _service.GetResultBystdRegNo(stdRegNo);
+            var serviceResponse = _service.GetResultBystdRegNo(StudentRegNo);
             if (serviceResponse.Success == false) return BadRequest(serviceResponse);
             return Ok(serviceResponse);
         }

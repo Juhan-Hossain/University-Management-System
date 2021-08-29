@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace StudentManagementEntity
 {
-    public class Room
+    public class WeekDay
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string DayName { get; set; }
         public virtual ICollection<RoomAllocationList> RoomAllocationLists { get; set; }
     }
 }

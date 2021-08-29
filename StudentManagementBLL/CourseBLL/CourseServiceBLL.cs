@@ -21,23 +21,8 @@ namespace StudentManagementBLL.CourseBLL
         }
 
 
-        //GET:All:COurse
-      /*  public override ServiceResponse<IEnumerable<Course>> GetAll()
-        {
-            var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
-            try
-            {
-                serviceResponse.Data = _dbContext.Courses.Include(x => x.).ToList();
 
-                serviceResponse.Message = "Course data & Assigning teacher fetched successfully from the database";
-            }
-            catch (Exception exception)
-            {
-                serviceResponse.Message = "Some error occurred while fetching data.\nError message: " + exception.Message;
-                serviceResponse.Success = false;
-            }
-            return serviceResponse;
-        }*/
+
 
         //POST:Course
         public override ServiceResponse<Course> Add(Course course)
@@ -49,16 +34,17 @@ namespace StudentManagementBLL.CourseBLL
                 serviceResponse.Data = course;
                 courseDbContext.Courses.Add(serviceResponse.Data);
                 courseDbContext.SaveChanges();
-                serviceResponse.Message = "Designation created successfully in DB";
+                serviceResponse.Message = "Course created successfully in DB";
             }
             catch (Exception exception)
             {
-                serviceResponse.Message = $"Storing action failed in the database for given designation\n" +
+                serviceResponse.Message = $"{course.Code}/{course.Name} already stored in the Db\n" +
                     $"Error Message: {exception.Message}";
                 serviceResponse.Success = false;
             }
             return serviceResponse;
         }
+
 
 
         
@@ -89,6 +75,8 @@ namespace StudentManagementBLL.CourseBLL
         //ViewCourseByDept:
         public ServiceResponse<IEnumerable<Course>> AssignedCoursesByDepartment(int departmentId)
         {
+                
+            
             var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
             try
             {
@@ -98,19 +86,24 @@ namespace StudentManagementBLL.CourseBLL
                 {
                     if (course.DepartmentId == departmentId)
                     {
-                        if (course.AssignTo != null)
+                        /*if (course.AssignTo != null)
                         {
                             data.Add(course);
-                        }
-                        else
+                        }*/
+                        if (course.AssignTo == null)
                         {
                             course.AssignTo = "Not Assigned Yet!";
-                            data.Add(course);
                         }
+                        var semestername = courseDbContext.Semesters
+                                .FirstOrDefault(x => x.Id == course.SemesterId).Name;
+                        if (course.SemesterName == null)
+                        {
+                            course.SemesterName =semestername; 
+                        }
+                        data.Add(course);
                     }
-                    
-
                 }
+
                 serviceResponse.Data = data;
 
                 
@@ -150,17 +143,13 @@ namespace StudentManagementBLL.CourseBLL
                         .Include(x => x.Department)
                     .Where(x => x.DepartmentId == aStudent.DepartmentId).ToList(); ;
 
-                    /*foreach (Course course in tempcourses)
-                    {
-                        if ()
-                    }*/
                     if (tempcourses is null)
                     {
-                        serviceResponse.Message = "student do not exist";
+                        serviceResponse.Message = "department does not have courses now";
                         serviceResponse.Success = false;
                     }
-
-                    serviceResponse.Message = "Data  with the given id was fetched successfully from the database";
+                    serviceResponse.Data = tempcourses;
+                    serviceResponse.Message = "this student department courses fetched successfully from Db";
                 }
                 else
                 {
