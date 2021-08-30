@@ -10,12 +10,11 @@ namespace StudentManagementEntity
 {
     public class StudentGrade
     {
-
-
         /*[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }*/
         [Key]
         public string Grade { get; set; }
-        public ICollection<StudentGrade> StudentResults { get; set; }
+    
+       
     }
 }

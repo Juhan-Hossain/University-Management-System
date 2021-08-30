@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagementDAL;
 
 namespace StudentManagementDAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210830135246_added_one_to_many_relation_CourseEntoll_StudentGrade")]
+    partial class added_one_to_many_relation_CourseEntoll_StudentGrade
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -171,8 +173,8 @@ namespace StudentManagementDAL.Migrations
                     b.Property<int?>("EnrolledStudentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Grade")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Grade1")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -187,6 +189,8 @@ namespace StudentManagementDAL.Migrations
                     b.HasIndex("DepartmentId");
 
                     b.HasIndex("EnrolledStudentId");
+
+                    b.HasIndex("Grade1");
 
                     b.HasIndex("CourseCode", "DepartmentId");
 
@@ -850,6 +854,10 @@ namespace StudentManagementDAL.Migrations
                         .WithMany("CourseEnrolls")
                         .HasForeignKey("EnrolledStudentId");
 
+                    b.HasOne("StudentManagementEntity.StudentGrade", "Grade")
+                        .WithMany()
+                        .HasForeignKey("Grade1");
+
                     b.HasOne("StudentManagementEntity.Course", "Course")
                         .WithMany("CourseEnrolls")
                         .HasForeignKey("CourseCode", "DepartmentId")
@@ -859,6 +867,8 @@ namespace StudentManagementDAL.Migrations
                     b.Navigation("Course");
 
                     b.Navigation("Department");
+
+                    b.Navigation("Grade");
 
                     b.Navigation("Student");
                 });

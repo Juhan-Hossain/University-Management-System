@@ -24,6 +24,7 @@ namespace StudentManagementEntity
         public DateTime Date { get; set; }
       
         public bool IsEnrolled { get; set; } = false;
+        public string Grade { get; set; }
 
 
         public virtual Student Student { get; set; }

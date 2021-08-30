@@ -120,11 +120,13 @@ namespace StudentManagementDAL
             //CourseEnrollment:
             modelBuilder.Entity<CourseEnroll>(entity =>
             {
+
                 entity.HasKey(x => new { x.StudentRegNo, x.CourseCode, x.DepartmentId });
                 entity.HasOne(x => x.Student)
                 .WithMany(x => x.CourseEnrolls).HasForeignKey(x => x.EnrolledStudentId);
                 entity.HasOne(x => x.Course)
                 .WithMany(x => x.CourseEnrolls).HasForeignKey(x => new { x.CourseCode, x.DepartmentId });
+              /*  entity.HasOne(x => x.Grade).WithMany(x => x.)*/
 
             });
 
@@ -257,6 +259,7 @@ namespace StudentManagementDAL
             //Student Grade:
             modelBuilder.Entity<StudentGrade>(entity =>
             {
+        /*        entity.HasOne(x=>x.Grade).WithMany(x=>x.)*/
                 entity.HasData(
                        new StudentGrade() { Grade = "A+" },
                        new StudentGrade() { Grade = "A" },

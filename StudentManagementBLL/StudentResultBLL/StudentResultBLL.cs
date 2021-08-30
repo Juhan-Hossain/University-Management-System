@@ -98,7 +98,18 @@ namespace StudentManagementBLL.StudentResultBLL
                             aResult.GradeLetter = studentResult.GradeLetter;
                             aResult.Result = true;
 
-
+                          
+                          foreach(var enroll in Context.CourseEnrolls)
+                            {
+                                if(enroll.StudentRegNo== studentResult.StudentRegNo && enroll.CourseCode==aCourseCode)
+                                {
+                                    if(enroll.Grade==null)
+                                    {
+                                        enroll.Grade = studentResult.GradeLetter;
+                                        break;
+                                    }
+                                }
+                            }
 
 
 
