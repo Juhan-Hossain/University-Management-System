@@ -21,12 +21,12 @@ namespace University_Student_Management.Controllers
 
         }
 
-        [HttpPost("UnAssaignAllCourses")]
+        [HttpDelete("UnAssaignAllCourses")]
 
-        public ActionResult<ServiceResponse<DeletedCourseAssign>> UnAssaignAllCourses(bool flag)
+        public ActionResult<ServiceResponse<DeletedCourseAssign>> UnAssaignAllCourses()
         {
 
-            var response = _service.UnassignTeacher(flag);
+            var response = _service.UnassignTeacher();
             if (!response.Success) return BadRequest(response);
 
             return Ok(response);

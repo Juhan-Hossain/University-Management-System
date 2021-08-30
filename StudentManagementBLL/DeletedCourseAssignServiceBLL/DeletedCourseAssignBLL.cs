@@ -21,14 +21,13 @@ namespace StudentManagementBLL.DeletedCourseAssignServiceBLL
 
         
 
-        public ServiceResponse<DeletedCourseAssign> UnassignTeacher(bool flag)
+        public ServiceResponse<DeletedCourseAssign> UnassignTeacher()
         {
             var serviceResponse = new ServiceResponse<DeletedCourseAssign>();
 
             var assignCourses = Context.CourseAssignments;
 
-            if (flag)
-            {
+            
                 DeletedCourseAssign deletedCourseAssign = new DeletedCourseAssign();
 
                 Context.CourseAssignments.FromSqlRaw<CourseAssignment>("SpGetDeletedCourseAssignTable01");
@@ -63,7 +62,7 @@ namespace StudentManagementBLL.DeletedCourseAssignServiceBLL
                 Context.SaveChanges();
 
 
-            }
+           
             return serviceResponse;
         }
 

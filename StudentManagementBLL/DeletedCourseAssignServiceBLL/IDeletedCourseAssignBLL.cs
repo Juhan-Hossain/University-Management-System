@@ -10,6 +10,6 @@ namespace StudentManagementBLL.DeletedCourseAssignServiceBLL
 {
     public interface IDeletedCourseAssignBLL : IRepository<DeletedCourseAssign>
     {
-        public ServiceResponse<DeletedCourseAssign> UnassignTeacher(bool flag);
+        public ServiceResponse<DeletedCourseAssign> UnassignTeacher();
     }
 }
