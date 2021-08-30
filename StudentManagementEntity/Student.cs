@@ -27,7 +27,9 @@ namespace StudentManagementEntity
 
         public string Email { get; set; }
         public DateTime Date { get; set; } = DateTime.Today.Date;
-        public int ContactNumber { get; set; }
+        [DataType(DataType.PhoneNumber)]
+        
+        public string ContactNumber { get; set; }
         [Required]
         public string Address { get; set; }
 

@@ -16,24 +16,27 @@ namespace StudentManagementEntity
         {
             CourseEnrolls = new HashSet<CourseEnroll>();
             Students = new HashSet<Student>();
-            RoomAllocationList = new HashSet<RoomAllocation>();
+            RoomAllocationLists = new HashSet<RoomAllocationList>();
         }
 
+
+        
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+       
         public int Id { get; set; }
 
         [Required(ErrorMessage = "There must be a Course Code\nSample: CSE-***")]
         public String Code { get; set; }
         [Required(ErrorMessage = "There must be a Course Name")]
-      
+
         public String Name { get; set; }
         [Required(ErrorMessage = "Credit Field Must Be Filled")]
         public float Credit { get; set; }
         public String Description { get; set; }
 
-        [ForeignKey("Semester")]
+   /*     [ForeignKey("Semester")]*/
         public int? SemesterId { get; set; }
+        public string SemesterName { get; set; }
 
         [ForeignKey("Teacher")]
         public int? TeacherId { get; set; }
@@ -47,9 +50,9 @@ namespace StudentManagementEntity
 
 
 
-        public virtual Teacher Teacher { get; set; }
+/*        public virtual Teacher? Teacher { get; set; }*/
 
-        public virtual ICollection<RoomAllocation> RoomAllocationList { get; set; }
+        public virtual ICollection<RoomAllocationList> RoomAllocationLists { get; set; }
         public virtual ICollection<Student> Students { get; set; }
         public virtual ICollection<CourseEnroll> CourseEnrolls { get; set; }
 

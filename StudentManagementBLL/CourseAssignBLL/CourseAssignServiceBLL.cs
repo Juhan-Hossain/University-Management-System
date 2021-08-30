@@ -1,4 +1,4 @@
-﻿using RepositoryLayer;
+using RepositoryLayer;
 using StudentManagementDAL;
 using StudentManagementEntity;
 using System;
@@ -11,9 +11,11 @@ namespace StudentManagementBLL.CourseAssignBLL
 {
     public class CourseAssignServiceBLL : Repository<CourseAssignment, ApplicationDbContext>, ICourseAssignServiceBLL
     {
+        private readonly ApplicationDbContext Context;
+
         public CourseAssignServiceBLL(ApplicationDbContext dbContext) : base(dbContext)
         {
-
+            this.Context = dbContext;
         }
         //validates the fact of course assignment
         public virtual ServiceResponse<CourseAssignment> AssignCourseToTeacher(int departmentId, string CourseCode, int teacherId)
@@ -21,10 +23,10 @@ namespace StudentManagementBLL.CourseAssignBLL
             var serviceResponse = new ServiceResponse<CourseAssignment>();
             try
             {
-                var fetchingCourse = _dbContext.Courses.SingleOrDefault(x => x.Code == CourseCode);
-                var fetchingTeacher = _dbContext.Teachers.SingleOrDefault(x => x.Id == teacherId);
-                var fetchingDepartment = _dbContext.Departments.SingleOrDefault(x => x.Id == departmentId);
-                serviceResponse.Data = _dbContext.CourseAssignments.SingleOrDefault(x =>
+                Course fetchingCourse = Context.Courses.SingleOrDefault(x => x.Code == CourseCode);
+                Teacher fetchingTeacher = Context.Teachers.SingleOrDefault(x => x.Id == teacherId);
+                Department fetchingDepartment = Context.Departments.SingleOrDefault(x => x.Id == departmentId);
+                serviceResponse.Data = Context.CourseAssignments.SingleOrDefault(x =>
                 x.DepartmentId == fetchingDepartment.Id
                 && x.TeacherId == fetchingTeacher.Id
                  && x.Code != fetchingCourse.Code);
@@ -56,28 +58,39 @@ namespace StudentManagementBLL.CourseAssignBLL
                     {
 
                         CourseAssignment aCourseAssignment = new CourseAssignment();
-                        if (fetchingTeacher.RemainingCredit >= fetchingCourse.Credit)
+
+                        if (fetchingTeacher.RemainingCredit >= fetchingCourse.Credit || fetchingTeacher.RemainingCredit == null)
                         {
-                            fetchingTeacher.RemainingCredit -= fetchingCourse.Credit;
-                            fetchingTeacher.CreditToBeTaken += fetchingCourse.Credit;
+                            try
+                            {
+                                fetchingTeacher.RemainingCredit -= fetchingCourse.Credit;/*
+                                fetchingTeacher.CreditToBeTaken -= fetchingCourse.Credit;*/
 
-                            fetchingCourse.AssignTo = fetchingTeacher.Name;
-                            fetchingCourse.TeacherId = fetchingTeacher.Id;
+                                fetchingCourse.AssignTo = fetchingTeacher.Name;
+                                fetchingCourse.TeacherId = fetchingTeacher.Id;
 
-                            aCourseAssignment.TeacherId = teacherId;
-                            aCourseAssignment.DepartmentId = departmentId;
-                            aCourseAssignment.CourseId = fetchingCourse.Id;
-                            aCourseAssignment.IsAssigned = true;
-                            aCourseAssignment.Code = CourseCode;
+                                aCourseAssignment.TeacherId = teacherId;
+                                aCourseAssignment.DepartmentId = departmentId;
+                                aCourseAssignment.CourseId = fetchingCourse.Id;
+                                aCourseAssignment.IsAssigned = 2;
+                                aCourseAssignment.Code = CourseCode;
 
 
-                            _dbContext.CourseAssignments.Add(aCourseAssignment);
-                            _dbContext.SaveChanges();
-                            serviceResponse.Data = aCourseAssignment;
-                            serviceResponse.Success = true;
+                                Context.CourseAssignments.Add(aCourseAssignment);
 
-                            serviceResponse.Message = $"{fetchingTeacher.Name} will start taking {fetchingCourse.Code}" +
-                               $": {fetchingCourse.Name}";
+                                serviceResponse.Data = aCourseAssignment;/*
+                                serviceResponse.Success = true;*/
+
+                                serviceResponse.Message = $"{fetchingTeacher.Name} will start taking {fetchingCourse.Code}" +
+                                   $": {fetchingCourse.Name}";
+                            }
+                            catch (Exception ex)
+                            {
+                                serviceResponse.Message = "error occured while assigning a course to a teacher \n" +
+                                    ex.Message;
+                                serviceResponse.Success = false;
+                            }
+
                         }
                         else
                         {
@@ -88,24 +101,32 @@ namespace StudentManagementBLL.CourseAssignBLL
                     }
 
                 }
-                else if (serviceResponse.Data.IsAssigned)
+                else if (serviceResponse.Data.IsAssigned == 1 || serviceResponse.Data.IsAssigned == 3)
                 {
-                    serviceResponse.Message = "Course is already assigned";
-                    serviceResponse.Success = false;
+                    try
+                    {
+                        serviceResponse.Data.IsAssigned = 2;
+                        serviceResponse.Data.DepartmentId = departmentId;
+                        serviceResponse.Data.CourseId = fetchingCourse.Id;
+
+                        serviceResponse.Data.Code = CourseCode;
+
+                        Context.CourseAssignments.Update(serviceResponse.Data);
+                    }
+                    catch (Exception error)
+                    {
+                        serviceResponse.Message = "error occured while updating assigning course\n" +
+                            error.Message;
+                        throw;
+                    }
+
                 }
                 else
                 {
-
-                    serviceResponse.Data.IsAssigned = true;
-                    serviceResponse.Data.DepartmentId = departmentId;
-                    serviceResponse.Data.CourseId = fetchingCourse.Id;
-
-                    serviceResponse.Data.Code = CourseCode;
-
-                    _dbContext.CourseAssignments.Update(serviceResponse.Data);
-                    _dbContext.SaveChanges();
+                    serviceResponse.Message = "Course is not assigned or need to be updated";
+                    serviceResponse.Success = false;
                 }
-
+                Context.SaveChanges();
             }
             catch (Exception exception)
             {

@@ -10,5 +10,6 @@ namespace StudentManagementBLL.TeacherBLL
 {
     public interface ITeacherServiceBLL: IRepository<Teacher>
     {
+        public ServiceResponse<IEnumerable<Teacher>> GetTeachersByDepartment(int departmentId);
     }
 }

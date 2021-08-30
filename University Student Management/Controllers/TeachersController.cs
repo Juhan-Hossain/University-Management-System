@@ -28,15 +28,29 @@ namespace University_Student_Management.Controllers
             return Ok(serviceResponse);
         }
 
+        [HttpGet("Department/{departmentId}")]
+        public ActionResult<ServiceResponse<IEnumerable<Teacher>>> GetTeachersById(int departmentId)
+        {
+            var serviceResponse = _service.GetTeachersByDepartment(departmentId);
+            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
+            return Ok(serviceResponse);
+        }
+
 
         // POST: api/CreateTeacher
         [HttpPost("CreateTeacher")]
         public ActionResult<ServiceResponse<Teacher>> CreateTeacher( Teacher teacher)
         {
-            
+            teacher.RemainingCredit = teacher.CreditToBeTaken;
             var serviceResponse = _service.Add(teacher);
-            if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
-            return Ok(serviceResponse.Data);
+            if (serviceResponse.Success == false)
+            {
+                serviceResponse.Message = "Create unique name & email for teacher";
+                return BadRequest(serviceResponse);
+            }
+            return Ok(serviceResponse);
         }
+
+        
     }
 }

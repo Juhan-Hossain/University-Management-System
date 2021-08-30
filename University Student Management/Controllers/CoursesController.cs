@@ -31,10 +31,10 @@ namespace University_Student_Management.Controllers
         }
 
         // GET: Courses
-        [HttpGet("CoursesByDepartment")]
-        public ActionResult<ServiceResponse<IEnumerable<Course>>> GetCoursesByDepartment(int departmentId)
+        [HttpGet("CoursesByDepartment&Code")]
+        public ActionResult<ServiceResponse<IEnumerable<Course>>> GetCoursesByDepartment(int departmentId,string courseCode)
         {
-            var serviceResponse = _service.GetCourseByDepartment(departmentId);
+            var serviceResponse = _service.GetCourseByDepartment(departmentId,courseCode);
             if (serviceResponse.Success == false) return BadRequest(serviceResponse);
             return Ok(serviceResponse);
         }
@@ -43,7 +43,7 @@ namespace University_Student_Management.Controllers
         [HttpGet("ViewCoursesByDepartment")]
         public ActionResult<ServiceResponse<IEnumerable<Course>>> ViewCoursesByDept(int departmentId)
         {
-            var serviceResponse = _service.ViewCourseByDepartment(departmentId);
+            var serviceResponse = _service.AssignedCoursesByDepartment(departmentId);
             if (serviceResponse.Success == false) return BadRequest(serviceResponse);
             return Ok(serviceResponse);
         }
@@ -53,9 +53,12 @@ namespace University_Student_Management.Controllers
         
         public ActionResult<ServiceResponse<Course>> CreateCourse(Course course)
         {
-           /* course.Id = 0;*/
+           
             var serviceResponse = _service.Add(course);
-            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
+            if (serviceResponse.Success == false)
+            {
+                return BadRequest(serviceResponse);
+            }
             return Ok(serviceResponse);
         }
 
@@ -68,30 +71,17 @@ namespace University_Student_Management.Controllers
         }
 
 
+        [HttpGet("EnrolledCoursesByStudentRegNo")]
+        public ActionResult<ServiceResponse<IEnumerable<Course>>> EnrolledCoursesByStudentRegNo(string stdRegNo)
+        {
+            var serviceResponse = _service.GetEnrolledCoursesBystdRegNo(stdRegNo);
+            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
+            return Ok(serviceResponse);
+        }
 
-        /* [HttpPost("CourseEnrollment")]
 
-         public ActionResult<ServiceResponse<Course>> CourseEnrollment([FromBody] CourseAssignment body)
-         {
 
-             var coursekeyresponse = _service.GetByCompositeKey(body.DepartmentId, body.Code, body.TeacherId);
 
-             //checking if a teacher can be assigned to a course
-             if (!coursekeyresponse.Success || coursekeyresponse.Data == null || (coursekeyresponse.Data.TeacherId != null))
-             {
-                 coursekeyresponse.Success = false;
-                 coursekeyresponse.Message = $"Can not Assign {body.Code} to TeacherId no: {body.TeacherId}";
-                 return BadRequest(coursekeyresponse);
-             }
-
-             coursekeyresponse.Data.TeacherId = body.TeacherId;
-             var updateresponse = _service.UpdateDetails(coursekeyresponse.Data);
-             if (!updateresponse.Success) return BadRequest(updateresponse);
-
-             coursekeyresponse.Message = $" {body.Code} Successfully assign to TeacherId no: {body.TeacherId}";
-             return Ok();
-
-         }*/
 
     }
 }

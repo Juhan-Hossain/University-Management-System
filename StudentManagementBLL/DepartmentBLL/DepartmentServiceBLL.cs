@@ -1,4 +1,4 @@
-﻿using RepositoryLayer;
+using RepositoryLayer;
 using StudentManagementDAL;
 using StudentManagementEntity;
 using System;
@@ -16,14 +16,13 @@ namespace StudentManagementBLL.DepartmentBLL
 
         }
 
-        public override ServiceResponse<Department> Add(Department department)
+       /* public override ServiceResponse<Department> Add(Department department)
         {
             var serviceResponse = new ServiceResponse<Department>();
 
             try
             {
                 var newId = department.Id;
-                department.Id = 0;
                 serviceResponse.Data = department;
                 _dbContext.Departments.Add(serviceResponse.Data);
                 _dbContext.SaveChanges();
@@ -31,11 +30,11 @@ namespace StudentManagementBLL.DepartmentBLL
             }
             catch (Exception exception)
             {
-                serviceResponse.Message = $"Storing action failed in the database for given department\n" +
+                serviceResponse.Message = $"please enter valid department code beetween 2-7 char & new name\n" +
                     $"Error Message: {exception.Message}";
                 serviceResponse.Success = false;
             }
             return serviceResponse;
-        }
+        }*/
     }
 }

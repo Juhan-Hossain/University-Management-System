@@ -11,9 +11,31 @@ namespace StudentManagementBLL.TeacherBLL
 {
     public class TeacherServiceBLL: Repository<Teacher, ApplicationDbContext>, ITeacherServiceBLL
     {
+        private readonly ApplicationDbContext Context;
+
         public TeacherServiceBLL(ApplicationDbContext dbContext):base(dbContext)
         {
+            this.Context = dbContext;
+        }
 
+
+        //GET:GET teacher by department:
+        public ServiceResponse<IEnumerable<Teacher>> GetTeachersByDepartment(int departmentId)
+        {
+            var serviceResponse = new ServiceResponse<IEnumerable<Teacher>>();
+            try
+            {
+                serviceResponse.Data = Context.Teachers.Where(x => x.DepartmentId == departmentId).ToList();
+
+                serviceResponse.Message = "teacher with the given dept.id was fetched successfully from the database";
+            }
+            catch (Exception exception)
+            {
+
+                serviceResponse.Message = "Some error occurred while fetching teacher by dept.id .\nError message: " + exception.Message;
+                serviceResponse.Success = false;
+            }
+            return serviceResponse;
         }
 
 

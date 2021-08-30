@@ -14,32 +14,34 @@ namespace StudentManagementBLL.CourseEnrollBLL
 {
     public class CourseEnrollBLL : Repository<CourseEnroll, ApplicationDbContext>, ICourseEnrollBLL
     {
+        private readonly ApplicationDbContext Context;
+
         public CourseEnrollBLL(ApplicationDbContext dbContext) : base(dbContext)
         {
-
+            this.Context = dbContext;
         }
-        public ServiceResponse<CourseEnroll> EnrollCourseToStudent(string sdtRegNo, string courseName)
+        public ServiceResponse<CourseEnroll> EnrollCourseToStudent(string sdtRegNo, string courseCode)
         {
             var serviceresponse = new ServiceResponse<CourseEnroll>();
             try
             {
-                var aStudentRegNo = _dbContext.Students.SingleOrDefault(x => x.RegistrationNumber == sdtRegNo).ToString();
-                var aCourseId = _dbContext.Courses.SingleOrDefault(x => x.Name == courseName).Id;
-                var astudentName = _dbContext.Students
+                var aStudentRegNo = Context.Students.SingleOrDefault(x => x.RegistrationNumber == sdtRegNo).ToString();
+                //----------------
+                var aCourseId = Context.Courses.SingleOrDefault(x => x.Code == courseCode).Id;
+                var astudentName = Context.Students
                         .SingleOrDefault(x => x.RegistrationNumber == sdtRegNo)
                         .Name;
-                var acourseName = _dbContext.Courses
-                    .SingleOrDefault(x => x.Name == courseName)
+                var acourseName = Context.Courses
+                    .SingleOrDefault(x => x.Code == courseCode)
                     .Name;
-                var acourseCode = _dbContext.Courses
-                    .SingleOrDefault(x => x.Name == courseName).Code;
-                var aDepartmentId = _dbContext.Students
+                var acourseCode =courseCode;
+                var aDepartmentId = Context.Students
                         .SingleOrDefault(x => x.RegistrationNumber == sdtRegNo)
                         .DepartmentId;
                 CourseEnroll acourseEnroll = new CourseEnroll();
 
-
-                serviceresponse.Data = _dbContext.CourseEnrolls.SingleOrDefault(x =>
+                //------------
+                serviceresponse.Data = Context.CourseEnrolls.SingleOrDefault(x =>
                 x.EnrolledCourseId == aCourseId
                 && x.StudentRegNo == aStudentRegNo);
 
@@ -63,10 +65,11 @@ namespace StudentManagementBLL.CourseEnrollBLL
                     }
                     else
                     {
+                        //----------
                         acourseEnroll.EnrolledCourseId = aCourseId;
                         acourseEnroll.Date = DateTime.Today;
                         acourseEnroll.IsEnrolled = true;
-                        acourseEnroll.EnrolledStudentId = _dbContext.Students
+                        acourseEnroll.EnrolledStudentId = Context.Students
                             .SingleOrDefault(x => x.RegistrationNumber == sdtRegNo)
                             .Id;
                         acourseEnroll.StudentRegNo = sdtRegNo;
@@ -75,8 +78,8 @@ namespace StudentManagementBLL.CourseEnrollBLL
                         acourseEnroll.CourseCode = acourseCode;
 
 
-                        _dbContext.CourseEnrolls.Add(acourseEnroll);
-                        _dbContext.SaveChanges();
+                        Context.CourseEnrolls.Add(acourseEnroll);
+                        Context.SaveChanges();
                         serviceresponse.Data = acourseEnroll;
                         serviceresponse.Success = true;
 
@@ -90,11 +93,11 @@ namespace StudentManagementBLL.CourseEnrollBLL
                 }
                 else
                 {
-
+                    //------------------------------
                     acourseEnroll.EnrolledCourseId = aCourseId;
                     acourseEnroll.Date = DateTime.Today;
                     acourseEnroll.IsEnrolled = true;
-                    acourseEnroll.EnrolledStudentId = _dbContext.Students
+                    acourseEnroll.EnrolledStudentId = Context.Students
                         .SingleOrDefault(x => x.RegistrationNumber == sdtRegNo)
                         .Id;
                     acourseEnroll.StudentRegNo = sdtRegNo;
@@ -103,8 +106,8 @@ namespace StudentManagementBLL.CourseEnrollBLL
                     acourseEnroll.CourseCode = acourseCode;
 
 
-                    _dbContext.CourseEnrolls.Update(acourseEnroll);
-                    _dbContext.SaveChanges();
+                    Context.CourseEnrolls.Update(acourseEnroll);
+                    Context.SaveChanges();
                     serviceresponse.Data = acourseEnroll;
                     serviceresponse.Message = "Course Enrollment Updated";
                 }
@@ -112,7 +115,7 @@ namespace StudentManagementBLL.CourseEnrollBLL
             }
             catch (Exception ex)
             {
-                serviceresponse.Message = "Error occured when fetching data from course enroll table" +
+                serviceresponse.Message = "student already enrolled in this course" +
                     ex.Message;
                 serviceresponse.Success = false;
             }
