@@ -95,7 +95,7 @@ namespace StudentManagementBLL.CourseBLL
                             course.AssignTo = "Not Assigned Yet!";
                         }
                         var semestername = courseDbContext.Semesters
-                                .FirstOrDefault(x => x.Id == course.SemesterId).Name;
+                                .SingleOrDefault(x => x.Id == course.SemesterId).Name;
                         if (course.SemesterName == null)
                         {
                             course.SemesterName =semestername; 
