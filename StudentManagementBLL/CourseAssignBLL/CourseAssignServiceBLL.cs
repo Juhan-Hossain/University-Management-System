@@ -117,13 +117,13 @@ namespace StudentManagementBLL.CourseAssignBLL
                     {
                         serviceResponse.Message = "error occured while updating assigning course\n" +
                             error.Message;
-                        throw;
+                      
                     }
 
                 }
                 else
                 {
-                    serviceResponse.Message = "Course is not assigned or need to be updated";
+                    serviceResponse.Message = "Course is already assigned!!";
                     serviceResponse.Success = false;
                 }
                 Context.SaveChanges();
