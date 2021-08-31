@@ -22,10 +22,10 @@ namespace StudentManagementEntity
         public int DayId { get; set; }
 
         [Display(Name = "Start time (Formate HH:MM) (24 Hours)")]
-        public string StartTime { set; get; }
+        public DateTime StartTime { set; get; }
 
         [Display(Name = "End time (Formate HH:MM) (24 Hours)")]
-        public string EndTime { set; get; }
+        public DateTime EndTime { set; get; }
         public string FromMeridiem { get; set; }  //return value AM or PM
         public string ToMeridiem { get; set; } //return value AM or PM
 
