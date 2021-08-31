@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RepositoryLayer;
 using StudentManagementBLL.DeletedRoomAllocationBLL;
+using StudentManagementEntity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +13,22 @@ namespace University_Student_Management.Controllers
     [Route("api/[controller]")]
     public class DeletedRoomAllocationController:ControllerBase
     {
-        private readonly IDeletedRoomAllocation _service;
-        public DeletedRoomAllocationController(IDeletedRoomAllocation service)
+        private readonly IDeletedRoomAllocationBLL _service;
+        public DeletedRoomAllocationController(IDeletedRoomAllocationBLL service)
         {
             _service = service;
 
+        }
+
+        [HttpDelete("UnAllocateRooms")]
+
+        public ActionResult<ServiceResponse<DeletedRoomAllocation>> UnAllocateRooms()
+        {
+
+            var response = _service.UnallocatingRooms();
+            if (!response.Success) return BadRequest(response);
+
+            return Ok(response);
         }
     }
 }

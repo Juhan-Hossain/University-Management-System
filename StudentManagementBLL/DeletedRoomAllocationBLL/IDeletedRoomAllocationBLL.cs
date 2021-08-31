@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace StudentManagementBLL.DeletedRoomAllocationBLL
 {
-    public interface IDeletedRoomAllocation : IRepository<DeletedRoomAllocation>
+    public interface IDeletedRoomAllocationBLL : IRepository<DeletedRoomAllocation>
     {
+        public ServiceResponse<DeletedRoomAllocation> UnallocatingRooms();
     }
 }

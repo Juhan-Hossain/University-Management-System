@@ -34,7 +34,7 @@ namespace StudentManagementDAL
         public DbSet<DeletedCourseAssign> DeletedCourseAssigns { get; set; }
 
         public DbSet<WeekDay> weekDays { get; set; }
-        public DbSet<DeletedRoomAllocation> deletedRoomAllocations { get; set; }
+        public DbSet<DeletedRoomAllocation> DeletedRoomAllocations { get; set; }
 
 
 

@@ -77,7 +77,7 @@ namespace University_Student_Management
             services.AddScoped<IDayBLL, DayBLL>();
             services.AddScoped<IRoomBLL, RoomBLL>();
             services.AddScoped<IGradeBLL, GradeBLL>();
-            services.AddScoped<IDeletedRoomAllocation, DeletedRoomAllocation>();
+            services.AddScoped<IDeletedRoomAllocationBLL, DeletedRoomAllocationBLL>();
 
 
         }
