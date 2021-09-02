@@ -38,7 +38,7 @@ namespace StudentManagementBLL.StudentResultBLL
                     .SingleOrDefault(x => x.Name == studentResult.CourseName).Name;
                 List<Course> courseList = new List<Course>();
                 //get enrolled course list from GetEnrolledCoursesBystdRegNo()
-                /*courseList = GetEnrolledCoursesBystdRegNo(studentResult.StudentRegNo).Data.ToList();*/
+             /*   courseList = GetEnrolledCoursesBystdRegNo(studentResult.StudentRegNo).Data.ToList();*/
 
                 //fetching departmentId with stdRegno
                 int aDepartmentId = Context.Students
@@ -57,7 +57,7 @@ namespace StudentManagementBLL.StudentResultBLL
                 //fetching data if there exist any or return null
                 serviceresponse.Data = Context.StudentResults.SingleOrDefault(x =>
                 x.CourseName == studentResult.CourseName
-                && x.StudentRegNo == studentResult.StudentRegNo);
+                && x.StudentRegNo == studentResult.StudentRegNo );
 
                 if (studentResult.CourseName is null)
                 {
@@ -98,21 +98,18 @@ namespace StudentManagementBLL.StudentResultBLL
                             aResult.GradeLetter = studentResult.GradeLetter;
                             aResult.Result = true;
 
-                          
-                          foreach(var enroll in Context.CourseEnrolls)
+
+                            foreach (var enroll in Context.CourseEnrolls)
                             {
-                                if(enroll.StudentRegNo== studentResult.StudentRegNo && enroll.CourseCode==aCourseCode)
+                                if (enroll.StudentRegNo == studentResult.StudentRegNo && enroll.CourseCode == aCourseCode)
                                 {
-                                    if(enroll.Grade==null)
+                                    if (enroll.Grade == null)
                                     {
                                         enroll.Grade = studentResult.GradeLetter;
                                         break;
                                     }
                                 }
                             }
-
-
-
                             Context.StudentResults.Add(aResult);
                             Context.SaveChanges();
                             serviceresponse.Data = aResult;
@@ -127,8 +124,7 @@ namespace StudentManagementBLL.StudentResultBLL
                                 ex.Message;
                             serviceresponse.Success = false;
                         }
-
-
+                        return serviceresponse;
                     }
                 }
 
@@ -136,9 +132,7 @@ namespace StudentManagementBLL.StudentResultBLL
                 {
                     serviceresponse.Message = "this student have this course result";
                     serviceresponse.Success = false;
-
-
-
+                    return serviceresponse;
                 }
 
             }

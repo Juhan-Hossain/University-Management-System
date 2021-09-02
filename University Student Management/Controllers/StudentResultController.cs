@@ -26,8 +26,8 @@ namespace University_Student_Management.Controllers
         {
 
             var serviceResponse = _service.Add(studentResult);
-            if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
-            return Ok(serviceResponse.Data);
+            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
+            return Ok(serviceResponse);
         }
 
         //Get: api/StudentResult
