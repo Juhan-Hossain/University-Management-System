@@ -41,5 +41,29 @@ namespace University_Student_Management.Controllers
            
         }
 
+        [HttpGet("AllocatedRooms")]
+        public ActionResult<ServiceResponse<IEnumerable<RoomAllocationList>>> GetAllocatedRooms()
+        {
+            var serviceResponse = _service.GetAll();
+            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
+            return Ok(serviceResponse);
+        }
+
+        [HttpGet("CourseCode")]
+        public ActionResult<ServiceResponse<IEnumerable<RoomAllocationList>>> GetRoomsByCourseCode(string code)
+        {
+            var serviceResponse = _service.GetByCourseCode(code);
+            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
+            return Ok(serviceResponse);
+        }
+
+        [HttpGet("DepartmentId")]
+        public ActionResult<ServiceResponse<IEnumerable<RoomAllocationList>>> GetRoomsByDeptId(int id)
+        {
+            var serviceResponse = _service.GetByDeptId(id);
+            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
+            return Ok(serviceResponse);
+        }
+
     }
 }

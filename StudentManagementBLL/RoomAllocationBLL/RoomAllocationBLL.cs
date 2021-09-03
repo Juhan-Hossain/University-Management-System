@@ -72,5 +72,49 @@ namespace StudentManagementBLL.RoomAllocationBLL
 
         }
 
+        public ServiceResponse<IEnumerable<RoomAllocationList>> GetByCourseCode(string code)
+        {
+            var serviceresponse = new ServiceResponse<IEnumerable<RoomAllocationList>>();
+
+
+            List<RoomAllocationList> ByDept = Context.RoomAllocationLists.Where(x => x.CourseCode == code).ToList();
+
+            if (ByDept.Count == 0)
+            {
+                serviceresponse.Message = "please add room allocation for this dept.";
+                serviceresponse.Success = false;
+                return serviceresponse;
+            }
+
+            serviceresponse.Data = ByDept;
+
+            serviceresponse.Message = "Added dept based room allocation list";
+
+
+            return serviceresponse;
+        }
+
+        public ServiceResponse<IEnumerable<RoomAllocationList>> GetByDeptId(int id)
+        {
+            var serviceresponse = new ServiceResponse<IEnumerable<RoomAllocationList>>();
+
+
+            List<RoomAllocationList> ByDept = Context.RoomAllocationLists.Where(x => x.DepartmentId==id).ToList();
+
+            if(ByDept.Count==0)
+            {
+                serviceresponse.Message = "please enter dept. ID";
+                serviceresponse.Success = false;
+                return serviceresponse;
+            }
+
+            serviceresponse.Data = ByDept;
+
+            serviceresponse.Message = "Added dept based room allocation list";
+
+
+            return serviceresponse;
+        }
+
     }
 }

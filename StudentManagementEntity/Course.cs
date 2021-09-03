@@ -36,7 +36,7 @@ namespace StudentManagementEntity
 
    /*     [ForeignKey("Semester")]*/
         public int? SemesterId { get; set; }
-        public string SemesterName { get; set; }
+     /*   public string SemesterName { get; set; }*/
 
         [ForeignKey("Teacher")]
         public int? TeacherId { get; set; }
