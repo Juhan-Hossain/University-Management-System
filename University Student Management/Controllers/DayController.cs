@@ -20,7 +20,7 @@ namespace University_Student_Management.Controllers
             _service = service;
         }
 
-        // GET: api/Teachers:All
+        // GET: api/Days:All
         [HttpGet("GetDays")]
         public ActionResult<ServiceResponse<IEnumerable<WeekDay>>> GetDays()
         {

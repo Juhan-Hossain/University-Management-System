@@ -94,12 +94,12 @@ namespace StudentManagementBLL.CourseBLL
                         {
                             course.AssignTo = "Not Assigned Yet!";
                         }
-                        var semestername = courseDbContext.Semesters
+                        /*var semestername = courseDbContext.Semesters
                                 .SingleOrDefault(x => x.Id == course.SemesterId).Name;
                         if (course.SemesterName == null)
                         {
-                            course.SemesterName =semestername; 
-                        }
+                            course.SemesterName = semestername;
+                        }*/
                         data.Add(course);
                     }
                 }

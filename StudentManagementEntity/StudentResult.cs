@@ -23,7 +23,7 @@ namespace StudentManagementEntity
    
         public string Email { get; set; }
 
-        public bool Result { get; set; } = false;
+        public bool? Result { get; set; } = false;
         public string DepartmentName { get; set; }
 
         [Required(ErrorMessage = "CourseName can't be empty")]
