@@ -35,6 +35,7 @@ namespace StudentManagementDAL
 
         public DbSet<WeekDay> weekDays { get; set; }
         public DbSet<DeletedRoomAllocation> DeletedRoomAllocations { get; set; }
+        public DbSet<AppUser> Users { get; set; }
 
 
 
