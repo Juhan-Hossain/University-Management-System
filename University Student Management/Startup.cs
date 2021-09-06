@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -7,9 +8,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using StudentManagementBLL;
+/*using StudentManagementBLL.AccountServiceBLL;*/
 using StudentManagementBLL.CourseAssignBLL;
 using StudentManagementBLL.CourseBLL;
 using StudentManagementBLL.CourseEnrollBLL;
@@ -29,15 +32,20 @@ using StudentManagementDAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using University_Student_Management.Interfaces;
+using University_Student_Management.services;
 
 namespace University_Student_Management
 {
     public class Startup
     {
+        private readonly IConfiguration _config;
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            /*Configuration = configuration;*/
+            this._config = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -49,19 +57,31 @@ namespace University_Student_Management
 
 
             services.AddControllers();
-                
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["TokenKey"])),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "University_Student_Management", Version = "v1" });
             });
 
             //resolves camelcase problem & looping problem
-            services.AddControllers().AddNewtonsoftJson(options => {
+            services.AddControllers().AddNewtonsoftJson(options =>
+            {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
             services.AddScoped<ApplicationDbContext>();
-          
+
             services.AddScoped<IDepartmentServiceBLL, DepartmentServiceBLL>();
             services.AddScoped<ITeacherServiceBLL, TeacherServiceBLL>();
             services.AddScoped<ICourseServiceBLL, CourseServiceBLL>();
@@ -78,6 +98,8 @@ namespace University_Student_Management
             services.AddScoped<IRoomBLL, RoomBLL>();
             services.AddScoped<IGradeBLL, GradeBLL>();
             services.AddScoped<IDeletedRoomAllocationBLL, DeletedRoomAllocationBLL>();
+            /*services.AddScoped<IAccountServiceBLL, AccountServiceBLL>();*/
+            services.AddScoped<ITokenService, TokenService>();
 
 
         }
@@ -108,6 +130,7 @@ namespace University_Student_Management
             app.UseCors(builder => builder.WithOrigins("http://localhost:4200")
                              .AllowAnyMethod()
                              .AllowAnyHeader());
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
