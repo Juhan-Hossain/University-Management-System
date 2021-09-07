@@ -56,10 +56,10 @@ namespace StudentManagementEntity
            using var hmac = new HMACSHA512(user.PasswordSalt);
 
             var ComputedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
-            for (int i = 0; i < ComputedHash.Length; i++)
-            {
-                if (ComputedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid password");
-            }
+            /*for (int i = 0; i < ComputedHash.Length; i++)
+            {*/
+                if (ComputedHash != user.PasswordHash) return Unauthorized("Invalid password");
+            //}
             return new UserDto
             {
                 UserName=user.UserName,

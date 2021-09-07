@@ -27,7 +27,7 @@ namespace StudentManagementBLL.CourseAssignBLL
                 Teacher fetchingTeacher = Context.Teachers.SingleOrDefault(x => x.Id == teacherId);
                 Department fetchingDepartment = Context.Departments.SingleOrDefault(x => x.Id == departmentId);
                 serviceResponse.Data = Context.CourseAssignments.SingleOrDefault(x =>
-                x.DepartmentId == fetchingDepartment.Id
+                x.DepartmentId != fetchingDepartment.Id
                 && x.TeacherId == fetchingTeacher.Id
                  && x.Code != fetchingCourse.Code);
 
@@ -47,19 +47,19 @@ namespace StudentManagementBLL.CourseAssignBLL
                     serviceResponse.Message = "this Department does not exist.";
                     serviceResponse.Success = false;
                 }
-                else if (serviceResponse.Data == null)
+                else if (serviceResponse.Data == null && serviceResponse.Success)
                 {
-                    if (!serviceResponse.Success)
+                    /*if (!serviceResponse.Success)
                     {
                         serviceResponse.Message = "Course is already assigned.";
                         serviceResponse.Success = false;
                     }
                     else
-                    {
+                    {*/
 
                         CourseAssignment aCourseAssignment = new CourseAssignment();
 
-                        if (fetchingTeacher.RemainingCredit >= fetchingCourse.Credit || fetchingTeacher.RemainingCredit == null)
+                        if (fetchingTeacher.RemainingCredit >= fetchingCourse.Credit )
                         {
                             try
                             {
@@ -98,10 +98,10 @@ namespace StudentManagementBLL.CourseAssignBLL
                             $" Credit to take {fetchingCourse.Code}: {fetchingCourse.Name}";
                             serviceResponse.Success = false;
                         }
-                    }
+                    //}
 
                 }
-                else if (serviceResponse.Data.IsAssigned == 1 || serviceResponse.Data.IsAssigned == 3)
+                else if (serviceResponse.Data.IsAssigned == 1)
                 {
                     try
                     {
@@ -117,20 +117,20 @@ namespace StudentManagementBLL.CourseAssignBLL
                     {
                         serviceResponse.Message = "error occured while updating assigning course\n" +
                             error.Message;
-                      
+
                     }
 
                 }
                 else
                 {
-                    serviceResponse.Message = "Course is already assigned!!";
+                    serviceResponse.Message = "Course is already assigned222!!";
                     serviceResponse.Success = false;
                 }
                 Context.SaveChanges();
             }
             catch (Exception exception)
             {
-                serviceResponse.Message = "Some error occurred while fetching data.\nError message: " + exception.Message;
+                serviceResponse.Message = "This course already assigned a teacher.\nError message: " + exception.Message;
                 serviceResponse.Success = false;
             }
             return serviceResponse;
