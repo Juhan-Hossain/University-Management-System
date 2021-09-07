@@ -36,10 +36,11 @@ namespace University_Student_Management.Controllers
         {
 
             var coursekeyresponse = _service.AssignCourseToTeacher(body.DepartmentId, body.Code, body.TeacherId);
+
             if (!coursekeyresponse.Success) return BadRequest(coursekeyresponse);
 
             coursekeyresponse.Message = $" {body.Code} Successfully assign to TeacherId no: {body.TeacherId}";
-            return Ok();
+            return Ok(coursekeyresponse);
 
         }
 

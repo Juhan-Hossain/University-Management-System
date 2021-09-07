@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace University_Student_Management.Controllers
 {
+    [Authorize]
     public class UsersController : BaseApiController
     {
         private readonly ApplicationDbContext Context;
@@ -30,11 +31,9 @@ namespace University_Student_Management.Controllers
 
        
         [HttpGet("{id}")]
-        [Authorize]
+
         public async Task<ActionResult<AppUser>> GetUser(int id)
         {
-            var p = id;
-
             return await Context.Users.FindAsync(id);
         }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using StudentManagementEntity;
 using System;
 using System.Collections.Generic;
@@ -9,8 +10,14 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace StudentManagementDAL
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
+        private readonly DbContextOptions options;
+
+        public ApplicationDbContext(DbContextOptions options) : base(options)
+        {
+            this.options = options;
+        }
 
         public DbSet<Department> Departments { get; set; }
         public DbSet<Student> Students { get; set; }
@@ -51,6 +58,7 @@ namespace StudentManagementDAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             //Day:
             modelBuilder.Entity<WeekDay>(entity =>
             {
@@ -142,7 +150,6 @@ namespace StudentManagementDAL
 
 
                 entity.HasIndex(x => x.Code).IsUnique();
-                /*entity.HasCheckConstraint("CHK_LengthOfCode", "len(code) >= 2 and len(code) <= 7");*/
                 entity.HasData(
                    new Department { Id = 1, Code = "EEE", Name = "Electronics & Electrical Engineering" },
                    new Department { Id = 2, Code = "CSE", Name = "Computer Science & Engineering" },

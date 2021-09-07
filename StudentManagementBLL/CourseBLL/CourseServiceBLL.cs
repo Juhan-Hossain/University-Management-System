@@ -13,11 +13,11 @@ namespace StudentManagementBLL.CourseBLL
 {
     public class CourseServiceBLL : Repository<Course, ApplicationDbContext>, ICourseServiceBLL
     {
-        private readonly ApplicationDbContext courseDbContext;
+        private readonly ApplicationDbContext Context;
 
         public CourseServiceBLL(ApplicationDbContext dbContext):base(dbContext)
         {
-            this.courseDbContext = dbContext;
+            this.Context = dbContext;
         }
 
 
@@ -32,8 +32,8 @@ namespace StudentManagementBLL.CourseBLL
             try
             {
                 serviceResponse.Data = course;
-                courseDbContext.Courses.Add(serviceResponse.Data);
-                courseDbContext.SaveChanges();
+                Context.Courses.Add(serviceResponse.Data);
+                Context.SaveChanges();
                 serviceResponse.Message = "Course created successfully in DB";
             }
             catch (Exception exception)
@@ -56,7 +56,7 @@ namespace StudentManagementBLL.CourseBLL
             var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
             try
             {
-                serviceResponse.Data = courseDbContext.Courses
+                serviceResponse.Data = Context.Courses
                     .Include(x => x.Department)
                     .Where(x => x.DepartmentId == departmentId).ToList();
 
@@ -73,41 +73,34 @@ namespace StudentManagementBLL.CourseBLL
 
 
         //ViewCourseByDept:
-        public ServiceResponse<IEnumerable<Course>> AssignedCoursesByDepartment(int departmentId)
+/*        public ServiceResponse<IEnumerable<Course>> AssignedCoursesByDepartment(int departmentId)
         {
                 
             
             var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
             try
             {
-                List<Course> data = new List<Course>();
-                DbSet<Course> courses = courseDbContext.Courses;
-                foreach (Course course in courses)
+                var courses = Context.Courses.Where(x=>x.DepartmentId== departmentId).Include(x=>x.RoomAllocationLists).ToList();
+
+
+                *//*foreach (Course course in courses)
                 {
                     if (course.DepartmentId == departmentId)
                     {
-                        /*if (course.AssignTo != null)
-                        {
-                            data.Add(course);
-                        }*/
+
                         if (course.AssignTo == null)
                         {
                             course.AssignTo = "Not Assigned Yet!";
                         }
-                        /*var semestername = courseDbContext.Semesters
-                                .SingleOrDefault(x => x.Id == course.SemesterId).Name;
-                        if (course.SemesterName == null)
-                        {
-                            course.SemesterName = semestername;
-                        }*/
+
                         data.Add(course);
                     }
-                }
+                }*//*
 
-                serviceResponse.Data = data;
+                serviceResponse.Data = courses;
 
                 
-                if (data.Count()>0)
+                if (courses.Count()>0)
                 {
                     serviceResponse.Message = "Data  with the given id was fetched successfully from the database";
                 }
@@ -126,6 +119,58 @@ namespace StudentManagementBLL.CourseBLL
                 serviceResponse.Success = false;
             }
             return serviceResponse;
+        }*/
+
+
+        //ViewCourseByDept:
+        public ServiceResponse<IEnumerable<Course>> AssignedCoursesByDepartment(int departmentId)
+        {
+
+
+            var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
+            try
+            {
+                List<Course> data = new List<Course>();
+                DbSet<Course> courses = Context.Courses;
+                foreach (Course course in courses)
+                {
+                    if (course.DepartmentId == departmentId)
+                    {
+                        /*if (course.AssignTo != null)
+                        {
+                            data.Add(course);
+                        }*/
+                        if (course.AssignTo == null)
+                        {
+                            course.AssignTo = "Not Assigned Yet!";
+                        }
+                        
+                        data.Add(course);
+                    }
+                }
+
+                serviceResponse.Data = data;
+
+
+                if (data.Count() > 0)
+                {
+                    serviceResponse.Message = "Data  with the given id was fetched successfully from the database";
+                }
+                else
+                {
+                    serviceResponse.Message = "This dept does not have any data!";
+                    serviceResponse.Success = false;
+                }
+
+
+            }
+            catch (Exception exception)
+            {
+
+                serviceResponse.Message = "Some error occurred while fetching data.\nError message: " + exception.Message;
+                serviceResponse.Success = false;
+            }
+            return serviceResponse;
         }
 
         //GetCourseByStdRegNo
@@ -135,11 +180,11 @@ namespace StudentManagementBLL.CourseBLL
             try
             {
                 Student aStudent;
-                 aStudent = courseDbContext.Students
+                 aStudent = Context.Students
                    .SingleOrDefault(x => x.RegistrationNumber == stdRegNo);
                 if(aStudent != null)
                 {
-                    var tempcourses = courseDbContext.Courses
+                    var tempcourses = Context.Courses
                         .Include(x => x.Department)
                     .Where(x => x.DepartmentId == aStudent.DepartmentId).ToList(); ;
 
@@ -178,11 +223,11 @@ namespace StudentManagementBLL.CourseBLL
             {
                 List<Course> EnrolledCourses = new List<Course>();
 
-                foreach (var enroll in courseDbContext.CourseEnrolls)
+                foreach (var enroll in Context.CourseEnrolls)
                 {
                     if(enroll.StudentRegNo==stdRegNo)
                     {
-                        var selectedCourse = courseDbContext.Courses.SingleOrDefault(x => x.Code == enroll.CourseCode);
+                        var selectedCourse = Context.Courses.SingleOrDefault(x => x.Code == enroll.CourseCode);
                         EnrolledCourses.Add(selectedCourse);
                     }
                 }
