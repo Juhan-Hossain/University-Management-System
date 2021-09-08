@@ -10,9 +10,8 @@ using System.Threading.Tasks;
 
 namespace University_Student_Management.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class DeletedCourseAssignController:ControllerBase
+
+    public class DeletedCourseAssignController : BaseApiController
     {
         private readonly IDeletedCourseAssignBLL _service;
         public DeletedCourseAssignController(IDeletedCourseAssignBLL service)
