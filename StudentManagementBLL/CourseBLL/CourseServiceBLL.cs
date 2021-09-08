@@ -73,34 +73,16 @@ namespace StudentManagementBLL.CourseBLL
 
 
         //ViewCourseByDept:
-/*        public ServiceResponse<IEnumerable<Course>> AssignedCoursesByDepartment(int departmentId)
+        public ServiceResponse<IEnumerable<Course>> ViewCoursesByDept(int departmentId)
         {
-                
-            
+
+
             var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
             try
             {
-                var courses = Context.Courses.Where(x=>x.DepartmentId== departmentId).Include(x=>x.RoomAllocationLists).ToList();
-
-
-                *//*foreach (Course course in courses)
-                {
-                    if (course.DepartmentId == departmentId)
-                    {
-
-                        if (course.AssignTo == null)
-                        {
-                            course.AssignTo = "Not Assigned Yet!";
-                        }
-
-                        data.Add(course);
-                    }
-                }*//*
-
+                var courses = Context.Courses.Where(x => x.DepartmentId == departmentId).Include(x => x.RoomAllocationLists).ToList();
                 serviceResponse.Data = courses;
-
-                
-                if (courses.Count()>0)
+                if (courses.Count() > 0)
                 {
                     serviceResponse.Message = "Data  with the given id was fetched successfully from the database";
                 }
@@ -109,8 +91,6 @@ namespace StudentManagementBLL.CourseBLL
                     serviceResponse.Message = "This dept does not have any data!";
                     serviceResponse.Success = false;
                 }
-
-                
             }
             catch (Exception exception)
             {
@@ -119,7 +99,7 @@ namespace StudentManagementBLL.CourseBLL
                 serviceResponse.Success = false;
             }
             return serviceResponse;
-        }*/
+        }
 
 
         //ViewCourseByDept:

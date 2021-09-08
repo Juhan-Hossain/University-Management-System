@@ -16,8 +16,6 @@ namespace StudentManagementEntity
             Courses = new HashSet<Course>();
             Teachers = new HashSet<Teacher>();
         }
-        
-
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -33,9 +31,5 @@ namespace StudentManagementEntity
         public string Code { get; set; }
         public virtual ICollection<Course> Courses { get; set; }
         public virtual ICollection<Teacher> Teachers { get; set; }
-
-
-
-
     }
 }
