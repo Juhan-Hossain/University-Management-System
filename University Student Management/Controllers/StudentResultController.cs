@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 
 namespace University_Student_Management.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class StudentResultController : ControllerBase
+    public class StudentResultController : BaseApiController
     {
         private readonly IStudentResultBLL _service;
         public StudentResultController(IStudentResultBLL service)
