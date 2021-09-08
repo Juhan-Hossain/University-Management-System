@@ -27,9 +27,10 @@ namespace University_Student_Management.Controllers
             if (serviceResponse.Success == false)
             {
                 serviceResponse.Message = "Department already exist in DB!";
-                return BadRequest(serviceResponse.Message);
+                return BadRequest(serviceResponse);
             }
-            return Ok(serviceResponse.Data);
+            serviceResponse.Message = "Department added successfully";
+            return Ok(serviceResponse);
         }
 
         // GET: api/Departments
