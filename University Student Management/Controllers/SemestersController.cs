@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 
 namespace University_Student_Management.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class SemestersController:ControllerBase
+    public class SemestersController : BaseApiController
     {
         private readonly ISemesterServiceBLL _service;
         public SemestersController(ISemesterServiceBLL service)

@@ -9,9 +9,7 @@ using StudentManagementEntity;
 
 namespace University_Student_Management.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class GradesController:ControllerBase
+    public class GradesController : BaseApiController
     {
         private readonly IGradeBLL _service;
         public GradesController(IGradeBLL service)

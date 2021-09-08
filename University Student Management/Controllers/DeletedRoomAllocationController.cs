@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 
 namespace University_Student_Management.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class DeletedRoomAllocationController:ControllerBase
+    public class DeletedRoomAllocationController : BaseApiController
     {
         private readonly IDeletedRoomAllocationBLL _service;
         public DeletedRoomAllocationController(IDeletedRoomAllocationBLL service)
