@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagementDAL;
 
 namespace StudentManagementDAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210911202528_addedValueToGrade")]
+    partial class addedValueToGrade
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -715,7 +717,7 @@ namespace StudentManagementDAL.Migrations
                     b.Property<string>("Grade")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("value")
+                    b.Property<int>("value")
                         .HasColumnType("int");
 
                     b.HasKey("Grade");
@@ -725,55 +727,68 @@ namespace StudentManagementDAL.Migrations
                     b.HasData(
                         new
                         {
-                            Grade = "A+"
+                            Grade = "A+",
+                            value = 0
                         },
                         new
                         {
-                            Grade = "A"
+                            Grade = "A",
+                            value = 0
                         },
                         new
                         {
-                            Grade = "A-"
+                            Grade = "A-",
+                            value = 0
                         },
                         new
                         {
-                            Grade = "B+"
+                            Grade = "B+",
+                            value = 0
                         },
                         new
                         {
-                            Grade = "B"
+                            Grade = "B",
+                            value = 0
                         },
                         new
                         {
-                            Grade = "B-"
+                            Grade = "B-",
+                            value = 0
                         },
                         new
                         {
-                            Grade = "C+"
+                            Grade = "C+",
+                            value = 0
                         },
                         new
                         {
-                            Grade = "C"
+                            Grade = "C",
+                            value = 0
                         },
                         new
                         {
-                            Grade = "C-"
+                            Grade = "C-",
+                            value = 0
                         },
                         new
                         {
-                            Grade = "D+"
+                            Grade = "D+",
+                            value = 0
                         },
                         new
                         {
-                            Grade = "D"
+                            Grade = "D",
+                            value = 0
                         },
                         new
                         {
-                            Grade = "D-"
+                            Grade = "D-",
+                            value = 0
                         },
                         new
                         {
-                            Grade = "F"
+                            Grade = "F",
+                            value = 0
                         });
                 });
 
