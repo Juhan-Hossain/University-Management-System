@@ -14,7 +14,8 @@ namespace StudentManagementEntity
         public int Id { get; set; }*/
         [Key]
         public string Grade { get; set; }
-    
-       
+        public int? value { get; set; }
+
+
     }
 }
