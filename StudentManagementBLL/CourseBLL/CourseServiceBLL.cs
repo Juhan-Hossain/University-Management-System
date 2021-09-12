@@ -38,8 +38,7 @@ namespace StudentManagementBLL.CourseBLL
             }
             catch (Exception exception)
             {
-                serviceResponse.Message = $"{course.Code}/{course.Name} already stored in the Db\n" +
-                    $"Error Message: {exception.Message}";
+                serviceResponse.Message = $"{course.Code}/{course.Name} already stored in the Db";
                 serviceResponse.Success = false;
             }
             return serviceResponse;
@@ -65,7 +64,7 @@ namespace StudentManagementBLL.CourseBLL
             catch (Exception exception)
             {
 
-                serviceResponse.Message = "Some error occurred while fetching data.\nError message: " + exception.Message;
+                serviceResponse.Message = "Some error occurred while fetching data.";
                 serviceResponse.Success = false;
             }
             return serviceResponse;
@@ -95,7 +94,7 @@ namespace StudentManagementBLL.CourseBLL
             catch (Exception exception)
             {
 
-                serviceResponse.Message = "Some error occurred while fetching data.\nError message: " + exception.Message;
+                serviceResponse.Message = "Some error occurred while fetching data";
                 serviceResponse.Success = false;
             }
             return serviceResponse;
@@ -147,7 +146,7 @@ namespace StudentManagementBLL.CourseBLL
             catch (Exception exception)
             {
 
-                serviceResponse.Message = "Some error occurred while fetching data.\nError message: " + exception.Message;
+                serviceResponse.Message = "Some error occurred while fetching data.";
                 serviceResponse.Success = false;
             }
             return serviceResponse;
@@ -187,7 +186,7 @@ namespace StudentManagementBLL.CourseBLL
             catch (Exception exception)
             {
 
-                serviceResponse.Message = "Some error occurred while fetching data.\nError message: " + exception.Message;
+                serviceResponse.Message = "Some error occurred while fetching data";
                 serviceResponse.Success = false;
             }
             return serviceResponse;
@@ -231,7 +230,7 @@ namespace StudentManagementBLL.CourseBLL
             }
             catch (Exception ex)
             {
-                serviceResponse.Message = "Error occurred while fetching data from DB for\n" + ex.Message;
+                serviceResponse.Message = "Error occurred while fetching data from DB";
                 serviceResponse.Success = false;
             }
             return serviceResponse;
