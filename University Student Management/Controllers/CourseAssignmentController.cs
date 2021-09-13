@@ -38,7 +38,7 @@ namespace University_Student_Management.Controllers
 
             if (!coursekeyresponse.Success) return BadRequest(coursekeyresponse);
 
-            coursekeyresponse.Message = $" {body.Code} Successfully assign to TeacherId no: {body.TeacherId}";
+            coursekeyresponse.Message = "course has been Successfully assign to Teacher";
             return Ok(coursekeyresponse);
 
         }
