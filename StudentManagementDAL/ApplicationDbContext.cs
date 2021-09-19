@@ -63,13 +63,13 @@ namespace StudentManagementDAL
             modelBuilder.Entity<WeekDay>(entity =>
             {
                 entity.HasData(
-                    new WeekDay { Id = 1, DayName = "Saturday" },
-                    new WeekDay { Id = 2, DayName = "Sunday" },
-                    new WeekDay { Id = 3, DayName = "Monday" },
-                    new WeekDay { Id = 4, DayName = "Tuesday" },
-                    new WeekDay { Id = 5, DayName = "Wednessday" },
-                    new WeekDay { Id = 6, DayName = "Thursday" },
-                    new WeekDay { Id = 7, DayName = "Friday" }
+                    new WeekDay { Id = 1, DayName = "Sat" },
+                    new WeekDay { Id = 2, DayName = "Sun" },
+                    new WeekDay { Id = 3, DayName = "Mon" },
+                    new WeekDay { Id = 4, DayName = "Tue" },
+                    new WeekDay { Id = 5, DayName = "Wed" },
+                    new WeekDay { Id = 6, DayName = "Thu" },
+                    new WeekDay { Id = 7, DayName = "Fri" }
                     );
             });
 
@@ -83,7 +83,7 @@ namespace StudentManagementDAL
                 .WithMany(x => x.RoomAllocationLists).HasForeignKey(x => x.DayId);
 
                 entity.HasOne(x => x.Course)
-                .WithMany(x => x.RoomAllocationLists).HasForeignKey(x => new { x.CourseCode, x.DepartmentId });
+                .WithMany(x => x.RoomAllocationLists).HasForeignKey(x => x.CourseId);
 
             });
 
@@ -129,14 +129,10 @@ namespace StudentManagementDAL
             //CourseEnrollment:
             modelBuilder.Entity<CourseEnroll>(entity =>
             {
-
-                entity.HasKey(x => new { x.StudentRegNo, x.CourseCode, x.DepartmentId });
                 entity.HasOne(x => x.Student)
                 .WithMany(x => x.CourseEnrolls).HasForeignKey(x => x.EnrolledStudentId);
                 entity.HasOne(x => x.Course)
-                .WithMany(x => x.CourseEnrolls).HasForeignKey(x => new { x.CourseCode, x.DepartmentId });
-              /*  entity.HasOne(x => x.Grade).WithMany(x => x.)*/
-
+                .WithMany(x => x.CourseEnrolls).HasForeignKey(x => x.EnrolledCourseId);
             });
 
 
@@ -150,15 +146,6 @@ namespace StudentManagementDAL
 
 
                 entity.HasIndex(x => x.Code).IsUnique();
-                entity.HasData(
-                   new Department { Id = 1, Code = "EEE", Name = "Electronics & Electrical Engineering" },
-                   new Department { Id = 2, Code = "CSE", Name = "Computer Science & Engineering" },
-                   new Department { Id = 3, Code = "CE", Name = "Civil Engineering" },
-                   new Department { Id = 4, Code = "ME", Name = "Mechanical Engineering" },
-                   new Department { Id = 5, Code = "MTE", Name = "Mechatronics Engineering" },
-                   new Department { Id = 6, Code = "IPE", Name = "Industrial Production & Engineering" },
-                   new Department { Id = 7, Code = "MME", Name = "Department of Materials and Metallurgical Engineering" }
-               );
             });
 
 
@@ -186,15 +173,15 @@ namespace StudentManagementDAL
                 entity.HasIndex(x => x.Name).IsUnique();
                 entity.Property(x => x.Code).HasMaxLength(9);
                 entity.HasIndex(x => x.Code).IsUnique();
-                entity.HasKey(x => new { x.Code, x.DepartmentId }); //setting code & departmentId as composite key
+                /*entity.HasKey(x => new { x.Code, x.DepartmentId }); *///setting code & departmentId as composite key
                 entity.HasCheckConstraint("CHK_LengthOfCodeOfCourse", "LEN(Code) >= 5");
                 entity.HasCheckConstraint("CHK_CreditRangeOfCourse", "Credit BETWEEN 0.5 AND 5.0");
-                entity.HasData(
+               /* entity.HasData(
                     new Course() { Code = "CSE-1102", DepartmentId = 2, Name = "C Lab", Credit = 3, Description = "", SemesterId = 1 },
                     new Course() { Code = "CSE-1103", DepartmentId = 2, Name = "C++", Credit = 3, Description = "", SemesterId = 1 },
                     new Course() { Code = "CSE-1104", DepartmentId = 2, Name = "C++ Lab", Credit = 1.5F, Description = "", SemesterId = 1 }
 
-                    );
+                    );*/
             });
 
             //Teacher
@@ -206,10 +193,10 @@ namespace StudentManagementDAL
                 entity.HasOne(a => a.Department).WithMany(b => b.Teachers);
                 entity.HasCheckConstraint("CHK_CreditToBeTakenByTeacher", "CreditToBeTaken >= 0");
                 entity.HasCheckConstraint("CHK_RemainingCreditOfTeacher", "RemainingCredit BETWEEN 0 AND CreditToBeTaken");
-                entity.HasData(
+                /*entity.HasData(
                     new Teacher() { Id = 1, Name = "Ezaz Raihan", Address = "fjdsf", Email = "saif@gmail.com", Contact = 123445, DesignationId = 2, CreditToBeTaken = 100, RemainingCredit = 97, DepartmentId = 2 },
                     new Teacher() { Id = 2, Name = "Ashek", Address = "adafsf", Email = "ashek@gmail.com", Contact = 12312445, DesignationId = 1, CreditToBeTaken = 100, RemainingCredit = 70, DepartmentId = 2 }
-                    );
+                    );*/
             });
 
             //Semester
@@ -217,7 +204,7 @@ namespace StudentManagementDAL
             {
                 entity.HasIndex(x => x.Id);
                 entity.HasIndex(x => x.Name);
-                entity.HasData(
+               /* entity.HasData(
                     new Semester { Id = 1, Name = "1st" },
                     new Semester { Id = 2, Name = "2nd" },
                     new Semester { Id = 3, Name = "3rd" },
@@ -226,7 +213,7 @@ namespace StudentManagementDAL
                     new Semester { Id = 6, Name = "6th" },
                     new Semester { Id = 7, Name = "7th" },
                     new Semester { Id = 8, Name = "8th" }
-                );
+                );*/
             });
 
             /* /// Day
@@ -249,7 +236,7 @@ namespace StudentManagementDAL
             modelBuilder.Entity<Room>(entity =>
             {
                 entity.HasIndex(x => x.Name).IsUnique();
-                entity.HasData(
+                /*entity.HasData(
                     new Room() { Id = 1, Name = "A-101" },
                     new Room() { Id = 2, Name = "A-102" },
                     new Room() { Id = 3, Name = "B-101" },
@@ -258,7 +245,7 @@ namespace StudentManagementDAL
                     new Room() { Id = 6, Name = "C-102" },
                     new Room() { Id = 7, Name = "D-101" },
                     new Room() { Id = 8, Name = "D-102" }
-                    );
+                    );*/
             });
 
 
@@ -268,7 +255,7 @@ namespace StudentManagementDAL
             modelBuilder.Entity<StudentGrade>(entity =>
             {
         /*        entity.HasOne(x=>x.Grade).WithMany(x=>x.)*/
-                entity.HasData(
+               /* entity.HasData(
                        new StudentGrade() { Grade = "A+" },
                        new StudentGrade() { Grade = "A" },
                        new StudentGrade() { Grade = "A-" },
@@ -282,7 +269,7 @@ namespace StudentManagementDAL
                        new StudentGrade() { Grade = "D" },
                        new StudentGrade() { Grade = "D-" },
                        new StudentGrade() { Grade = "F" }
-                   );
+                   );*/
             });
 
 

@@ -20,9 +20,10 @@ namespace StudentManagementEntity
         }
 
 
-        
+
         [Key]
-       
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
         public int Id { get; set; }
 
         [Required(ErrorMessage = "There must be a Course Code\nSample: CSE-***")]

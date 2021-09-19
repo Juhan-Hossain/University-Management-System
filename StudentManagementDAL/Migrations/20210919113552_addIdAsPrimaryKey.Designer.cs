@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagementDAL;
 
 namespace StudentManagementDAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210919113552_addIdAsPrimaryKey")]
+    partial class addIdAsPrimaryKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -278,6 +280,9 @@ namespace StudentManagementDAL.Migrations
                     b.Property<string>("CourseCode")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -301,9 +306,9 @@ namespace StudentManagementDAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DepartmentId");
+                    b.HasIndex("CourseId");
 
-                    b.HasIndex("EnrolledCourseId");
+                    b.HasIndex("DepartmentId");
 
                     b.HasIndex("EnrolledStudentId");
 
@@ -875,13 +880,15 @@ namespace StudentManagementDAL.Migrations
 
             modelBuilder.Entity("StudentManagementEntity.CourseEnroll", b =>
                 {
+                    b.HasOne("StudentManagementEntity.Course", "Course")
+                        .WithMany("CourseEnrolls")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("StudentManagementEntity.Department", "Department")
                         .WithMany()
                         .HasForeignKey("DepartmentId");
-
-                    b.HasOne("StudentManagementEntity.Course", "Course")
-                        .WithMany("CourseEnrolls")
-                        .HasForeignKey("EnrolledCourseId");
 
                     b.HasOne("StudentManagementEntity.Student", "Student")
                         .WithMany("CourseEnrolls")

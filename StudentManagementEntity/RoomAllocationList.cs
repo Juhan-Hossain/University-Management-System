@@ -18,6 +18,8 @@ namespace StudentManagementEntity
         [Required]
          public string CourseCode { get; set; }
         public int DepartmentId { get; set; }
+        [ForeignKey("Course")]
+        public int CourseId { get; set; }
 
         public int RoomId { get; set; }
         [ForeignKey("WeekDay")]

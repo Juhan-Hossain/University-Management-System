@@ -17,6 +17,8 @@ namespace StudentManagementEntity
         public string StudentRegNo { get; set; }
 
         public string CourseCode { get; set; }
+        [ForeignKey("Course")]
+        
         public int? EnrolledCourseId { set; get; }
         [ForeignKey("Student")]
         public int? EnrolledStudentId { get; set; }

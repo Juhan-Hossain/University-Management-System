@@ -27,7 +27,7 @@ namespace University_Student_Management.Controllers
             var response = _service.EnrollCourseToStudent(courseEnroll.StudentRegNo, courseEnroll.CourseCode);
             if (!response.Success) return BadRequest(response);
 
-            response.Message = $" {courseEnroll.StudentRegNo} Successfully enrolled by student {courseEnroll.CourseCode}";
+           /* response.Message = $" {courseEnroll.StudentRegNo} Successfully enrolled by student {courseEnroll.CourseCode}";*/
             return Ok(response);
 
         }

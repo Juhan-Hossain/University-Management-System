@@ -62,7 +62,7 @@ namespace StudentManagementDAL.Migrations
                 table: "CourseEnrolls",
                 columns: new[] { "StudentRegNo", "CourseCode", "DepartmentId" });
 
-            migrationBuilder.CreateTable(
+           /* migrationBuilder.CreateTable(
                 name: "CourseStudent",
                 columns: table => new
                 {
@@ -85,7 +85,7 @@ namespace StudentManagementDAL.Migrations
                         principalTable: "Students",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
+                });*/
 
             migrationBuilder.CreateIndex(
                 name: "IX_CourseEnrolls_CourseCode_DepartmentId",
@@ -97,10 +97,10 @@ namespace StudentManagementDAL.Migrations
                 table: "CourseEnrolls",
                 column: "EnrolledStudentId");
 
-            migrationBuilder.CreateIndex(
+           /* migrationBuilder.CreateIndex(
                 name: "IX_CourseStudent_CoursesCode_CoursesDepartmentId",
                 table: "CourseStudent",
-                columns: new[] { "CoursesCode", "CoursesDepartmentId" });
+                columns: new[] { "CoursesCode", "CoursesDepartmentId" });*/
 
             migrationBuilder.AddForeignKey(
                 name: "FK_CourseEnrolls_Courses_CourseCode_DepartmentId",
@@ -141,8 +141,8 @@ namespace StudentManagementDAL.Migrations
                 name: "FK_CourseEnrolls_Students_EnrolledStudentId",
                 table: "CourseEnrolls");
 
-            migrationBuilder.DropTable(
-                name: "CourseStudent");
+           /* migrationBuilder.DropTable(
+                name: "CourseStudent");*/
 
             migrationBuilder.DropPrimaryKey(
                 name: "PK_CourseEnrolls",
