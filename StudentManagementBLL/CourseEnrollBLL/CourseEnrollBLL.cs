@@ -107,6 +107,7 @@ namespace StudentManagementBLL.CourseEnrollBLL
 
 
                     Context.CourseEnrolls.Update(acourseEnroll);
+
                     Context.SaveChanges();
                     serviceresponse.Data = acourseEnroll;
                     serviceresponse.Message = "Course Enrollment Updated";
