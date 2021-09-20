@@ -10,7 +10,6 @@ namespace StudentManagementEntity
 {
     public class RoomAllocationList
     {
-      
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
@@ -39,15 +38,5 @@ namespace StudentManagementEntity
         public virtual Room Room { get; set; }
         public virtual WeekDay WeekDay { get; set; }
         public virtual Course Course { get; set; }
-
-
-
     }
- 
-
-  
-
-
-
-
 }

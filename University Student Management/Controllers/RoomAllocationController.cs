@@ -28,12 +28,12 @@ namespace University_Student_Management.Controllers
 
             if (response.Success)
             {
-                response.Message = $" {body.CourseCode} Successfully assign to RoomId no: {body.RoomId}";
+                /*response.Message = $" {body.CourseCode} Successfully assign to RoomId no: {body.RoomId}";*/
                 return Ok(response);
             }
             else
             {
-                response.Message = "error occured while allocating rooms";
+                /*response.Message = "error occured while allocating rooms";*/
                 return BadRequest(response);
             }
            

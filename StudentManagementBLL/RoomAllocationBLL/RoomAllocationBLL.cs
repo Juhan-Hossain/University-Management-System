@@ -29,26 +29,19 @@ namespace StudentManagementBLL.RoomAllocationBLL
             var start = body.StartTime;
             var end = body.EndTime;
 
-            if(start==end || start>end)
+            if (start == end || start > end)
             {
                 serviceresponse.Message = "please enter a valid start & end time";
                 serviceresponse.Success = false;
                 return serviceresponse;
             }
-
-
-
-
-
-
-
             RoomAllocationList SelectedRoom = Context.RoomAllocationLists.SingleOrDefault(x => x.DayId == body.DayId && x.RoomId == body.RoomId
                 && (x.StartTime < end && x.EndTime > start)
             );
             serviceresponse.Data = SelectedRoom;
             if(SelectedRoom!=null)
             {
-                serviceresponse.Message = $"{body.RoomId} is busy right now";
+                serviceresponse.Message = $"Room {aRoom.Name} is busy right now";
                 serviceresponse.Success = false;
                 return serviceresponse;
             }
@@ -56,13 +49,14 @@ namespace StudentManagementBLL.RoomAllocationBLL
             {
                 try
                 {
+                    body.CourseId = aCourse.Id;
                     Context.RoomAllocationLists.Add(body);
                     Context.SaveChanges();
+                    serviceresponse.Message = $"{aCourse.Name} is Successfully allocated to {aRoom.Name}";
                 }
                 catch (Exception ex)
                 {
-                    serviceresponse.Message = "error occured while allocating room :\n" +
-                        "error: "+ex.Message;
+                    serviceresponse.Message = "error occured while allocating room";
                     serviceresponse.Success = false;
                 }
                
