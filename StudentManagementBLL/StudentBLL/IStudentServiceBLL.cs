@@ -10,7 +10,7 @@ namespace StudentManagementBLL.StudentBLL
 {
     public interface IStudentServiceBLL :IRepository<Student>
     {
-
+        public ServiceResponse<IEnumerable<string>> StudentDDl(string str);
     }
    
 }
