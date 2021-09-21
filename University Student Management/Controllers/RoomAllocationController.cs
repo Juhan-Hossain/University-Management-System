@@ -28,17 +28,14 @@ namespace University_Student_Management.Controllers
 
             if (response.Success)
             {
-                /*response.Message = $" {body.CourseCode} Successfully assign to RoomId no: {body.RoomId}";*/
                 return Ok(response);
             }
             else
             {
-                /*response.Message = "error occured while allocating rooms";*/
                 return BadRequest(response);
             }
            
         }
-
         [HttpGet("AllocatedRooms")]
         public ActionResult<ServiceResponse<IEnumerable<RoomAllocationList>>> GetAllocatedRooms()
         {
@@ -46,7 +43,6 @@ namespace University_Student_Management.Controllers
             if (serviceResponse.Success == false) return BadRequest(serviceResponse);
             return Ok(serviceResponse);
         }
-
         [HttpGet("CourseCode")]
         public ActionResult<ServiceResponse<IEnumerable<RoomAllocationList>>> GetRoomsByCourseCode(string code)
         {
@@ -54,7 +50,6 @@ namespace University_Student_Management.Controllers
             if (serviceResponse.Success == false) return BadRequest(serviceResponse);
             return Ok(serviceResponse);
         }
-
         [HttpGet("DepartmentId")]
         public ActionResult<ServiceResponse<IEnumerable<RoomAllocationList>>> GetRoomsByDeptId(int id)
         {

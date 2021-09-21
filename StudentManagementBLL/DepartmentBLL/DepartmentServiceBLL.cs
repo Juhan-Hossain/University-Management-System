@@ -11,30 +11,43 @@ namespace StudentManagementBLL.DepartmentBLL
 {
     public class DepartmentServiceBLL:Repository<Department,ApplicationDbContext>,IDepartmentServiceBLL
     {
+        private readonly ApplicationDbContext Context;
+
         public DepartmentServiceBLL(ApplicationDbContext dbContext) : base(dbContext)
         {
-
+            this.Context = dbContext;
         }
-
-       /* public override ServiceResponse<Department> Add(Department department)
+        public ServiceResponse<IEnumerable< Department>> DepartmentDDl(string str)
         {
-            var serviceResponse = new ServiceResponse<Department>();
-
-            try
+            var serviceResponse = new ServiceResponse<IEnumerable<Department>>();
+            List<Department> ddl = new List<Department>();
+            List<Department> fddl = new List<Department>();
+            ddl = Context.Departments.Where(x => x.Name.Contains(str)).ToList();
+            var x=0;
+            if (ddl.Count <= 0)
             {
-                var newId = department.Id;
-                serviceResponse.Data = department;
-                _dbContext.Departments.Add(serviceResponse.Data);
-                _dbContext.SaveChanges();
-                serviceResponse.Message = "Department created successfully in DB";
-            }
-            catch (Exception exception)
-            {
-                serviceResponse.Message = $"please enter valid department code beetween 2-7 char & new name\n" +
-                    $"Error Message: {exception.Message}";
+                serviceResponse.Message = "no dept with given name exists!!";
                 serviceResponse.Success = false;
             }
+            if (ddl.Count >= 10)
+            {
+                x = 10;
+            }
+            else
+            {
+                x = ddl.Count;
+            }
+            for(int i=0;i<x;i++)
+            {
+                fddl.Add(ddl[i]);
+            }
+            if(serviceResponse.Success)
+            {
+                serviceResponse.Data = fddl;
+                serviceResponse.Message = " ddl load success";
+            }
             return serviceResponse;
-        }*/
+        }
+
     }
 }
