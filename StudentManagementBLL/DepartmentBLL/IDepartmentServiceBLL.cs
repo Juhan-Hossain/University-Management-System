@@ -10,5 +10,6 @@ namespace StudentManagementBLL.DepartmentBLL
 {
     public interface IDepartmentServiceBLL : IRepository<Department>
     {
+        public ServiceResponse<IEnumerable<Department>> DepartmentDDl(string str);
     }
 }

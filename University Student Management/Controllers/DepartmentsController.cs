@@ -38,7 +38,16 @@ namespace University_Student_Management.Controllers
         public ActionResult<ServiceResponse<IEnumerable<Department>>> GetDepartments()
         {
             var serviceResponse =  _service.GetAll();
-            if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
+            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
+            return Ok(serviceResponse);
+        }
+
+
+        [HttpGet("LoadDeptDDL")]
+        public ActionResult<ServiceResponse<IEnumerable<Department>>> LoadDepartment(string str)
+        {
+            var serviceResponse = _service.DepartmentDDl(str);
+            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
             return Ok(serviceResponse);
         }
     }
