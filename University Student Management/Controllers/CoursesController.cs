@@ -87,7 +87,13 @@ namespace University_Student_Management.Controllers
             return Ok(serviceResponse);
         }
 
-
+        [HttpGet("EnrolledCoursesByStdRegDDL")]
+        public ActionResult<ServiceResponse<IEnumerable<Course>>> EnrolledCoursesByStdRegNo(string stdRegNo)
+        {
+            var serviceResponse = _service.EnrolledCoursesBystdRegNoDDL(stdRegNo);
+            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
+            return Ok(serviceResponse);
+        }
 
 
 
