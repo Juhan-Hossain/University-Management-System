@@ -41,7 +41,14 @@ namespace University_Student_Management.Controllers
             return Ok(serviceResponse);
         }
 
-       
+        [HttpGet("LoadStdDDL")]
+        public ActionResult<ServiceResponse<IEnumerable<Department>>> LoadStudent(string str)
+        {
+            var serviceResponse = _service.StudentDDl(str);
+            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
+            return Ok(serviceResponse);
+        }
+
 
     }
 }

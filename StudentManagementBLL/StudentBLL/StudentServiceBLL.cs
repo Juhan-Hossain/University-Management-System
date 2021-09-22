@@ -18,6 +18,38 @@ namespace StudentManagementBLL.StudentBLL
             this.Context = dbContext;
         }
 
+        public ServiceResponse<IEnumerable<string>> StudentDDl(string str)
+        {
+            var serviceResponse = new ServiceResponse<IEnumerable<string>>();
+            List<Student> ddl = new List<Student>();
+            List<string> fddl = new List<string>();
+            ddl = Context.Students.Where(x => x.RegistrationNumber.Contains(str)).ToList();
+            var x = 0;
+            if (ddl.Count <= 0)
+            {
+                serviceResponse.Message = "no student with given registration no. exists!!";
+                serviceResponse.Success = false;
+            }
+            if (ddl.Count >= 10)
+            {
+                x = 10;
+            }
+            else
+            {
+                x = ddl.Count;
+            }
+            for (int i = 0; i < x; i++)
+            {
+                fddl.Add(ddl[i].RegistrationNumber);
+            }
+            if (serviceResponse.Success)
+            {
+                serviceResponse.Data = fddl;
+                serviceResponse.Message = " ddl load success";
+            }
+            return serviceResponse;
+        }
+
         //POST:Add Student
         public override ServiceResponse<Student> Add(Student student)
         {
