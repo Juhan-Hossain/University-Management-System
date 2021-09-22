@@ -10,5 +10,6 @@ namespace StudentManagementBLL.GradeBLL
 {
     public interface IGradeBLL :IRepository<StudentGrade>
     {
+        public ServiceResponse<IEnumerable<StudentGrade>> GradeDDl(string str);
     }
 }

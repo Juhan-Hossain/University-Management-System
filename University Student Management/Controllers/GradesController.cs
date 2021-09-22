@@ -25,5 +25,12 @@ namespace University_Student_Management.Controllers
             if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
             return Ok(serviceResponse);
         }
+        [HttpGet("LoadGradeDDL")]
+        public ActionResult<ServiceResponse<IEnumerable<StudentGrade>>> LoadGradeDDL(string str)
+        {
+            var serviceResponse = _service.GradeDDl(str);
+            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
+            return Ok(serviceResponse);
+        }
     }
 }
