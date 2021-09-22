@@ -11,29 +11,45 @@ namespace StudentManagementBLL.SemesterBLL
 {
     public class SemesterServiceBLL : Repository<Semester, ApplicationDbContext>, ISemesterServiceBLL
     {
-        
+        private readonly ApplicationDbContext Context;
 
         public SemesterServiceBLL(ApplicationDbContext dbContext):base(dbContext)
         {
-           
+            this.Context = dbContext;
         }
 
-        //GETAllSemesterTo view:
-       /* public override ServiceResponse<IEnumerable<Semester>> GetAll()
+        public ServiceResponse<IEnumerable<Semester>> SemesterDDl(string str)
         {
             var serviceResponse = new ServiceResponse<IEnumerable<Semester>>();
-            try
+            List<Semester> ddl = new List<Semester>();
+            List<Semester> fddl = new List<Semester>();
+            ddl = Context.Semesters.Where(x => x.Name.Contains(str)).ToList();
+            var x = 0;
+            if (ddl.Count <= 0)
             {
-                serviceResponse.Data = _dbContext.Semesters.ToList();
-
-                serviceResponse.Message = "Semester data & Assigning teacher fetched successfully from the database";
-            }
-            catch (Exception exception)
-            {
-                serviceResponse.Message = "Some error occurred while fetching data.\nError message: " + exception.Message;
+                serviceResponse.Message = "no semester with given name exists!!";
                 serviceResponse.Success = false;
             }
+            if (ddl.Count >= 10)
+            {
+                x = 10;
+            }
+            else
+            {
+                x = ddl.Count;
+            }
+            for (int i = 0; i < x; i++)
+            {
+                fddl.Add(ddl[i]);
+            }
+            if (serviceResponse.Success)
+            {
+                serviceResponse.Data = fddl;
+                serviceResponse.Message = " ddl load success";
+            }
             return serviceResponse;
-        }*/
+        }
+
+
     }
 }

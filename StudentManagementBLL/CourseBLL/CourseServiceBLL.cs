@@ -19,11 +19,6 @@ namespace StudentManagementBLL.CourseBLL
         {
             this.Context = dbContext;
         }
-
-
-
-
-
         //POST:Course
         public override ServiceResponse<Course> Add(Course course)
         {
@@ -43,21 +38,15 @@ namespace StudentManagementBLL.CourseBLL
             }
             return serviceResponse;
         }
-
-
-
-        
-
-
         //GetCoursesByDept:
-        public ServiceResponse<IEnumerable<Course>> GetCourseByDepartment(int departmentId,string courseCode)
+        public ServiceResponse<IEnumerable<Course>> GetCourseByDepartmentAndStr(int departmentId,string str)
         {
             var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
             try
             {
                 serviceResponse.Data = Context.Courses
                     .Include(x => x.Department)
-                    .Where(x => x.DepartmentId == departmentId).ToList();
+                    .Where(x => x.DepartmentId == departmentId && x.Name.Contains(str)).ToList();
 
                 serviceResponse.Message = "Data  with the given id was fetched successfully from the database";
             }
@@ -153,7 +142,7 @@ namespace StudentManagementBLL.CourseBLL
         }
 
         //GetCourseByStdRegNo
-        public ServiceResponse<IEnumerable<Course>> ViewCourseBystdRegNo(string stdRegNo)
+        public ServiceResponse<IEnumerable<Course>> ViewCourseBystdRegNo(string stdRegNo, string str)
         {
             var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
             try
@@ -165,7 +154,7 @@ namespace StudentManagementBLL.CourseBLL
                 {
                     var tempcourses = Context.Courses
                         .Include(x => x.Department)
-                    .Where(x => x.DepartmentId == aStudent.DepartmentId).ToList(); ;
+                    .Where(x => x.DepartmentId == aStudent.DepartmentId && x.Name.Contains(str)).ToList(); ;
 
                     if (tempcourses is null)
                     {
@@ -195,7 +184,7 @@ namespace StudentManagementBLL.CourseBLL
         //Get Enrolled Courses By StdReg No:
 
         //GetCourseByStdRegNo:
-        public ServiceResponse<IEnumerable<Course>> GetEnrolledCoursesBystdRegNo(string stdRegNo)
+        public ServiceResponse<IEnumerable<Course>> GetEnrolledCoursesBystdRegNo(string stdRegNo,string str)
         {
             var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
             try
@@ -206,7 +195,7 @@ namespace StudentManagementBLL.CourseBLL
                 {
                     if(enroll.StudentRegNo==stdRegNo)
                     {
-                        var selectedCourse = Context.Courses.SingleOrDefault(x => x.Code == enroll.CourseCode);
+                        var selectedCourse = Context.Courses.SingleOrDefault(x => x.Code == enroll.CourseCode && x.Name.Contains(str));
                         EnrolledCourses.Add(selectedCourse);
                     }
                 }

@@ -30,17 +30,20 @@ namespace University_Student_Management.Controllers
             if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
             return Ok(serviceResponse);
         }
-
-
-
-
-
         [HttpPost]
         public ActionResult<ServiceResponse<Designation>> PostDesignation(Designation designation)
         {
             designation.Id = 0;
             var serviceResponse = _service.Add(designation);
             if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
+            return Ok(serviceResponse);
+        }
+
+        [HttpGet("LoadDesignationDDL")]
+        public ActionResult<ServiceResponse<IEnumerable<Designation>>> LoadDesignation(string str)
+        {
+            var serviceResponse = _service.DesignationDDl(str);
+            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
             return Ok(serviceResponse);
         }
 

@@ -26,10 +26,10 @@ namespace University_Student_Management.Controllers
             return Ok(serviceResponse);
         }
 
-        [HttpGet("Department/{departmentId}")]
-        public ActionResult<ServiceResponse<IEnumerable<Teacher>>> GetTeachersById(int departmentId)
+        [HttpGet("TeacherDDL")]
+        public ActionResult<ServiceResponse<IEnumerable<Teacher>>> GetTeachersByIdAndStr(int departmentId,string str)
         {
-            var serviceResponse = _service.GetTeachersByDepartment(departmentId);
+            var serviceResponse = _service.GetTeachersByDepartment(departmentId,str);
             if (serviceResponse.Success == false) return BadRequest(serviceResponse);
             return Ok(serviceResponse);
         }

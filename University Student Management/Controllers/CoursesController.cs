@@ -30,10 +30,10 @@ namespace University_Student_Management.Controllers
         }
 
         // GET: Courses
-        [HttpGet("CoursesByDepartment&Code")]
-        public ActionResult<ServiceResponse<IEnumerable<Course>>> GetCoursesByDepartment(int departmentId,string courseCode)
+        [HttpGet("CoursesByDepartmentAndStrDDL")]
+        public ActionResult<ServiceResponse<IEnumerable<Course>>> GetCoursesByDepartment(int departmentId,string str)
         {
-            var serviceResponse = _service.GetCourseByDepartment(departmentId,courseCode);
+            var serviceResponse = _service.GetCourseByDepartmentAndStr(departmentId,str);
             if (serviceResponse.Success == false) return BadRequest(serviceResponse);
             return Ok(serviceResponse);
         }
@@ -70,19 +70,19 @@ namespace University_Student_Management.Controllers
             return Ok(serviceResponse);
         }
 
-        [HttpGet("CoursesByStudentRegNo")]
-        public ActionResult<ServiceResponse<IEnumerable<Course>>> GetCoursesByStudentRegNo(string stdRegNo)
+        [HttpGet("CoursesByStudentRegNoDDL")]
+        public ActionResult<ServiceResponse<IEnumerable<Course>>> GetCoursesByStudentRegNo(string stdRegNo,string str)
         {
-            var serviceResponse = _service.ViewCourseBystdRegNo(stdRegNo);
+            var serviceResponse = _service.ViewCourseBystdRegNo(stdRegNo,str);
             if (serviceResponse.Success == false) return BadRequest(serviceResponse);
             return Ok(serviceResponse);
         }
 
 
-        [HttpGet("EnrolledCoursesByStudentRegNo")]
-        public ActionResult<ServiceResponse<IEnumerable<Course>>> EnrolledCoursesByStudentRegNo(string stdRegNo)
+        [HttpGet("EnrolledCoursesByStudentRegNoDDL")]
+        public ActionResult<ServiceResponse<IEnumerable<Course>>> EnrolledCoursesByStudentRegNo(string stdRegNo,string str)
         {
-            var serviceResponse = _service.GetEnrolledCoursesBystdRegNo(stdRegNo);
+            var serviceResponse = _service.GetEnrolledCoursesBystdRegNo(stdRegNo,str);
             if (serviceResponse.Success == false) return BadRequest(serviceResponse);
             return Ok(serviceResponse);
         }

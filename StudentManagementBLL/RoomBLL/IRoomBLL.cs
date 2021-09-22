@@ -10,6 +10,6 @@ namespace StudentManagementBLL.RoomBLL
 {
     public interface IRoomBLL : IRepository<Room>
     {
-
+        public ServiceResponse<IEnumerable<Room>> RoomDDl(string str);
     }
 }

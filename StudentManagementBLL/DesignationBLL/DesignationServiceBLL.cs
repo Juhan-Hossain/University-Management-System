@@ -11,9 +11,11 @@ namespace StudentManagementBLL.DesignationBLL
 {
     public class DesignationServiceBLL : Repository<Designation, ApplicationDbContext>,IDesignationServiceBLL
     {
+        private readonly ApplicationDbContext Context;
+
         public DesignationServiceBLL(ApplicationDbContext dbContext):base(dbContext)
         {
-
+            this.Context = dbContext;
         }
 
         public override ServiceResponse<Designation> Add(Designation designation)
@@ -24,8 +26,8 @@ namespace StudentManagementBLL.DesignationBLL
             {
                 designation.Id = 0;
                 serviceResponse.Data = designation;
-                _dbContext.Designations.Add(serviceResponse.Data);
-                _dbContext.SaveChanges();
+                Context.Designations.Add(serviceResponse.Data);
+                Context.SaveChanges();
                 serviceResponse.Message = "Designation created successfully in DB";
             }
             catch (Exception exception)
@@ -34,6 +36,38 @@ namespace StudentManagementBLL.DesignationBLL
                     $"Error Message: {exception.Message}";
                 serviceResponse.Success = false;
             }          
+            return serviceResponse;
+        }
+
+        public ServiceResponse<IEnumerable<Designation>> DesignationDDl(string str)
+        {
+            var serviceResponse = new ServiceResponse<IEnumerable<Designation>>();
+            List<Designation> ddl = new List<Designation>();
+            List<Designation> fddl = new List<Designation>();
+            ddl = Context.Designations.Where(x => x.Name.Contains(str)).ToList();
+            var x = 0;
+            if (ddl.Count <= 0)
+            {
+                serviceResponse.Message = "no Designation with given name exists!!";
+                serviceResponse.Success = false;
+            }
+            if (ddl.Count >= 10)
+            {
+                x = 10;
+            }
+            else
+            {
+                x = ddl.Count;
+            }
+            for (int i = 0; i < x; i++)
+            {
+                fddl.Add(ddl[i]);
+            }
+            if (serviceResponse.Success)
+            {
+                serviceResponse.Data = fddl;
+                serviceResponse.Message = " ddl load success";
+            }
             return serviceResponse;
         }
     }

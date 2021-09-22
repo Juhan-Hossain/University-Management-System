@@ -26,5 +26,12 @@ namespace University_Student_Management.Controllers
             if (serviceResponse.Success == false) return BadRequest(serviceResponse.Message);
             return Ok(serviceResponse);
         }
+        [HttpGet("LoadRoomDDL")]
+        public ActionResult<ServiceResponse<IEnumerable<Room>>> LoadRoom(string str)
+        {
+            var serviceResponse = _service.RoomDDl(str);
+            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
+            return Ok(serviceResponse);
+        }
     }
 }

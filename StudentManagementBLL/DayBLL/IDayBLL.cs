@@ -10,6 +10,6 @@ namespace StudentManagementBLL.DayBLL
 {
     public interface IDayBLL : IRepository<WeekDay>
     {
-
+        public ServiceResponse<IEnumerable<WeekDay>> DayDDl(string str);
     }
 }

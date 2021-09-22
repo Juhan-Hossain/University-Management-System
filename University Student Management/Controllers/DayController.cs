@@ -28,6 +28,13 @@ namespace University_Student_Management.Controllers
             return Ok(serviceResponse);
         }
 
+        [HttpGet("LoadDayDDL")]
+        public ActionResult<ServiceResponse<IEnumerable<WeekDay>>> LoadDay(string str)
+        {
+            var serviceResponse = _service.DayDDl(str);
+            if (serviceResponse.Success == false) return BadRequest(serviceResponse);
+            return Ok(serviceResponse);
+        }
 
     }
 }

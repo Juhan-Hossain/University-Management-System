@@ -10,5 +10,6 @@ namespace StudentManagementBLL.DesignationBLL
 {
     public interface IDesignationServiceBLL :IRepository<Designation>
     {
+        public ServiceResponse<IEnumerable<Designation>> DesignationDDl(string str);
     }
 }

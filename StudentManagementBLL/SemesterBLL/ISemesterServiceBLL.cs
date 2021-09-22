@@ -10,5 +10,6 @@ namespace StudentManagementBLL.SemesterBLL
 {
     public interface ISemesterServiceBLL : IRepository<Semester>
     {
+        public ServiceResponse<IEnumerable<Semester>> SemesterDDl(string str);
     }
 }

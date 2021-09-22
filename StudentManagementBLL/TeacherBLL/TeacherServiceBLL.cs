@@ -20,19 +20,19 @@ namespace StudentManagementBLL.TeacherBLL
 
 
         //GET:GET teacher by department:
-        public ServiceResponse<IEnumerable<Teacher>> GetTeachersByDepartment(int departmentId)
+        public ServiceResponse<IEnumerable<Teacher>> GetTeachersByDepartment(int departmentId,string str)
         {
             var serviceResponse = new ServiceResponse<IEnumerable<Teacher>>();
             try
             {
-                serviceResponse.Data = Context.Teachers.Where(x => x.DepartmentId == departmentId).ToList();
+                serviceResponse.Data = Context.Teachers.Where(x => x.DepartmentId == departmentId && x.Name.Contains(str)).ToList();
 
-                serviceResponse.Message = "teacher with the given dept.id was fetched successfully from the database";
+                serviceResponse.Message = "teacher with the given dept.id &  was fetched successfully from the database";
             }
             catch (Exception exception)
             {
 
-                serviceResponse.Message = "Some error occurred while fetching teacher by dept.id .\nError message: " + exception.Message;
+                serviceResponse.Message = "Some error occurred while fetching teacher by dept.id ";
                 serviceResponse.Success = false;
             }
             return serviceResponse;
