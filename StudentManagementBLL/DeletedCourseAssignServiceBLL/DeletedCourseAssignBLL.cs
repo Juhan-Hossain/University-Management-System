@@ -46,11 +46,13 @@ namespace StudentManagementBLL.DeletedCourseAssignServiceBLL
 
                     
                     fetchingTeacher.RemainingCredit = fetchingTeacher.CreditToBeTaken;
-                    
+                if (fetchingCourse != null)
+                {
                     fetchingCourse.AssignTo = null;
                     fetchingCourse.TeacherId = null;
-
                     Context.Courses.Update(fetchingCourse);
+                }
+                
 
 
                     Context.CourseAssignments.Remove(assign);
