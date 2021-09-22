@@ -15,6 +15,7 @@ namespace StudentManagementBLL.CourseBLL
         public ServiceResponse<IEnumerable<Course>> ViewCourseBystdRegNo(string stdRegNo, string str);
         public ServiceResponse<IEnumerable<Course>> GetEnrolledCoursesBystdRegNo(string stdRegNo, string str);
         public ServiceResponse<IEnumerable<Course>> ViewCoursesByDept(int departmentId);
+        public ServiceResponse<IEnumerable<Course>> EnrolledCoursesBystdRegNoDDL(string stdRegNo);
 
 
 

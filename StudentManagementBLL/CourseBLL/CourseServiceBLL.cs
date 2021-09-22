@@ -183,7 +183,7 @@ namespace StudentManagementBLL.CourseBLL
 
         //Get Enrolled Courses By StdReg No:
 
-        //GetCourseByStdRegNo:
+        //GetCourseByStdRegNoWithSearch:
         public ServiceResponse<IEnumerable<Course>> GetEnrolledCoursesBystdRegNo(string stdRegNo,string str)
         {
             var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
@@ -198,11 +198,7 @@ namespace StudentManagementBLL.CourseBLL
                         var selectedCourse = Context.Courses.SingleOrDefault(x => x.Code == enroll.CourseCode && x.Name.Contains(str));
                         EnrolledCourses.Add(selectedCourse);
                     }
-                }
-
-              
-                
-                    
+                }   
                 if (EnrolledCourses != null)
                 {
 
@@ -214,8 +210,6 @@ namespace StudentManagementBLL.CourseBLL
                     serviceResponse.Message = "student do not have any enrolled course";
                     serviceResponse.Success = false;
                 }
-
-
             }
             catch (Exception ex)
             {
@@ -225,7 +219,41 @@ namespace StudentManagementBLL.CourseBLL
             return serviceResponse;
         }
 
+        //GetCourseByStdRegNo:
+        public ServiceResponse<IEnumerable<Course>> EnrolledCoursesBystdRegNoDDL(string stdRegNo)
+        {
+            var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
+            try
+            {
+                List<Course> EnrolledCourses = new List<Course>();
 
+                foreach (var enroll in Context.CourseEnrolls)
+                {
+                    if (enroll.StudentRegNo == stdRegNo)
+                    {
+                        var selectedCourse = Context.Courses.SingleOrDefault(x => x.Code == enroll.CourseCode);
+                        EnrolledCourses.Add(selectedCourse);
+                    }
+                }
+                if (EnrolledCourses != null)
+                {
+
+                    serviceResponse.Data = EnrolledCourses;
+                    serviceResponse.Message = "enrolled courses fetched successfully";
+                }
+                else
+                {
+                    serviceResponse.Message = "student do not have any enrolled course";
+                    serviceResponse.Success = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Message = "Error occurred while fetching data from DB";
+                serviceResponse.Success = false;
+            }
+            return serviceResponse;
+        }
 
     }
 }
