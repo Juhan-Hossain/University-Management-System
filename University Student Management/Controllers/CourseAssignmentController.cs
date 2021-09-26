@@ -34,11 +34,11 @@ namespace University_Student_Management.Controllers
         public ActionResult<ServiceResponse<CourseAssignment>> CourseAssignment([FromBody] CourseAssignment body)
         {
 
-            var coursekeyresponse = _service.AssignCourseToTeacher(body.DepartmentId, body.Code, body.TeacherId);
+            var coursekeyresponse = _service.AssignCourseToTeacher(body.DepartmentId,body.TeacherId,body.CourseId);
 
             if (!coursekeyresponse.Success) return BadRequest(coursekeyresponse);
 
-            coursekeyresponse.Message = "course has been Successfully assign to Teacher";
+            /*coursekeyresponse.Message = "course has been Successfully assign to Teacher";*/
             return Ok(coursekeyresponse);
 
         }

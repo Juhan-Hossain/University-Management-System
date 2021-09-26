@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,25 +9,16 @@ using System.Threading.Tasks;
 
 namespace StudentManagementEntity
 {
+   /* [Keyless]*/
     public class DeletedCourseAssign
     {
         [Key]
-      /*  [DatabaseGenerated(DatabaseGeneratedOption.Identity)]*/
         public int Id { get; set; }
-
-
         public int DepartmentId { get; set; }
-
-
         public int TeacherId { get; set; }
-
         public int? CourseId { get; set; }
-
         public int IsAssigned { get; set; } = 3;
-
         [NotMapped]
         public bool IsValidOperation { get; set; } = false;
-        [Required]
-        public string Code { get; set; }
     }
 }
