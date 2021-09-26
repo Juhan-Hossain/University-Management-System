@@ -19,7 +19,7 @@ namespace StudentManagementBLL.DeletedCourseAssignServiceBLL
             this.Context = dbContext;
         }
 
-        
+
 
         public ServiceResponse<DeletedCourseAssign> UnassignTeacher()
         {
@@ -27,44 +27,32 @@ namespace StudentManagementBLL.DeletedCourseAssignServiceBLL
 
             var assignCourses = Context.CourseAssignments;
 
-            
-                DeletedCourseAssign deletedCourseAssign = new DeletedCourseAssign();
 
-                Context.CourseAssignments.FromSqlRaw<CourseAssignment>("SpGetDeletedCourseAssignTable01");
-                
-                foreach (CourseAssignment assign in assignCourses)
-                {
-                    Course fetchingCourse = Context.Courses.SingleOrDefault(x => x.Code == assign.Code);
-                    Teacher fetchingTeacher = Context.Teachers.SingleOrDefault(x => x.Id == assign.TeacherId);
-                    Department fetchingDepartment = Context.Departments.SingleOrDefault(x => x.Id == assign.DepartmentId);
-                   
-                    deletedCourseAssign.Code = assign.Code;
-                    deletedCourseAssign.CourseId = assign.CourseId;
-                    deletedCourseAssign.DepartmentId = assign.DepartmentId;
-                    deletedCourseAssign.TeacherId = assign.TeacherId;
-                    assign.IsAssigned = 3;
+            DeletedCourseAssign deletedCourseAssign = new DeletedCourseAssign();
 
-                    
-                    fetchingTeacher.RemainingCredit = fetchingTeacher.CreditToBeTaken;
+            /*Context.CourseAssignments.FromSqlRaw<CourseAssignment>("SpGetDeletedCourseAssignTable01");*/
+            foreach (CourseAssignment assign in assignCourses)
+            {
+                Course fetchingCourse = Context.Courses.SingleOrDefault(x => x.Id == assign.CourseId);
+                Teacher fetchingTeacher = Context.Teachers.SingleOrDefault(x => x.Id == assign.TeacherId);
+                deletedCourseAssign.Id = assign.Id;
+                deletedCourseAssign.CourseId = assign.CourseId;
+                deletedCourseAssign.DepartmentId = assign.DepartmentId;
+                deletedCourseAssign.TeacherId = assign.TeacherId;
+                assign.IsAssigned = 3;
+                fetchingTeacher.RemainingCredit = fetchingTeacher.CreditToBeTaken;
                 if (fetchingCourse != null)
                 {
                     fetchingCourse.AssignTo = null;
                     fetchingCourse.TeacherId = null;
                     Context.Courses.Update(fetchingCourse);
                 }
-                
-
-
-                    Context.CourseAssignments.Remove(assign);
-                    Context.DeletedCourseAssigns.Add(deletedCourseAssign);
-                    
-                }
-                serviceResponse.Message = "Unassigned All Courses";
-                    serviceResponse.Success = true;
-                Context.SaveChanges();
-
-
-           
+                Context.CourseAssignments.Remove(assign);
+                Context.DeletedCourseAssigns.Add(deletedCourseAssign);
+            }
+            serviceResponse.Message = "Unassigned All Courses";
+            serviceResponse.Success = true;
+            Context.SaveChanges();
             return serviceResponse;
         }
 

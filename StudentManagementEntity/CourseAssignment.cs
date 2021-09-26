@@ -20,15 +20,15 @@ namespace StudentManagementEntity
 
 
         public int TeacherId { get; set; }
-
-        public int? CourseId { get; set; }
+        [Required]
+        public int CourseId { get; set; }
 
         public int IsAssigned { get; set; } = 1;
 
         [NotMapped]
         public bool IsValidOperation { get; set; } = false;
-        [Required]
-        public string Code { get; set; }
+       
+   /*     public string Code { get; set; }*/
         public virtual Teacher Teacher { get; set; }
     }
 }

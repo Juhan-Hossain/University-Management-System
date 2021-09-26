@@ -102,7 +102,7 @@ namespace StudentManagementDAL
             //CourseAssignment:
             modelBuilder.Entity<CourseAssignment>(entity =>
             {
-                entity.HasKey(x => new { x.Code, x.DepartmentId, x.TeacherId});
+                entity.HasKey(x => x.Id);
             });
 
             /*modelBuilder.Entity<DeletedCourseAssign>(entity =>

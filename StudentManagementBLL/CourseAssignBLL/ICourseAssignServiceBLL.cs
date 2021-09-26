@@ -10,7 +10,7 @@ namespace StudentManagementBLL.CourseAssignBLL
 {
     public interface ICourseAssignServiceBLL:IRepository<CourseAssignment>
     {
-        public ServiceResponse<CourseAssignment> AssignCourseToTeacher(int departmentId, string CourseCode, int teacherId);
+        public ServiceResponse<CourseAssignment> AssignCourseToTeacher(int departmentId, int teacherId, int courseId);
 
     }
 }
