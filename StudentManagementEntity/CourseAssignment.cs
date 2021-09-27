@@ -23,12 +23,10 @@ namespace StudentManagementEntity
         [Required]
         public int CourseId { get; set; }
 
-        public int IsAssigned { get; set; } = 1;
+        public bool IsAssigned { get; set; } = false;
 
         [NotMapped]
         public bool IsValidOperation { get; set; } = false;
-       
-   /*     public string Code { get; set; }*/
         public virtual Teacher Teacher { get; set; }
     }
 }

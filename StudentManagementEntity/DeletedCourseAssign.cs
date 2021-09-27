@@ -12,12 +12,12 @@ namespace StudentManagementEntity
    /* [Keyless]*/
     public class DeletedCourseAssign
     {
-        [Key]
+       /* [Key]*/
         public int Id { get; set; }
         public int DepartmentId { get; set; }
         public int TeacherId { get; set; }
         public int? CourseId { get; set; }
-        public int IsAssigned { get; set; } = 3;
+        public bool IsAssigned { get; set; } = true;
         [NotMapped]
         public bool IsValidOperation { get; set; } = false;
     }
