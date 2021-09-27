@@ -29,18 +29,19 @@ namespace StudentManagementBLL.DeletedCourseAssignServiceBLL
 
 
             DeletedCourseAssign deletedCourseAssign = new DeletedCourseAssign();
-
-            /*Context.CourseAssignments.FromSqlRaw<CourseAssignment>("SpGetDeletedCourseAssignTable01");*/
             foreach (CourseAssignment assign in assignCourses)
             {
                 Course fetchingCourse = Context.Courses.SingleOrDefault(x => x.Id == assign.CourseId);
                 Teacher fetchingTeacher = Context.Teachers.SingleOrDefault(x => x.Id == assign.TeacherId);
+
                 deletedCourseAssign.Id = assign.Id;
                 deletedCourseAssign.CourseId = assign.CourseId;
                 deletedCourseAssign.DepartmentId = assign.DepartmentId;
                 deletedCourseAssign.TeacherId = assign.TeacherId;
-                assign.IsAssigned = 3;
-                fetchingTeacher.RemainingCredit = fetchingTeacher.CreditToBeTaken;
+
+                assign.IsAssigned = false;
+
+                fetchingTeacher.CreditToBeTaken = fetchingTeacher.RemainingCredit;
                 if (fetchingCourse != null)
                 {
                     fetchingCourse.AssignTo = null;

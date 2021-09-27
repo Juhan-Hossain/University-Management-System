@@ -40,7 +40,7 @@ namespace StudentManagementEntity
 
         public double CreditToBeTaken { get; set; } = 100;
 
-        public double? RemainingCredit { get; set; }
+        public double RemainingCredit { get; set; }
 
         public int? DepartmentId { get; set; }
         public virtual Department Department { get; set; }

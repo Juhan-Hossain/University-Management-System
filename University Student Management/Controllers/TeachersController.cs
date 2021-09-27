@@ -27,9 +27,9 @@ namespace University_Student_Management.Controllers
         }
 
         [HttpGet("TeacherDDL")]
-        public ActionResult<ServiceResponse<IEnumerable<Teacher>>> GetTeachersByIdAndStr(int departmentId,string str)
+        public ActionResult<ServiceResponse<IEnumerable<Teacher>>> GetTeachersByIdAndStr(int departmentId, string str)
         {
-            var serviceResponse = _service.GetTeachersByDepartment(departmentId,str);
+            var serviceResponse = _service.GetTeachersByDepartment(departmentId, str);
             if (serviceResponse.Success == false) return BadRequest(serviceResponse);
             return Ok(serviceResponse);
         }
@@ -37,7 +37,7 @@ namespace University_Student_Management.Controllers
 
         // POST: api/CreateTeacher
         [HttpPost("CreateTeacher")]
-        public ActionResult<ServiceResponse<Teacher>> CreateTeacher( Teacher teacher)
+        public ActionResult<ServiceResponse<Teacher>> CreateTeacher(Teacher teacher)
         {
             teacher.RemainingCredit = teacher.CreditToBeTaken;
             var serviceResponse = _service.Add(teacher);
@@ -49,6 +49,6 @@ namespace University_Student_Management.Controllers
             return Ok(serviceResponse);
         }
 
-        
+
     }
 }
