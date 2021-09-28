@@ -18,51 +18,16 @@ namespace StudentManagementBLL.DeletedRoomAllocationBLL
         {
             this.Context = dbContext;
         }
-
         public ServiceResponse<DeletedRoomAllocation> UnallocatingRooms()
         {
             var serviceResponse = new ServiceResponse<DeletedRoomAllocation>();
-
             var allocationLists = Context.RoomAllocationLists;
-
-
             DeletedRoomAllocation deletedRoomAllocation = new DeletedRoomAllocation();
-
-            Context.DeletedRoomAllocations.FromSqlRaw<DeletedRoomAllocation>("SpGetDeletedRoomAllocationTable01");
-
-            foreach (RoomAllocationList allocation in allocationLists)
-            {
-                /*Course fetchingCourse = Context.Courses.SingleOrDefault(x => x.Code == assign.Code);
-                Teacher fetchingTeacher = Context.Teachers.SingleOrDefault(x => x.Id == assign.TeacherId);
-                Department fetchingDepartment = Context.Departments.SingleOrDefault(x => x.Id == assign.DepartmentId);*/
-
-                deletedRoomAllocation.CourseCode = allocation.CourseCode;
-                deletedRoomAllocation.DayId = allocation.DayId;
-                deletedRoomAllocation.DepartmentId = allocation.DepartmentId;
-                deletedRoomAllocation.EndTime = allocation.EndTime;
-                deletedRoomAllocation.StartTime = allocation.StartTime;
-                deletedRoomAllocation.RoomId = allocation.RoomId;
-                deletedRoomAllocation.FromMeridiem = allocation.FromMeridiem;
-                deletedRoomAllocation.ToMeridiem = allocation.ToMeridiem;
-
-
-
-
-
-
-                Context.RoomAllocationLists.Remove(allocation);
-                Context.DeletedRoomAllocations.Add(deletedRoomAllocation);
-
-            }
+            _dbContext.Database.ExecuteSqlRaw("execute SpGetDeletedRoomAllocationTable01");
             serviceResponse.Message = "Unallocated All Rooms";
             serviceResponse.Success = true;
             Context.SaveChanges();
-
-
-
             return serviceResponse;
         }
-
-       
     }
 }
