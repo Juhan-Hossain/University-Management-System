@@ -13,35 +13,24 @@ namespace StudentManagementBLL.DeletedCourseAssignServiceBLL
     public class DeletedCourseAssignBLL : Repository<DeletedCourseAssign, ApplicationDbContext>, IDeletedCourseAssignBLL
     {
         private readonly ApplicationDbContext Context;
-
         public DeletedCourseAssignBLL(ApplicationDbContext dbContext) : base(dbContext)
         {
             this.Context = dbContext;
         }
-
-
-
         public ServiceResponse<DeletedCourseAssign> UnassignTeacher()
         {
             var serviceResponse = new ServiceResponse<DeletedCourseAssign>();
-
             var assignCourses = Context.CourseAssignments;
-
-
             DeletedCourseAssign deletedCourseAssign = new DeletedCourseAssign();
+            //Execute Stored Procedure
+            var x = _dbContext.Database.ExecuteSqlRaw("execute SpGetDeletedCourseAssignTable01");
+
             foreach (CourseAssignment assign in assignCourses)
             {
                 Course fetchingCourse = Context.Courses.SingleOrDefault(x => x.Id == assign.CourseId);
                 Teacher fetchingTeacher = Context.Teachers.SingleOrDefault(x => x.Id == assign.TeacherId);
-
-                deletedCourseAssign.Id = assign.Id;
-                deletedCourseAssign.CourseId = assign.CourseId;
-                deletedCourseAssign.DepartmentId = assign.DepartmentId;
-                deletedCourseAssign.TeacherId = assign.TeacherId;
-
-                assign.IsAssigned = false;
-
-                fetchingTeacher.CreditToBeTaken = fetchingTeacher.RemainingCredit;
+                assign.IsAssigned = true;
+                fetchingTeacher.RemainingCredit = fetchingTeacher.CreditToBeTaken;
                 if (fetchingCourse != null)
                 {
                     fetchingCourse.AssignTo = null;
@@ -49,7 +38,6 @@ namespace StudentManagementBLL.DeletedCourseAssignServiceBLL
                     Context.Courses.Update(fetchingCourse);
                 }
                 Context.CourseAssignments.Remove(assign);
-                Context.DeletedCourseAssigns.Add(deletedCourseAssign);
             }
             serviceResponse.Message = "Unassigned All Courses";
             serviceResponse.Success = true;
