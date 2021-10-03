@@ -20,34 +20,15 @@ namespace StudentManagementBLL.RoomBLL
 
         public ServiceResponse<IEnumerable<Room>> RoomDDl(string str)
         {
-            var serviceResponse = new ServiceResponse<IEnumerable<Room>>();
-            List<Room> ddl = new List<Room>();
-            List<Room> fddl = new List<Room>();
-            ddl = Context.Rooms.Where(x => x.Name.Contains(str)).ToList();
-            var x = 0;
-            if (ddl.Count <= 0)
+            var DropDownListData = FindDDL(x => x.Name.Contains(str));
+            var service = new ServiceResponse<IEnumerable<Room>>();
+            if (DropDownListData.Success)
             {
-                serviceResponse.Message = "no Room with given name exists!!";
-                serviceResponse.Success = false;
+                service.Data = DropDownListData.Data.Take(10).ToList();
+                service.Message = DropDownListData.Message;
+                service.Success = DropDownListData.Success;
             }
-            if (ddl.Count >= 10)
-            {
-                x = 10;
-            }
-            else
-            {
-                x = ddl.Count;
-            }
-            for (int i = 0; i < x; i++)
-            {
-                fddl.Add(ddl[i]);
-            }
-            if (serviceResponse.Success)
-            {
-                serviceResponse.Data = fddl;
-                serviceResponse.Message = " ddl load success";
-            }
-            return serviceResponse;
+            return service;
         }
     }
 }

@@ -42,30 +42,17 @@ namespace StudentManagementBLL.DesignationBLL
         public ServiceResponse<IEnumerable<Designation>> DesignationDDl(string str)
         {
             var serviceResponse = new ServiceResponse<IEnumerable<Designation>>();
-            List<Designation> ddl = new List<Designation>();
+            List<Designation> DropDownListData = new List<Designation>();
             List<Designation> fddl = new List<Designation>();
-            ddl = Context.Designations.Where(x => x.Name.Contains(str)).ToList();
-            var x = 0;
-            if (ddl.Count <= 0)
+            DropDownListData = Context.Designations.Where(x => x.Name.Contains(str)).Take(10).ToList();
+            if (DropDownListData.Count <= 0)
             {
                 serviceResponse.Message = "no Designation with given name exists!!";
                 serviceResponse.Success = false;
             }
-            if (ddl.Count >= 10)
-            {
-                x = 10;
-            }
-            else
-            {
-                x = ddl.Count;
-            }
-            for (int i = 0; i < x; i++)
-            {
-                fddl.Add(ddl[i]);
-            }
             if (serviceResponse.Success)
             {
-                serviceResponse.Data = fddl;
+                serviceResponse.Data = DropDownListData;
                 serviceResponse.Message = " ddl load success";
             }
             return serviceResponse;

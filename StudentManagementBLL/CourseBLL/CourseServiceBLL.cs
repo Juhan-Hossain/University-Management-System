@@ -58,13 +58,9 @@ namespace StudentManagementBLL.CourseBLL
             }
             return serviceResponse;
         }
-
-
         //ViewCourseByDept:
         public ServiceResponse<IEnumerable<Course>> ViewCoursesByDept(int departmentId)
         {
-
-
             var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
             try
             {
@@ -88,13 +84,9 @@ namespace StudentManagementBLL.CourseBLL
             }
             return serviceResponse;
         }
-
-
         //ViewCourseByDept:
         public ServiceResponse<IEnumerable<Course>> AssignedCoursesByDepartment(int departmentId)
         {
-
-
             var serviceResponse = new ServiceResponse<IEnumerable<Course>>();
             try
             {
@@ -104,22 +96,14 @@ namespace StudentManagementBLL.CourseBLL
                 {
                     if (course.DepartmentId == departmentId)
                     {
-                        /*if (course.AssignTo != null)
-                        {
-                            data.Add(course);
-                        }*/
                         if (course.AssignTo == null)
                         {
                             course.AssignTo = "Not Assigned Yet!";
                         }
-                        
                         data.Add(course);
                     }
                 }
-
                 serviceResponse.Data = data;
-
-
                 if (data.Count() > 0)
                 {
                     serviceResponse.Message = "Data  with the given id was fetched successfully from the database";
@@ -129,8 +113,6 @@ namespace StudentManagementBLL.CourseBLL
                     serviceResponse.Message = "This dept does not have any data!";
                     serviceResponse.Success = false;
                 }
-
-
             }
             catch (Exception exception)
             {
@@ -154,23 +136,24 @@ namespace StudentManagementBLL.CourseBLL
                 {
                     var tempcourses = Context.Courses
                         .Include(x => x.Department)
-                    .Where(x => x.DepartmentId == aStudent.DepartmentId && x.Name.Contains(str)).ToList(); ;
+                        .Where(x => x.DepartmentId == aStudent.DepartmentId && x.Name.Contains(str)).Take(10).ToList(); ;
 
                     if (tempcourses is null)
                     {
                         serviceResponse.Message = "department does not have courses now";
                         serviceResponse.Success = false;
                     }
-                    serviceResponse.Data = tempcourses;
-                    serviceResponse.Message = "this student department courses fetched successfully from Db";
+                    else
+                    {
+                        serviceResponse.Data = tempcourses;
+                        serviceResponse.Message = "this student department courses fetched successfully from Db";
+                    }
                 }
                 else
                 {
                     serviceResponse.Message = "Student does not exist";
                     serviceResponse.Success = false;
                 }
-
-                
             }
             catch (Exception exception)
             {

@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using StudentManagementBLL;
+using StudentManagementBLL.ClassScheduleBLL;
 /*using StudentManagementBLL.AccountServiceBLL;*/
 using StudentManagementBLL.CourseAssignBLL;
 using StudentManagementBLL.CourseBLL;
@@ -114,6 +115,7 @@ namespace University_Student_Management
             services.AddScoped<IRoomBLL, RoomBLL>();
             services.AddScoped<IGradeBLL, GradeBLL>();
             services.AddScoped<IDeletedRoomAllocationBLL, DeletedRoomAllocationBLL>();
+            services.AddScoped<IClassScheduleBLL, ClassScheduleBLL>();
             /*services.AddScoped<IAccountServiceBLL, AccountServiceBLL>();*/
             services.AddScoped<ITokenService, TokenService>();
 

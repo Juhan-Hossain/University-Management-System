@@ -19,34 +19,15 @@ namespace StudentManagementBLL.DepartmentBLL
         }
         public ServiceResponse<IEnumerable< Department>> DepartmentDDl(string str)
         {
-            var serviceResponse = new ServiceResponse<IEnumerable<Department>>();
-            List<Department> ddl = new List<Department>();
-            List<Department> fddl = new List<Department>();
-            ddl = Context.Departments.Where(x => x.Name.Contains(str)).ToList();
-            var x=0;
-            if (ddl.Count <= 0)
+            var DropDownListData = FindDDL(x => x.Name.Contains(str));
+            var service = new ServiceResponse<IEnumerable<Department>>();
+            if (DropDownListData.Success)
             {
-                serviceResponse.Message = "no dept with given name exists!!";
-                serviceResponse.Success = false;
+                service.Data = DropDownListData.Data.Take(10).ToList();
+                service.Message = DropDownListData.Message;
+                service.Success = DropDownListData.Success;
             }
-            if (ddl.Count >= 10)
-            {
-                x = 10;
-            }
-            else
-            {
-                x = ddl.Count;
-            }
-            for(int i=0;i<x;i++)
-            {
-                fddl.Add(ddl[i]);
-            }
-            if(serviceResponse.Success)
-            {
-                serviceResponse.Data = fddl;
-                serviceResponse.Message = " ddl load success";
-            }
-            return serviceResponse;
+            return service;
         }
 
     }

@@ -20,35 +20,15 @@ namespace StudentManagementBLL.GradeBLL
 
         public ServiceResponse<IEnumerable<StudentGrade>> GradeDDl(string str)
         {
-            var serviceResponse = new ServiceResponse<IEnumerable<StudentGrade>>();
-            List<StudentGrade> ddl = new List<StudentGrade>();
-            List<StudentGrade> fddl = new List<StudentGrade>();
-            ddl = Context.StudentGrades.Where(x => x.Grade.Contains(str)).ToList();
-            var x = 0;
-            if (ddl.Count <= 0)
+            var DropDownListData = FindDDL(x => x.Grade.Contains(str));
+            var service = new ServiceResponse<IEnumerable<StudentGrade>>();
+            if (DropDownListData.Success)
             {
-                serviceResponse.Message = "no grade with given name exists!!";
-                serviceResponse.Success = false;
+                service.Data = DropDownListData.Data.Take(10).OrderBy(x=>x.value).ToList();
+                service.Message = DropDownListData.Message;
+                service.Success = DropDownListData.Success;
             }
-            if (ddl.Count >= 10)
-            {
-                x = 10;
-            }
-            else
-            {
-                x = ddl.Count;
-            }
-            for (int i = 0; i < x; i++)
-            {
-                fddl.Add(ddl[i]);
-            }
-            if (serviceResponse.Success)
-            {
-                fddl= fddl.OrderBy(o => o.value).ToList();
-                serviceResponse.Data = fddl;
-                serviceResponse.Message = " ddl load success";
-            }
-            return serviceResponse;
+            return service;
         }
 
     }

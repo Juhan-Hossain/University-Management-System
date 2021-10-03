@@ -24,6 +24,8 @@ namespace StudentManagementBLL.DeletedCourseAssignServiceBLL
             DeletedCourseAssign deletedCourseAssign = new DeletedCourseAssign();
             //Execute Stored Procedure
             var x = _dbContext.Database.ExecuteSqlRaw("execute SpGetDeletedCourseAssignTable01");
+          /*  var p = _dbContext.Database.ExecuteSqlRaw("EXEC SpViewRoomAllocation");
+            var pp = Context.DeletedCourseAssigns.FromSqlRaw("select * from dbo.TempSchedule02").ToList();*/
 
             foreach (CourseAssignment assign in assignCourses)
             {

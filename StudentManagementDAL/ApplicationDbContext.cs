@@ -26,7 +26,7 @@ namespace StudentManagementDAL
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Semester> Semesters { get; set; }
         public DbSet<Room> Rooms { get; set; }
-
+        
 
         public DbSet<CourseAssignment> CourseAssignments { get; set; }
 
@@ -43,6 +43,7 @@ namespace StudentManagementDAL
         public DbSet<WeekDay> weekDays { get; set; }
         public DbSet<DeletedRoomAllocation> DeletedRoomAllocations { get; set; }
         public DbSet<AppUser> Users { get; set; }
+        public DbSet<ClassSchedule> ClassSchedules { get; set; }
 
 
 

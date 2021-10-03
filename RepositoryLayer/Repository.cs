@@ -3,6 +3,7 @@ using StudentManagementDAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -138,7 +139,6 @@ namespace RepositoryLayer
             }
             else
             {
-                /*if (unit.GetType().GetProperties().Id)*/
                 _dbContext.Entry(unit).State = EntityState.Modified;
                 _dbContext.SaveChanges();
                 serviceResponse.Data = unit;
@@ -148,7 +148,22 @@ namespace RepositoryLayer
 
         }
 
-
+        public ServiceResponse<IQueryable<TEntity>> FindDDL(Expression<Func<TEntity, bool>> expression)
+        {
+            var serviceResponse = new ServiceResponse<IQueryable<TEntity>>();
+            var result= _dbContext.Set<TEntity>().Where(expression);
+            if (result != null)
+            {
+                serviceResponse.Data = result;
+                serviceResponse.Message = "loaded data sucessfully";
+            }
+            else
+            {
+                serviceResponse.Message = "no data found to load";
+                serviceResponse.Success = false;
+            }
+            return serviceResponse;
+        }
 
 
         public virtual ServiceResponse<TEntity> Delete(TEntity unit)
@@ -156,20 +171,15 @@ namespace RepositoryLayer
             var ServiceResponse = new ServiceResponse<TEntity>();
             throw new NotImplementedException();
         }
-
-
-
-
-
-
         public virtual ServiceResponse<TEntity> DeleteById(int id)
         {
             var ServiceResponse = new ServiceResponse<TEntity>();
 
             throw new NotImplementedException();
 
-        }   
-       
+        }
+
+        
     }
 
         

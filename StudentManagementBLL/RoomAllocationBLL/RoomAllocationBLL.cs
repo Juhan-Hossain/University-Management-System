@@ -22,9 +22,7 @@ namespace StudentManagementBLL.RoomAllocationBLL
         {
             var serviceresponse = new ServiceResponse<RoomAllocationList>();
             Course aCourse = Context.Courses.SingleOrDefault(x => x.Code == body.CourseCode);
-            Department aDepartment = Context.Departments.SingleOrDefault(x => x.Id == body.DepartmentId);
             Room aRoom = Context.Rooms.SingleOrDefault(x => x.Id == body.RoomId);
-            WeekDay aDay = Context.weekDays.SingleOrDefault(x => x.Id == body.DayId);
 
             var start = body.StartTime;
             var end = body.EndTime;
@@ -59,11 +57,8 @@ namespace StudentManagementBLL.RoomAllocationBLL
                     serviceresponse.Message = "error occured while allocating room";
                     serviceresponse.Success = false;
                 }
-               
-
             }
             return serviceresponse;
-
         }
 
         public ServiceResponse<IEnumerable<RoomAllocationList>> GetByCourseCode(string code)
@@ -109,6 +104,10 @@ namespace StudentManagementBLL.RoomAllocationBLL
 
             return serviceresponse;
         }
-
+       /* public ServiceResponse<IEnumerable<RoomAllocationList>> GetRoomAllocationList(int deptId)
+        {
+            var p = Context.DeletedRoomAllocations.fromSqlRaw("EXEC SpViewRoomAllocation");
+        }
+*/
     }
 }
